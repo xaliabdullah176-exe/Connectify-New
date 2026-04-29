@@ -1,24 +1,17 @@
 #include "user.h"
+
 void User::createPost(Post* p) {
-    Post** temp = new Post * [postCount + 1];
-    for (int i = 0; i < postCount; i++)
-        temp[i] = posts[i];
-    temp[postCount] = p;
-    postCount++;
-    delete[] posts;
-    posts = temp;
-    cout << userName << " created a post\n";
+    resize((User**&)posts, postCount);  // reuse resize pattern
+    posts[postCount++] = p;
 }
 
 void User::showPosts() {
-    cout << "\n--- Posts of " << userName << " ---\n";
-    for (int i = 0; i < postCount; i++) {
+    if (postCount == 0) { cout << "No posts yet." << endl; return; }
+    for (int i = 0; i < postCount; i++)
         posts[i]->display();
-        cout << "-----------------\n";
-    }
 }
-void User::showNewsFeed() {
 
+void User::showNewsFeed() {
     int total = 0;
 
     // STEP 1: count posts from followed users
@@ -91,7 +84,7 @@ void User::showNewsFeed() {
         cout << "-----------------------------\n";
     }
 
-   
+
     delete[] feed;
     delete[] owner;
 }

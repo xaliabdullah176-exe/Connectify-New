@@ -26,19 +26,18 @@ void MessageSystem::sendMessage(User* from, User* to, string text) {
     }
     resize();
     msg[msgCount++] = new Message(from->userID, to->userID, text);
+    notifSystem.addNotification(to->userID, from->userName + " Sent You a Message.");
     cout << "message sent" << endl;
 }
 void MessageSystem::viewInbox(User* u) {
+    if (u == nullptr) return;
+    cout << "===== Inbox for " << u->userName << " =====" << endl;
     bool found = false;
     for (int i = 0; i < msgCount; i++) {
         if (msg[i]->receiverID == u->userID) {
-            cout << "From ID: " << msg[i]->senderID << endl;
-            cout << "Message: " << msg[i]->text << endl;
-            cout << "-------------------" << endl;
+            cout << "From ID " << msg[i]->senderID << ": " << msg[i]->text << endl;
             found = true;
         }
     }
-
-    if (!found)
-        cout << "no messages" << endl;
+    if (!found) cout << "No messages." << endl;
 }

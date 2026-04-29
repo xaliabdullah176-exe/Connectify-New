@@ -1,7 +1,8 @@
 #pragma once
 #include <iostream>
 #include <ctime>
-#define _CRT_SECURE_NO_WARNINGS
+#include <string>
+
 using namespace std;
 
 // ==================== POST CLASS ====================
@@ -20,8 +21,8 @@ public:
         content = "";
         likeCount = 0;
         commentCount = 0;
-        next = NULL;
-        timestamp = time(NULL);
+        next = nullptr;
+        timestamp = time(nullptr);
     }
 
     Post(int id, string c) {
@@ -29,7 +30,8 @@ public:
         content = c;
         likeCount = 0;
         commentCount = 0;
-        next = NULL;
+        next = nullptr;
+        timestamp = time(nullptr);
     }
 
     void like() { likeCount++; }
@@ -43,19 +45,20 @@ public:
         cout << "Post ID   : " << postID << endl;
         cout << "Content   : " << content << endl;
         cout << "Likes     : " << likeCount << endl;
-        cout << "Comments:" << endl;
+        cout << "Comments  :" << endl;
         for (int i = 0; i < commentCount; i++)
-            cout << "- " << comments[i] << endl;
+            cout << "  - " << comments[i] << endl;
     }
 };
 
-// ==================== USER CLASS ====================
+// ==================== USER CLASS (BASE) ====================
 class User {
 public:
     int userID;
     string password;
     string userName;
     string role;
+
     User** friends;
     int friendCount;
     User** request;
@@ -81,7 +84,7 @@ public:
         posts = new Post * [1];
     }
 
-    ~User() {
+    virtual ~User() {
         delete[] friends;
         delete[] request;
         delete[] follower;
@@ -91,6 +94,7 @@ public:
         delete[] posts;
     }
 
+    // Copy constructor (shallow copy of pointer arrays � pointers are shared)
     User(const User& other) {
         userID = other.userID;
         password = other.password;
@@ -148,14 +152,44 @@ public:
         return *this;
     }
 
+    // Utility
     void resize(User**& u, int count);
-    void createPost(Post* p);
+
+    // Social
     void sendRequest(User* u);
     void follow(User* to);
     void acceptRequest(User* u);
     void rejectRequest(User* u);
+
+    // Posts
+    void createPost(Post* p);
     void showPosts();
     void showNewsFeed();
+};
+
+// ==================== SUBCLASSES ====================
+class NormalUser : public User {
+public:
+    NormalUser() { role = "user"; }
+
+    NormalUser(int id, string username, string pass) {
+        userID = id;
+        userName = username;
+        password = pass;
+        role = "user";
+    }
+};
+
+class Admin : public User {
+public:
+    Admin() { role = "admin"; }
+
+    Admin(int id, string username, string pass) {
+        userID = id;
+        userName = username;
+        password = pass;
+        role = "admin";
+    }
 };
 
 // ==================== MESSAGE CLASS ====================
@@ -172,22 +206,30 @@ public:
     }
 };
 
-// ==================== Message System CLASS ====================
+// ==================== MESSAGE SYSTEM CLASS ====================
 class MessageSystem {
 public:
     Message** msg;
     int msgCount;
+
     MessageSystem() {
         msg = new Message * [1];
         msgCount = 0;
     }
+
+    ~MessageSystem() {
+        for (int i = 0; i < msgCount; i++)
+            delete msg[i];
+        delete[] msg;
+    }
+
     void resize();
     void sendMessage(User* from, User* to, string text);
     void viewInbox(User* u);
 };
 
 // ==================== GLOBAL VARIABLES ====================
-extern User* user;
+extern User** users;   // pointer array � avoids slicing
 extern int userCount;
 
 // ==================== GLOBAL FUNCTIONS ====================
@@ -195,8 +237,48 @@ bool userNameExist(string n);
 bool adminExist();
 void resizeUsers();
 void signup(int id, string usern, string pass, string rol);
-int login(string u, string pass);
+int  login(string u, string pass);
 void removeUserReferences(int targetID);
 void deleteAccount(int index);
 void adminDelete(int adminIndex, string u);
 void display(int adminIndex);
+
+// ==================== NOTIFICATION CLASS ====================
+class Notification {
+public:
+    int    targetUserID;
+    string message;
+    time_t timestamp;
+
+    Notification() {
+        targetUserID = -1;
+        message = "";
+        timestamp = 0;
+    }
+};
+
+class NotificationSystem {
+    Notification** notifications;
+    int notifCount;
+
+    void resize();
+
+public:
+    NotificationSystem() {
+        notifications = nullptr;
+        notifCount = 0;
+    }
+
+    ~NotificationSystem() {
+        for (int i = 0; i < notifCount; i++)
+            delete notifications[i];
+        delete[] notifications;
+    }
+
+    void addNotification(int targetID, string msg);
+    void showNotifications(int userID, string userName);
+};
+void searchUsers(string keyword);
+void searchPosts(string keyword);
+
+extern NotificationSystem notifSystem;

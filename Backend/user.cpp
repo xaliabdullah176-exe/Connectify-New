@@ -1,12 +1,10 @@
-
 #include <iostream>
-#include <cstring>
 #include "user.h"
 using namespace std;
 
 // ==================== GLOBAL VARIABLES ====================
-User* user = nullptr;
-int userCount = 0;
+User** users = nullptr;
+int    userCount = 0;
 
 // ==================== USER METHODS ====================
 
@@ -18,27 +16,28 @@ void User::resize(User**& u, int count) {
     u = temp;
 }
 
-
 void User::sendRequest(User* u) {
-    if (u == NULL) { cout << "user not found" << endl; return; }
-    if (u == this) { cout << "cant request yourself" << endl; return; }
+    if (u == nullptr) { cout << "User not found." << endl; return; }
+    if (u == this) { cout << "Cannot send request to yourself." << endl; return; }
 
     for (int i = 0; i < friendCount; i++)
-        if (friends[i] == u) { cout << "already friends" << endl; return; }
+        if (friends[i] == u) { cout << "Already friends." << endl; return; }
 
     for (int i = 0; i < requestCount; i++)
-        if (request[i] == u) { cout << "they already sent you a request, accept it instead" << endl; return; }
+        if (request[i] == u) { cout << "They already sent you a request � accept it instead." << endl; return; }
 
     for (int i = 0; i < u->requestCount; i++)
-        if (u->request[i] == this) { cout << "already requested" << endl; return; }
+        if (u->request[i] == this) { cout << "Request already sent." << endl; return; }
 
     u->resize(u->request, u->requestCount);
     u->request[u->requestCount++] = this;
-    cout << "request sent successfully" << endl;
+    notifSystem.addNotification(u->userID, userName + " Sent You a Friend Request.");
+    cout << "Request sent successfully." << endl;
 }
 
 void User::follow(User* to) {
-    if (to == NULL || to == this) return;
+    if (to == nullptr || to == this) return;
+
     for (int i = 0; i < followingCount; i++)
         if (following[i] == to) return;
 
@@ -51,31 +50,36 @@ void User::follow(User* to) {
 
 void User::acceptRequest(User* u) {
     for (int i = 0; i < friendCount; i++)
-        if (friends[i] == u) { cout << "already friends" << endl; return; }
+        if (friends[i] == u) { cout << "Already friends." << endl; return; }
 
     bool found = false;
     for (int i = 0; i < requestCount; i++)
         if (request[i] == u) { found = true; break; }
-    if (!found) { cout << "no request from this user" << endl; return; }
+    if (!found) { cout << "No request from this user." << endl; return; }
 
+    // Check if u already follows this user (mutual follow = friendship)
     bool mutual = false;
     for (int i = 0; i < u->followingCount; i++)
         if (u->following[i] == this) { mutual = true; break; }
 
-    follow(u);
+    follow(u);  // this user now follows u
 
     if (mutual) {
         resize(friends, friendCount);
         friends[friendCount++] = u;
+
         u->resize(u->friends, u->friendCount);
         u->friends[u->friendCount++] = this;
-        cout << "request accepted, you are now friends" << endl;
+        notifSystem.addNotification(u->userID, userName + " Accepted Your Friend Request!");
+        cout << "Request accepted . you are now friends." << endl;
+        
     }
     else {
-        cout << "request accepted" << endl;
+        notifSystem.addNotification(u->userID, userName + " Accepted Your Friend Request.");
+        cout << "Request accepted." << endl;
     }
 
-    rejectRequest(u);
+    rejectRequest(u);  // remove from request list
 }
 
 void User::rejectRequest(User* u) {
@@ -84,116 +88,128 @@ void User::rejectRequest(User* u) {
             for (int j = i; j < requestCount - 1; j++)
                 request[j] = request[j + 1];
             requestCount--;
-            cout << "request rejected" << endl;
             return;
         }
     }
 }
 
+
+
+//void User::showPosts() {
+//    if (postCount == 0) { cout << "No posts yet." << endl; return; }
+//    for (int i = 0; i < postCount; i++)
+//        posts[i]->display();
+//}
+
+
+
 // ==================== GLOBAL FUNCTIONS ====================
 
 bool userNameExist(string n) {
     for (int i = 0; i < userCount; i++)
-        if (user[i].userName == n) return true;
+        if (users[i]->userName == n) return true;
     return false;
 }
 
 bool adminExist() {
     for (int i = 0; i < userCount; i++)
-        if (user[i].role == "Admin" || user[i].role == "admin") return true;
+        if (users[i]->role == "admin" || users[i]->role == "Admin") return true;
     return false;
 }
 
 void resizeUsers() {
-    int ns = userCount + 1;
-    User* temp = new User[ns];
+    User** temp = new User * [userCount + 1];
     for (int i = 0; i < userCount; i++)
-        temp[i] = user[i];
-    delete[] user;
-    for (int i = 0; i < userCount; i++)
-        user[i] = temp[i];
-   
+        temp[i] = users[i];
+    delete[] users;
+    users = temp;
 }
 
 void signup(int id, string usern, string pass, string rol) {
-    if (userNameExist(usern)) { cout << "username already exists" << endl; return; }
-    if ((rol == "Admin" || rol == "admin") && adminExist()) { cout << "admin already exists" << endl; return; }
+    if (userNameExist(usern)) { cout << "Username already exists." << endl; return; }
+
+    string roleLower = rol;
+    for (char& c : roleLower) c = tolower(c);
+
+    if (roleLower == "admin" && adminExist()) { cout << "Admin already exists." << endl; return; }
+
     resizeUsers();
-    user[userCount].userID = id;
-    user[userCount].userName = usern;
-    user[userCount].password = pass;
-    user[userCount].role = rol;
+
+    if (roleLower == "admin")
+        users[userCount] = new Admin(id, usern, pass);
+    else
+        users[userCount] = new NormalUser(id, usern, pass);
+
     userCount++;
-    cout << "account created successfully" << endl;
+    cout << "Account created successfully." << endl;
 }
 
 int login(string u, string pass) {
     for (int i = 0; i < userCount; i++)
-        if (user[i].userName == u && user[i].password == pass)
+        if (users[i]->userName == u && users[i]->password == pass)
             return i;
     return -1;
 }
 
 void removeUserReferences(int targetID) {
     for (int i = 0; i < userCount; i++) {
-        User* u = &user[i];
+        User* u = users[i];
         if (u->userID == targetID) continue;
 
-        for (int j = 0; j < u->friendCount; j++)
-            if (u->friends[j]->userID == targetID) {
-                for (int k = j; k < u->friendCount - 1; k++) u->friends[k] = u->friends[k + 1];
-                u->friendCount--; break;
+        auto removeFrom = [](User**& arr, int& count, int targetID) {
+            for (int j = 0; j < count; j++) {
+                if (arr[j]->userID == targetID) {
+                    for (int k = j; k < count - 1; k++) arr[k] = arr[k + 1];
+                    count--;
+                    return;
+                }
             }
-        for (int j = 0; j < u->requestCount; j++)
-            if (u->request[j]->userID == targetID) {
-                for (int k = j; k < u->requestCount - 1; k++) u->request[k] = u->request[k + 1];
-                u->requestCount--; break;
-            }
-        for (int j = 0; j < u->followerCount; j++)
-            if (u->follower[j]->userID == targetID) {
-                for (int k = j; k < u->followerCount - 1; k++) u->follower[k] = u->follower[k + 1];
-                u->followerCount--; break;
-            }
-        for (int j = 0; j < u->followingCount; j++)
-            if (u->following[j]->userID == targetID) {
-                for (int k = j; k < u->followingCount - 1; k++) u->following[k] = u->following[k + 1];
-                u->followingCount--; break;
-            }
+            };
+
+        removeFrom(u->friends, u->friendCount, targetID);
+        removeFrom(u->request, u->requestCount, targetID);
+        removeFrom(u->follower, u->followerCount, targetID);
+        removeFrom(u->following, u->followingCount, targetID);
     }
 }
 
 void deleteAccount(int index) {
-    if (index < 0 || index >= userCount) { cout << "no such user account found" << endl; return; }
-    removeUserReferences(user[index].userID);
+    if (index < 0 || index >= userCount) { cout << "No such user found." << endl; return; }
+    removeUserReferences(users[index]->userID);
+    delete users[index];
     for (int i = index; i < userCount - 1; i++)
-        user[i] = user[i + 1];
+        users[i] = users[i + 1];
     userCount--;
-    cout << "account deleted successfully" << endl;
+    cout << "Account deleted successfully." << endl;
 }
 
 void adminDelete(int adminIndex, string u) {
-    if (user[adminIndex].role != "admin" && user[adminIndex].role != "Admin") {
-        cout << "access denied" << endl; return;
+    if (users[adminIndex]->role != "admin" && users[adminIndex]->role != "Admin") {
+        cout << "Access denied." << endl; return;
     }
     int index = -1;
     for (int i = 0; i < userCount; i++)
-        if (user[i].userName == u) { index = i; break; }
-    if (index == -1) { cout << "no such user account found" << endl; return; }
-    removeUserReferences(user[index].userID);
-    for (int i = index; i < userCount - 1; i++)
-        user[i] = user[i + 1];
-    userCount--;
-    cout << "account deleted successfully" << endl;
+        if (users[i]->userName == u) { index = i; break; }
+    if (index == -1) { cout << "No such user found." << endl; return; }
+
+    deleteAccount(index);
 }
 
 void display(int adminIndex) {
-    if (user[adminIndex].role != "admin" && user[adminIndex].role != "Admin") {
-        cout << "access denied" << endl; return;
+    if (users[adminIndex]->role != "admin" && users[adminIndex]->role != "Admin") {
+        cout << "Access denied." << endl; return;
     }
     for (int i = 0; i < userCount; i++) {
-        cout << "user id   : " << user[i].userID << endl;
-        cout << "user name : " << user[i].userName << endl;
-        cout << "role      : " << user[i].role << endl;
+        cout << "User ID   : " << users[i]->userID << endl;
+        cout << "Username  : " << users[i]->userName << endl;
+        cout << "Role      : " << users[i]->role << endl;
         cout << "-------------------------" << endl;
     }
 }
+
+
+
+
+
+
+
