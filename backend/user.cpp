@@ -24,14 +24,13 @@ void User::sendRequest(User* u) {
         if (friends[i] == u) { cout << "Already friends." << endl; return; }
 
     for (int i = 0; i < requestCount; i++)
-        if (request[i] == u) { cout << "They already sent you a request ï¿½ accept it instead." << endl; return; }
+        if (request[i] == u) { cout << "They already sent you a request — accept it instead." << endl; return; }
 
     for (int i = 0; i < u->requestCount; i++)
         if (u->request[i] == this) { cout << "Request already sent." << endl; return; }
 
     u->resize(u->request, u->requestCount);
     u->request[u->requestCount++] = this;
-    notifSystem.addNotification(u->userID, userName + " Sent You a Friend Request.");
     cout << "Request sent successfully." << endl;
 }
 
@@ -70,12 +69,10 @@ void User::acceptRequest(User* u) {
 
         u->resize(u->friends, u->friendCount);
         u->friends[u->friendCount++] = this;
-        notifSystem.addNotification(u->userID, userName + " Accepted Your Friend Request!");
-        cout << "Request accepted . you are now friends." << endl;
-        
+
+        cout << "Request accepted — you are now friends." << endl;
     }
     else {
-        notifSystem.addNotification(u->userID, userName + " Accepted Your Friend Request.");
         cout << "Request accepted." << endl;
     }
 
@@ -176,6 +173,9 @@ void removeUserReferences(int targetID) {
 void deleteAccount(int index) {
     if (index < 0 || index >= userCount) { cout << "No such user found." << endl; return; }
     removeUserReferences(users[index]->userID);
+    for (int i = 0; i < users[index]->postCount; i++)
+        delete users[index]->posts[i];
+
     delete users[index];
     for (int i = index; i < userCount - 1; i++)
         users[i] = users[i + 1];
@@ -187,9 +187,11 @@ void adminDelete(int adminIndex, string u) {
     if (users[adminIndex]->role != "admin" && users[adminIndex]->role != "Admin") {
         cout << "Access denied." << endl; return;
     }
+  
     int index = -1;
     for (int i = 0; i < userCount; i++)
         if (users[i]->userName == u) { index = i; break; }
+    if (users[index]->role == "admin" || users[index]->role == "Admin") return;
     if (index == -1) { cout << "No such user found." << endl; return; }
 
     deleteAccount(index);
@@ -202,7 +204,7 @@ void display(int adminIndex) {
     for (int i = 0; i < userCount; i++) {
         cout << "User ID   : " << users[i]->userID << endl;
         cout << "Username  : " << users[i]->userName << endl;
-        cout << "Role      : " << users[i]->role << endl;
+       // cout << "Role      : " << users[i]->role << endl;
         cout << "-------------------------" << endl;
     }
 }

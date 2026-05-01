@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "user.h"
 using namespace std;
 
@@ -242,7 +242,6 @@ void handleLikePost() {
     User* target = findUserByName(name);
     if (!target) { cout << "User not found." << endl; pause(); return; }
 
-    // sirf friends ki post like ho sakti hai
     bool isFriend = false;
     for (int i = 0; i < users[loggedInIndex]->friendCount; i++) {
         if (users[loggedInIndex]->friends[i] == target) {
@@ -261,7 +260,6 @@ void handleLikePost() {
         if (target->posts[i]->postID == postID) {
             target->posts[i]->like();
             cout << "Post liked!" << endl;
-            // NOTIFICATION: post owner ko batao
             notifSystem.addNotification(
                 target->userID,
                 users[loggedInIndex]->userName + " ne aapki post like ki."
@@ -286,7 +284,6 @@ void handleCommentPost() {
     User* target = findUserByName(name);
     if (!target) { cout << "User not found." << endl; pause(); return; }
 
-    // sirf friends ki post pe comment ho sakta hai
     bool isFriend = false;
     for (int i = 0; i < users[loggedInIndex]->friendCount; i++) {
         if (users[loggedInIndex]->friends[i] == target) {
@@ -307,7 +304,6 @@ void handleCommentPost() {
                 users[loggedInIndex]->userName + ": " + comment
             );
             cout << "Comment added!" << endl;
-            // NOTIFICATION: post owner ko batao
             notifSystem.addNotification(
                 target->userID,
                 users[loggedInIndex]->userName + " ne aapki post pe comment kiya."
@@ -384,7 +380,7 @@ void userDashboard() {
         case 15: handleLikePost();         break;
         case 16: handleCommentPost();      break;
         case 17: handleDeleteMyAccount(); return;
-        case 18: handleViewNotifications(); break; // ADDED
+        case 18: handleViewNotifications(); break;
         case 0:
             cout << "Logged out successfully." << endl;
             loggedInIndex = -1;
@@ -436,6 +432,9 @@ void adminDashboard() {
 // ==================== MAIN ====================
 
 int main() {
+    // ===== Load all saved data on startup =====
+    loadData();
+
     int choice;
 
     while (true) {
@@ -460,6 +459,9 @@ int main() {
             break;
 
         case 0:
+            // ===== Save all data before exit =====
+            saveData();
+
             cout << "\nGoodbye!\n";
             for (int i = 0; i < userCount; i++)
                 delete users[i];

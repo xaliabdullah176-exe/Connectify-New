@@ -26,7 +26,6 @@ void MessageSystem::sendMessage(User* from, User* to, string text) {
     }
     resize();
     msg[msgCount++] = new Message(from->userID, to->userID, text);
-    notifSystem.addNotification(to->userID, from->userName + " Sent You a Message.");
     cout << "message sent" << endl;
 }
 void MessageSystem::viewInbox(User* u) {
