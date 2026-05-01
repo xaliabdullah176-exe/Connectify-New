@@ -66,7 +66,7 @@ void User::showNewsFeed() {
         }
     }
 
-    // display feed
+    
     cout << "\n========== NEWS FEED ==========\n";
 
     for (int i = 0; i < total; i++) {
@@ -84,7 +84,8 @@ void User::showNewsFeed() {
         cout << "-----------------------------\n";
     }
 
-
+   
     delete[] feed;
     delete[] owner;
 }
+

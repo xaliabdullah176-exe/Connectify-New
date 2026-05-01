@@ -2,6 +2,7 @@
 #include <iostream>
 #include <ctime>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -94,7 +95,7 @@ public:
         delete[] posts;
     }
 
-    // Copy constructor (shallow copy of pointer arrays � pointers are shared)
+    // Copy constructor (shallow copy of pointer arrays)
     User(const User& other) {
         userID = other.userID;
         password = other.password;
@@ -229,7 +230,7 @@ public:
 };
 
 // ==================== GLOBAL VARIABLES ====================
-extern User** users;   // pointer array � avoids slicing
+extern User** users;   // pointer array
 extern int userCount;
 
 // ==================== GLOBAL FUNCTIONS ====================
@@ -277,8 +278,17 @@ public:
 
     void addNotification(int targetID, string msg);
     void showNotifications(int userID, string userName);
+
+    // ===== FILE HANDLING =====
+    void saveToFile(const string& filename);
+    void loadFromFile(const string& filename);
 };
+
 void searchUsers(string keyword);
 void searchPosts(string keyword);
 
 extern NotificationSystem notifSystem;
+
+// ==================== FILE HANDLING ====================
+void saveData();   // call on exit
+void loadData();   // call on startup
