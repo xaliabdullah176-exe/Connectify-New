@@ -1,0 +1,9 @@
+C:/Users/iAT/Documents/ConnectifyUI/build/CMakeFiles/ConnectifyUI.dir
+C:/Users/iAT/Documents/ConnectifyUI/build/CMakeFiles/edit_cache.dir
+C:/Users/iAT/Documents/ConnectifyUI/build/CMakeFiles/rebuild_cache.dir
+C:/Users/iAT/Documents/ConnectifyUI/build/CMakeFiles/list_install_components.dir
+C:/Users/iAT/Documents/ConnectifyUI/build/CMakeFiles/install.dir
+C:/Users/iAT/Documents/ConnectifyUI/build/CMakeFiles/install/local.dir
+C:/Users/iAT/Documents/ConnectifyUI/build/CMakeFiles/install/strip.dir
+C:/Users/iAT/Documents/ConnectifyUI/build/CMakeFiles/ConnectifyUI_autogen_timestamp_deps.dir
+C:/Users/iAT/Documents/ConnectifyUI/build/CMakeFiles/ConnectifyUI_autogen.dir
