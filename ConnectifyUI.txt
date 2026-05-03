@@ -8,8 +8,8 @@ PROJECT STRUCTURE
 Root: C:\Users\iAT\Documents\ConnectifyUI
 
 ConnectifyUI/
+├── .git/  [skipped]
 ├── .qtcreator/
-│   ├── qtc-cmake-presets-OovxBHYz/
 │   └── CMakeLists.txt.user
 ├── backend/
 │   ├── main.cpp
@@ -53,7 +53,7 @@ FILE: /.qtcreator/CMakeLists.txt.user
 --------------------------------------------------------------------------------
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 19.0.1, 2026-05-03T21:44:48. -->
+<!-- Written by QtCreator 19.0.1, 2026-05-03T21:54:22. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -1217,7 +1217,9 @@ using namespace std;
 
 // ==================== GLOBAL VARIABLES ====================
 User** users = nullptr;
-int    userCount = 0;
+int    userCount = 0;int nextID = 1;
+MessageSystem msgSystem;
+//NotificationSystem notifSystem;
 
 // ==================== USER METHODS ====================
 
@@ -1420,6 +1422,13 @@ void display(int adminIndex) {
        // cout << "Role      : " << users[i]->role << endl;
         cout << "-------------------------" << endl;
     }
+}
+void saveData() {
+    // File handling - placeholder for now
+}
+
+void loadData() {
+    // File handling - placeholder for now
 }
 
 
@@ -2735,9 +2744,9 @@ LoginPage::LoginPage(QWidget* parent) : QWidget(parent) {
     outer->addWidget(card, 0, Qt::AlignVCenter);
     outer->addStretch();
 
-    connect(loginBtn_,     &QPushButton::clicked,       this, &LoginPage::onLoginClicked);
-    connect(signupBtn_,    &QPushButton::clicked,       this, &LoginPage::goToSignup);
-    connect(passwordEdit_, &QLineEdit::returnPressed,   this, &LoginPage::onLoginClicked);
+    connect(loginBtn_,     &QPushButton::clicked,     this, &LoginPage::onLoginClicked);
+    connect(signupBtn_,    &QPushButton::clicked,     this, &LoginPage::signupLinkClicked);
+    connect(passwordEdit_, &QLineEdit::returnPressed, this, &LoginPage::onLoginClicked);
 }
 
 void LoginPage::onLoginClicked() {
@@ -2748,39 +2757,44 @@ void LoginPage::onLoginClicked() {
         errorLabel_->setText("Please fill all fields!");
         return;
     }
+    emit loginClicked(username, password);
+}
 
-    if (username == "admin" && password == "admin123") {
-        emit loginSuccess(true);
-        return;
-    }
+void LoginPage::showError(const QString& msg) {
+    errorLabel_->setText(msg);
+}
 
-    errorLabel_->setText("Invalid credentials!");
+void LoginPage::clearFields() {
+    usernameEdit_->clear();
+    passwordEdit_->clear();
+    errorLabel_->clear();
 }
 
 --------------------------------------------------------------------------------
 FILE: /LoginPage.h
 --------------------------------------------------------------------------------
-#ifndef LOGINPAGE_H
-#define LOGINPAGE_H
-
-#endif // LOGINPAGE_H
 #pragma once
-#include<QWidget>
-#include<QLineEdit>
-#include<QLabel>
-#include<QPushButton>
-#include<QVBoxLayout>
+#include <QWidget>
+#include <QLineEdit>
+#include <QLabel>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 class LoginPage : public QWidget {
     Q_OBJECT
 
-    public:
-    explicit LoginPage(QWidget* Parent = nullptr);
-    signals:
-    void loginSuccess(bool isAdmin);
-    void goToSignup();
+public:
+    explicit LoginPage(QWidget* parent = nullptr);
+    void showError(const QString& msg);
+    void clearFields();
+
+signals:
+    void loginClicked(const QString& username, const QString& password);
+    void signupLinkClicked();
+
 private slots:
     void onLoginClicked();
+
 private:
     QLineEdit*   usernameEdit_;
     QLineEdit*   passwordEdit_;
@@ -2788,7 +2802,6 @@ private:
     QPushButton* loginBtn_;
     QPushButton* signupBtn_;
 };
-
 
 --------------------------------------------------------------------------------
 FILE: /main.cpp
@@ -3303,9 +3316,23 @@ void MainWindow::connectSignals() {
     connect(feedPage, &NewsFeedPage::goToSearch,        this, &MainWindow::showSearch);
 
     // ── ProfilePage (Arslan) ──
-    connect(profilePage, &ProfilePage::editProfileClicked,    this, &MainWindow::showProfile);
+    connect(profilePage, &ProfilePage::editProfileClicked, this, [this]() {
+    bool ok;
+    QString newName = QInputDialog::getText(
+        this, "Edit Profile", "Enter new username:",
+        QLineEdit::Normal,
+        QString::fromStdString(users[m_loggedInIndex]->userName), &ok
+    );
+    if (ok && !newName.trimmed().isEmpty()) {
+        users[m_loggedInIndex]->userName = newName.toStdString();
+        showProfile();
+    }
+});
     connect(profilePage, &ProfilePage::viewAllFriendsClicked, this, &MainWindow::showSearch);
-
+    connect(profilePage, &ProfilePage::createPostClicked, this, &MainWindow::showNewsFeed);
+    connect(profilePage, &ProfilePage::createPostClicked, this, [this]() {
+    showNewsFeed();
+});
     // ── SearchPage (Arslan) ──
     connect(searchPage, &SearchPage::viewProfileClicked, this, [this](int userID) {
         // Load that user's profile
@@ -5227,17 +5254,18 @@ FILE: /newsfeedpage.h
 // ─────────────────────────────────────────────────────
 //  Single post card shown in the feed
 // ─────────────────────────────────────────────────────
-class FeedPostCard : public QFrame {
+class FeedPostCard : public QFrame
+{
     Q_OBJECT
 public:
     FeedPostCard(int postID,
                  const QString &ownerName,
                  const QString &content,
-                 const QString &imagePath,   // "" if text-only post
+                 const QString &imagePath, // "" if text-only post
                  const QString &timeAgo,
                  int likes,
                  int comments,
-                 bool canInteract,           // false if not friend/self
+                 bool canInteract, // false if not friend/self
                  QWidget *parent = nullptr);
 
     void updateLikes(int newCount);
@@ -5247,15 +5275,16 @@ signals:
     void commentClicked(int postID);
 
 private:
-    int         m_postID;
-    QLabel      *likesLabel;
-    QLabel      *commentsLabel;
+    int m_postID;
+    QLabel *likesLabel;
+    QLabel *commentsLabel;
 };
 
 // ─────────────────────────────────────────────────────
 //  NewsFeedPage
 // ─────────────────────────────────────────────────────
-class NewsFeedPage : public QWidget {
+class NewsFeedPage : public QWidget
+{
     Q_OBJECT
 
 public:
@@ -5268,7 +5297,7 @@ public:
     void addPost(int postID,
                  const QString &ownerName,
                  const QString &content,
-                 const QString &imagePath,   // "" for text post
+                 const QString &imagePath, // "" for text post
                  const QString &timeAgo,
                  int likes,
                  int comments,
@@ -5308,23 +5337,23 @@ private slots:
 
 private:
     // ── State ──────────────────────────────────────────
-    int     m_currentUserID = -1;
+    int m_currentUserID = -1;
     QString m_currentUserName;
     QString m_selectedImagePath;
 
     // ── Navbar ─────────────────────────────────────────
-    QLabel      *navUserNameLabel;
-    QLabel      *navAvatarLabel;
+    QLabel *navUserNameLabel;
+    QLabel *navAvatarLabel;
 
     // ── Create post box ────────────────────────────────
-    QTextEdit   *postInput;
-    QLabel      *imagePreviewLabel;
+    QTextEdit *postInput;
+    QLabel *imagePreviewLabel;
     QPushButton *selectImageBtn;
     QPushButton *postBtn;
-    QLabel      *charCountLabel;
+    QLabel *charCountLabel;
 
     // ── Feed ───────────────────────────────────────────
-    QVBoxLayout *feedLayout;   // holds FeedPostCard widgets + stretch
+    QVBoxLayout *feedLayout; // holds FeedPostCard widgets + stretch
 
     // ── Helpers ────────────────────────────────────────
     void setupUI();
