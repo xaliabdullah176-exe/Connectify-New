@@ -49,12 +49,14 @@ void ProfilePage::loadProfile(int    userID,
 // ═══════════════════════════════════════════════════════
 void ProfilePage::addTextPost(int postID, QString name, QString handle,
                                QString content, QString timeAgo,
-                               int likes, int comments)
+                               int likes, int comments, bool isLikedByMe,
+                               const QStringList &commentsList,
+                               bool isOwnPost)
 {
     postsLayout->insertWidget(
         postsLayout->count() - 1,   // insert before the stretch
         makePostCard(postID, name, handle, content, "", timeAgo,
-                     likes, comments, false)
+                     likes, comments, false, isLikedByMe, commentsList, isOwnPost)
     );
 }
 
@@ -63,12 +65,14 @@ void ProfilePage::addTextPost(int postID, QString name, QString handle,
 // ═══════════════════════════════════════════════════════
 void ProfilePage::addImagePost(int postID, QString name, QString handle,
                                 QString content, QString imagePath,
-                                QString timeAgo, int likes, int comments)
+                                QString timeAgo, int likes, int comments, bool isLikedByMe,
+                                const QStringList &commentsList,
+                                bool isOwnPost)
 {
     postsLayout->insertWidget(
         postsLayout->count() - 1,
         makePostCard(postID, name, handle, content, imagePath, timeAgo,
-                     likes, comments, true)
+                     likes, comments, true, isLikedByMe, commentsList, isOwnPost)
     );
 }
 
@@ -101,7 +105,9 @@ void ProfilePage::clearPosts() {
 QFrame* ProfilePage::makePostCard(int postID, QString name, QString handle,
                                    QString content, QString imagePath,
                                    QString timeAgo, int likes, int comments,
-                                   bool hasImage)
+                                   bool hasImage, bool isLikedByMe,
+                                   const QStringList &commentsList,
+                                   bool isOwnPost)
 {
     QFrame *card = new QFrame();
     card->setObjectName("postCard");
@@ -144,7 +150,20 @@ QFrame* ProfilePage::makePostCard(int postID, QString name, QString handle,
     topRow->addWidget(av);
     topRow->addLayout(nameCol);
     topRow->addStretch();
-    topRow->addWidget(menu);
+    if (isOwnPost) {
+        QPushButton *delBtn = new QPushButton("🗑️");
+        delBtn->setObjectName("delBtn");
+        delBtn->setCursor(Qt::PointingHandCursor);
+        delBtn->setToolTip("Delete this post");
+        delBtn->setStyleSheet("background:transparent; border:none; font-size:16px;");
+        topRow->addWidget(delBtn);
+
+        connect(delBtn, &QPushButton::clicked, this, [this, postID]() {
+            emit deletePostClicked(postID);
+        });
+    } else {
+        topRow->addWidget(menu);
+    }
     vl->addWidget(topWidget);
 
     // ── Content text ─────────────────────────────────────
@@ -184,10 +203,24 @@ QFrame* ProfilePage::makePostCard(int postID, QString name, QString handle,
     footerRow->setContentsMargins(14, 8, 14, 10);
     footerRow->setSpacing(16);
 
-    QPushButton *likeBtn = new QPushButton("♥  " + QString::number(likes));
+    QPushButton *likeBtn = new QPushButton(QString(isLikedByMe ? "❤️  %1" : "♥  %1").arg(likes));
+    likeBtn->setProperty("isLiked", isLikedByMe);
     likeBtn->setObjectName("likeBtn");
     likeBtn->setFlat(true);
     likeBtn->setCursor(Qt::PointingHandCursor);
+
+    // Dummy toggle logic since profile page doesn't emit signals to MainWindow currently
+    connect(likeBtn, &QPushButton::clicked, this, [likeBtn]() mutable {
+        bool currentlyLiked = likeBtn->property("isLiked").toBool();
+        int cur = likeBtn->text().split("  ").last().toInt();
+        if (currentlyLiked) {
+            likeBtn->setProperty("isLiked", false);
+            likeBtn->setText(QString("♥  %1").arg(cur - 1));
+        } else {
+            likeBtn->setProperty("isLiked", true);
+            likeBtn->setText(QString("❤️  %1").arg(cur + 1));
+        }
+    });
 
     QPushButton *cmtBtn = new QPushButton("💬  " + QString::number(comments));
     cmtBtn->setObjectName("cmtBtn");
@@ -204,6 +237,42 @@ QFrame* ProfilePage::makePostCard(int postID, QString name, QString handle,
     footerRow->addStretch();
     footerRow->addWidget(shareBtn);
     vl->addWidget(footer);
+
+    // ── Comments Display ───────────────────────────────
+    if (!commentsList.isEmpty()) {
+        QWidget *commentsWidget = new QWidget();
+        QVBoxLayout *commentsLayout = new QVBoxLayout(commentsWidget);
+        commentsLayout->setContentsMargins(14, 0, 14, 10);
+        commentsLayout->setSpacing(4);
+
+        int maxInitial = 3;
+        int showCount = qMin(commentsList.size(), maxInitial);
+
+        for (int i = 0; i < showCount; i++) {
+            QLabel *cLabel = new QLabel(commentsList[i]);
+            cLabel->setStyleSheet("font-size:12px; color:#d1d5db; background:transparent;");
+            cLabel->setWordWrap(true);
+            commentsLayout->addWidget(cLabel);
+        }
+
+        if (commentsList.size() > maxInitial) {
+            QPushButton *showMoreBtn = new QPushButton(QString("Show %1 more comments").arg(commentsList.size() - maxInitial));
+            showMoreBtn->setStyleSheet("font-size:11px; color:#a78bfa; background:transparent; border:none; text-align:left;");
+            showMoreBtn->setCursor(Qt::PointingHandCursor);
+            commentsLayout->addWidget(showMoreBtn);
+
+            connect(showMoreBtn, &QPushButton::clicked, card, [commentsLayout, commentsList, maxInitial, showMoreBtn]() {
+                for (int i = maxInitial; i < commentsList.size(); i++) {
+                    QLabel *cLabel = new QLabel(commentsList[i]);
+                    cLabel->setStyleSheet("font-size:12px; color:#d1d5db; background:transparent;");
+                    cLabel->setWordWrap(true);
+                    commentsLayout->insertWidget(commentsLayout->count() - 1, cLabel);
+                }
+                showMoreBtn->hide();
+            });
+        }
+        vl->addWidget(commentsWidget);
+    }
 
     return card;
 }

@@ -5,6 +5,20 @@ void User::createPost(Post* p) {
     posts[postCount++] = p;
 }
 
+bool User::deletePost(int postID) {
+    for (int i = 0; i < postCount; i++) {
+        if (posts[i]->postID == postID) {
+            delete posts[i];
+            for (int j = i; j < postCount - 1; j++) {
+                posts[j] = posts[j + 1];
+            }
+            postCount--;
+            return true;
+        }
+    }
+    return false;
+}
+
 void User::showPosts() {
     if (postCount == 0) { cout << "No posts yet." << endl; return; }
     for (int i = 0; i < postCount; i++)

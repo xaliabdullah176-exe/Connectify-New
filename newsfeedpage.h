@@ -25,6 +25,9 @@ public:
                  int likes,
                  int comments,
                  bool canInteract, // false if not friend/self
+                 bool isLikedByMe = false,
+                 const QStringList &commentsList = QStringList(),
+                 bool isOwnPost = false,
                  QWidget *parent = nullptr);
 
     void updateLikes(int newCount);
@@ -32,6 +35,7 @@ public:
 signals:
     void likeClicked(int postID);
     void commentClicked(int postID);
+    void deleteClicked(int postID);
 
 private:
     int m_postID;
@@ -60,7 +64,10 @@ public:
                  const QString &timeAgo,
                  int likes,
                  int comments,
-                 bool canInteract = true);
+                 bool canInteract = true,
+                 bool isLikedByMe = false,
+                 const QStringList &commentsList = QStringList(),
+                 bool isOwnPost = false);
 
     // ── Clear feed (call before refresh) ──
     void clearFeed();
@@ -82,6 +89,9 @@ signals:
 
     // User clicked 💬 Comment
     void commentClicked(int postID);
+
+    // User clicked 🗑️ Delete
+    void deletePostClicked(int postID);
 
     // Navbar signals
     void logoutClicked();

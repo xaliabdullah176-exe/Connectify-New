@@ -15,6 +15,9 @@ FeedPostCard::FeedPostCard(int postID,
                            int likes,
                            int comments,
                            bool canInteract,
+                           bool isLikedByMe,
+                           const QStringList &commentsList,
+                           bool isOwnPost,
                            QWidget *parent)
     : QFrame(parent), m_postID(postID)
 {
@@ -54,6 +57,20 @@ FeedPostCard::FeedPostCard(int postID,
     topRow->addWidget(av);
     topRow->addLayout(nameCol);
     topRow->addStretch();
+
+    if (isOwnPost) {
+        QPushButton *delBtn = new QPushButton("🗑️");
+        delBtn->setObjectName("delBtn");
+        delBtn->setCursor(Qt::PointingHandCursor);
+        delBtn->setToolTip("Delete this post");
+        delBtn->setStyleSheet("background:transparent; border:none; font-size:16px;");
+        topRow->addWidget(delBtn);
+
+        connect(delBtn, &QPushButton::clicked, this, [this]() {
+            emit deleteClicked(m_postID);
+        });
+    }
+
     vl->addWidget(topWidget);
 
     // ── Content text ──────────────────────────────────
@@ -94,7 +111,8 @@ FeedPostCard::FeedPostCard(int postID,
     footerRow->setSpacing(8);
 
     // Like button
-    QPushButton *likeBtn = new QPushButton(QString("❤️  %1").arg(likes));
+    QPushButton *likeBtn = new QPushButton(QString(isLikedByMe ? "❤️  %1" : "🤍  %1").arg(likes));
+    likeBtn->setProperty("isLiked", isLikedByMe);
     likeBtn->setObjectName(canInteract ? "likeBtn" : "likeBtnDisabled");
     likeBtn->setCursor(canInteract ? Qt::PointingHandCursor : Qt::ArrowCursor);
     likeBtn->setEnabled(canInteract);
@@ -120,16 +138,59 @@ FeedPostCard::FeedPostCard(int postID,
     vl->addWidget(footer);
 
     // Connections
-    connect(likeBtn, &QPushButton::clicked, this, [this, likeBtn, likes]() mutable {
+    connect(likeBtn, &QPushButton::clicked, this, [this, likeBtn]() mutable {
         emit likeClicked(m_postID);
         // Optimistic UI update
+        bool currentlyLiked = likeBtn->property("isLiked").toBool();
         int cur = likeBtn->text().split("  ").last().toInt();
-        likeBtn->setText(QString("❤️  %1").arg(cur + 1));
+        if (currentlyLiked) {
+            likeBtn->setProperty("isLiked", false);
+            likeBtn->setText(QString("🤍  %1").arg(cur - 1));
+        } else {
+            likeBtn->setProperty("isLiked", true);
+            likeBtn->setText(QString("❤️  %1").arg(cur + 1));
+        }
     });
 
     connect(cmtBtn, &QPushButton::clicked, this, [this]() {
         emit commentClicked(m_postID);
     });
+
+    // ── Comments Display ───────────────────────────────
+    if (!commentsList.isEmpty()) {
+        QWidget *commentsWidget = new QWidget();
+        QVBoxLayout *commentsLayout = new QVBoxLayout(commentsWidget);
+        commentsLayout->setContentsMargins(16, 0, 16, 10);
+        commentsLayout->setSpacing(4);
+
+        int maxInitial = 3;
+        int showCount = qMin(commentsList.size(), maxInitial);
+
+        for (int i = 0; i < showCount; i++) {
+            QLabel *cLabel = new QLabel(commentsList[i]);
+            cLabel->setStyleSheet("font-size:12px; color:#d1d5db; background:transparent;");
+            cLabel->setWordWrap(true);
+            commentsLayout->addWidget(cLabel);
+        }
+
+        if (commentsList.size() > maxInitial) {
+            QPushButton *showMoreBtn = new QPushButton(QString("Show %1 more comments").arg(commentsList.size() - maxInitial));
+            showMoreBtn->setStyleSheet("font-size:11px; color:#a78bfa; background:transparent; border:none; text-align:left;");
+            showMoreBtn->setCursor(Qt::PointingHandCursor);
+            commentsLayout->addWidget(showMoreBtn);
+
+            connect(showMoreBtn, &QPushButton::clicked, this, [commentsLayout, commentsList, maxInitial, showMoreBtn]() {
+                for (int i = maxInitial; i < commentsList.size(); i++) {
+                    QLabel *cLabel = new QLabel(commentsList[i]);
+                    cLabel->setStyleSheet("font-size:12px; color:#d1d5db; background:transparent;");
+                    cLabel->setWordWrap(true);
+                    commentsLayout->insertWidget(commentsLayout->count() - 1, cLabel);
+                }
+                showMoreBtn->hide();
+            });
+        }
+        vl->addWidget(commentsWidget);
+    }
 }
 
 void FeedPostCard::updateLikes(int newCount) {
@@ -172,15 +233,19 @@ void NewsFeedPage::addPost(int postID,
                            const QString &timeAgo,
                            int likes,
                            int comments,
-                           bool canInteract)
+                           bool canInteract,
+                           bool isLikedByMe,
+                           const QStringList &commentsList,
+                           bool isOwnPost)
 {
     FeedPostCard *card = new FeedPostCard(
         postID, ownerName, content, imagePath,
-        timeAgo, likes, comments, canInteract
+        timeAgo, likes, comments, canInteract, isLikedByMe, commentsList, isOwnPost
     );
 
     connect(card, &FeedPostCard::likeClicked,    this, &NewsFeedPage::likeClicked);
     connect(card, &FeedPostCard::commentClicked, this, &NewsFeedPage::commentClicked);
+    connect(card, &FeedPostCard::deleteClicked,  this, &NewsFeedPage::deletePostClicked);
 
     // Insert before the bottom stretch
     feedLayout->insertWidget(feedLayout->count() - 1, card);

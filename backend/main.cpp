@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include "user.h"
 using namespace std;
 
@@ -258,12 +258,16 @@ void handleLikePost() {
     bool found = false;
     for (int i = 0; i < target->postCount; i++) {
         if (target->posts[i]->postID == postID) {
-            target->posts[i]->like();
-            cout << "Post liked!" << endl;
-            notifSystem.addNotification(
-                target->userID,
-                users[loggedInIndex]->userName + " ne aapki post like ki."
-            );
+            bool isLiked = target->posts[i]->toggleLike(users[loggedInIndex]->userID);
+            if (isLiked) {
+                cout << "Post liked!" << endl;
+                notifSystem.addNotification(
+                    target->userID,
+                    users[loggedInIndex]->userName + " ne aapki post like ki."
+                );
+            } else {
+                cout << "Post unliked!" << endl;
+            }
             found = true;
             break;
         }

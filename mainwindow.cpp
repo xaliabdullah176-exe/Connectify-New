@@ -64,6 +64,7 @@ void MainWindow::connectSignals() {
     connect(feedPage, &NewsFeedPage::createPostClicked, this, &MainWindow::onCreatePost);
     connect(feedPage, &NewsFeedPage::likeClicked,       this, &MainWindow::onLikePost);
     connect(feedPage, &NewsFeedPage::commentClicked,    this, &MainWindow::onCommentPost);
+    connect(feedPage, &NewsFeedPage::deletePostClicked, this, &MainWindow::onDeletePost);
     connect(feedPage, &NewsFeedPage::logoutClicked,     this, &MainWindow::onLogout);
     connect(feedPage, &NewsFeedPage::goToProfile,       this, &MainWindow::showProfile);
     connect(feedPage, &NewsFeedPage::goToMessages,      this, &MainWindow::showMessages);
@@ -85,8 +86,10 @@ void MainWindow::connectSignals() {
     connect(profilePage, &ProfilePage::viewAllFriendsClicked, this, &MainWindow::showSearch);
     connect(profilePage, &ProfilePage::createPostClicked, this, &MainWindow::showNewsFeed);
     connect(profilePage, &ProfilePage::createPostClicked, this, [this]() {
-    showNewsFeed();
-});
+        showNewsFeed();
+    });
+    connect(profilePage, &ProfilePage::deletePostClicked, this, &MainWindow::onDeletePost);
+
     // ── SearchPage (Arslan) ──
     connect(searchPage, &SearchPage::viewProfileClicked, this, [this](int userID) {
         // Load that user's profile
@@ -227,7 +230,7 @@ void MainWindow::onCreatePost(const QString &content, const QString &imagePath) 
     users[m_loggedInIndex]->createPost(p);
 
     QString uname = QString::fromStdString(users[m_loggedInIndex]->userName);
-    feedPage->addPost(p->postID, uname, content, imagePath, "just now", 0, 0, true);
+    feedPage->addPost(p->postID, uname, content, imagePath, "just now", 0, 0, true, false, QStringList(), true);
 
     saveData();
 }
@@ -241,11 +244,13 @@ void MainWindow::onLikePost(int postID) {
     for (int i = 0; i < userCount; i++) {
         for (int j = 0; j < users[i]->postCount; j++) {
             if (users[i]->posts[j]->postID == postID) {
-                users[i]->posts[j]->like();
-                notifSystem.addNotification(
-                    users[i]->userID,
-                    users[m_loggedInIndex]->userName + " liked your post."
-                );
+                bool isLiked = users[i]->posts[j]->toggleLike(users[m_loggedInIndex]->userID);
+                if (isLiked) {
+                    notifSystem.addNotification(
+                        users[i]->userID,
+                        users[m_loggedInIndex]->userName + " liked your post."
+                    );
+                }
                 return;
             }
         }
@@ -275,8 +280,34 @@ void MainWindow::onCommentPost(int postID) {
                     users[i]->userID,
                     users[m_loggedInIndex]->userName + " commented on your post."
                 );
+
+                // Refresh the UI to reflect the new comment count
+                if (stack->currentIndex() == 2) {
+                    showNewsFeed();
+                } else if (stack->currentIndex() == 3) {
+                    showProfile();
+                }
                 return;
             }
+        }
+    }
+}
+
+// ═══════════════════════════════════════════════════════
+//  DELETE POST
+// ═══════════════════════════════════════════════════════
+void MainWindow::onDeletePost(int postID) {
+    if (m_loggedInIndex == -1) return;
+
+    // We know only the owner can delete their own post.
+    bool deleted = users[m_loggedInIndex]->deletePost(postID);
+    if (deleted) {
+        saveData();
+        // Refresh the UI
+        if (stack->currentIndex() == 2) {
+            showNewsFeed();
+        } else if (stack->currentIndex() == 3) {
+            showProfile();
         }
     }
 }
@@ -327,13 +358,21 @@ void MainWindow::loadFeed() {
             for (int i = 0; i < me->friendCount; i++)
                 if (me->friends[i] == item.owner) { canInteract = true; break; }
 
+        QStringList commentsList;
+        for (int i = 0; i < item.post->commentCount; i++) {
+            commentsList.append(QString::fromStdString(item.post->comments[i]));
+        }
+
         feedPage->addPost(
             item.post->postID, ownerName, content,
             "",   // imagePath — extend Post if needed
             timeAgo,
             item.post->likeCount,
             item.post->commentCount,
-            canInteract
+            canInteract,
+            item.post->hasLiked(me->userID),
+            commentsList,
+            (item.owner == me)
         );
     }
 }
@@ -373,6 +412,11 @@ void MainWindow::showProfile() {
     );
     // Load user's own posts into profile
     for (int i = 0; i < u->postCount; i++) {
+        QStringList commentsList;
+        for (int c = 0; c < u->posts[i]->commentCount; c++) {
+            commentsList.append(QString::fromStdString(u->posts[i]->comments[c]));
+        }
+
         profilePage->addTextPost(
             u->posts[i]->postID,
             QString::fromStdString(u->userName),
@@ -380,7 +424,10 @@ void MainWindow::showProfile() {
             QString::fromStdString(u->posts[i]->content),
             "recently",
             u->posts[i]->likeCount,
-            u->posts[i]->commentCount
+            u->posts[i]->commentCount,
+            u->posts[i]->hasLiked(users[m_loggedInIndex]->userID),
+            commentsList,
+            (u->userID == users[m_loggedInIndex]->userID)
         );
     }
     // Load friends into sidebar

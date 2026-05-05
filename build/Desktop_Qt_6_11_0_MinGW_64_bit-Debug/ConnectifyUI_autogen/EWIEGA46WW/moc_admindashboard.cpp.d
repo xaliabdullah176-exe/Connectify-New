@@ -1,5 +1,5 @@
-C:/Users/iAT/Documents/ConnectifyUI/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/EWIEGA46WW/moc_admindashboard.cpp: C:/Users/iAT/Documents/ConnectifyUI/admindashboard.h \
-  C:/Users/iAT/Documents/ConnectifyUI/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/moc_predefs.h \
+C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/EWIEGA46WW/moc_admindashboard.cpp: C:/Users/Mustafa/Desktop/Connectify-New/admindashboard.h \
+  C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/moc_predefs.h \
   C:/Qt/6.11.0/mingw_64/include/QtCore/q17memory.h \
   C:/Qt/6.11.0/mingw_64/include/QtCore/q20bit.h \
   C:/Qt/6.11.0/mingw_64/include/QtCore/q20functional.h \

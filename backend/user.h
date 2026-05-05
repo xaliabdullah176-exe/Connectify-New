@@ -12,6 +12,7 @@ public:
     int postID;
     string content;
     int likeCount;
+    std::vector<int> likedBy;
     string comments[50];
     int commentCount;
     Post* next;
@@ -35,7 +36,25 @@ public:
         timestamp = time(nullptr);
     }
 
-    void like() { likeCount++; }
+    bool toggleLike(int userID) {
+        for (auto it = likedBy.begin(); it != likedBy.end(); ++it) {
+            if (*it == userID) {
+                likedBy.erase(it);
+                likeCount--;
+                return false;
+            }
+        }
+        likedBy.push_back(userID);
+        likeCount++;
+        return true;
+    }
+
+    bool hasLiked(int userID) {
+        for (int id : likedBy) {
+            if (id == userID) return true;
+        }
+        return false;
+    }
 
     void addComment(string c) {
         if (commentCount < 50)
@@ -164,6 +183,7 @@ public:
 
     // Posts
     void createPost(Post* p);
+    bool deletePost(int postID);
     void showPosts();
     void showNewsFeed();
 };

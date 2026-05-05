@@ -29,11 +29,15 @@ public:
     // ── Add posts dynamically ──
     void addTextPost (int postID, QString name, QString handle,
                       QString content, QString timeAgo,
-                      int likes, int comments);
+                      int likes, int comments, bool isLikedByMe = false,
+                      const QStringList &commentsList = QStringList(),
+                      bool isOwnPost = false);
 
     void addImagePost(int postID, QString name, QString handle,
                       QString content, QString imagePath,
-                      QString timeAgo, int likes, int comments);
+                      QString timeAgo, int likes, int comments, bool isLikedByMe = false,
+                      const QStringList &commentsList = QStringList(),
+                      bool isOwnPost = false);
 
     // ── Add friend to left sidebar ──
     void addFriend(QString name, QString mutualCount);
@@ -45,6 +49,9 @@ signals:
     void editProfileClicked();
     void createPostClicked();
     void viewAllFriendsClicked();
+
+    // User clicked 🗑️ Delete
+    void deletePostClicked(int postID);
 
 private:
     // Header widgets
@@ -73,7 +80,9 @@ private:
     QFrame* makePostCard   (int postID, QString name, QString handle,
                              QString content, QString imagePath,
                              QString timeAgo, int likes, int comments,
-                             bool hasImage);
+                             bool hasImage, bool isLikedByMe,
+                             const QStringList &commentsList,
+                             bool isOwnPost);
     QFrame* makeFriendItem (QString name, QString mutual);
     QWidget* makeStatCell  (QLabel *&numLabel, const QString &labelText);
 };

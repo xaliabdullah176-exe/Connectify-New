@@ -41,6 +41,7 @@ private slots:
     void onCreatePost(const QString &content, const QString &imagePath);
     void onLikePost(int postID);
     void onCommentPost(int postID);
+    void onDeletePost(int postID);
 
     // ── Navigation ──
     void showLogin();

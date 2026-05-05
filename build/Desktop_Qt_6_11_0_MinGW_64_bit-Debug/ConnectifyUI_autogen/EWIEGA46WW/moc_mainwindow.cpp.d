@@ -1,5 +1,5 @@
-C:/Users/iAT/Documents/ConnectifyUI/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/EWIEGA46WW/moc_mainwindow.cpp: C:/Users/iAT/Documents/ConnectifyUI/mainwindow.h \
-  C:/Users/iAT/Documents/ConnectifyUI/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/moc_predefs.h \
+C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/EWIEGA46WW/moc_mainwindow.cpp: C:/Users/Mustafa/Desktop/Connectify-New/mainwindow.h \
+  C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/moc_predefs.h \
   C:/Qt/6.11.0/mingw_64/include/QtCore/QDateTime \
   C:/Qt/6.11.0/mingw_64/include/QtCore/QTimer \
   C:/Qt/6.11.0/mingw_64/include/QtCore/q17memory.h \
@@ -463,11 +463,11 @@ C:/Users/iAT/Documents/ConnectifyUI/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/C
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wctype.h \
-  C:/Users/iAT/Documents/ConnectifyUI/LoginPage.h \
-  C:/Users/iAT/Documents/ConnectifyUI/admindashboard.h \
-  C:/Users/iAT/Documents/ConnectifyUI/backend/user.h \
-  C:/Users/iAT/Documents/ConnectifyUI/messagepage.h \
-  C:/Users/iAT/Documents/ConnectifyUI/newsfeedpage.h \
-  C:/Users/iAT/Documents/ConnectifyUI/profilepage.h \
-  C:/Users/iAT/Documents/ConnectifyUI/searchpage.h \
-  C:/Users/iAT/Documents/ConnectifyUI/signuppage.h
+  C:/Users/Mustafa/Desktop/Connectify-New/LoginPage.h \
+  C:/Users/Mustafa/Desktop/Connectify-New/admindashboard.h \
+  C:/Users/Mustafa/Desktop/Connectify-New/backend/user.h \
+  C:/Users/Mustafa/Desktop/Connectify-New/messagepage.h \
+  C:/Users/Mustafa/Desktop/Connectify-New/newsfeedpage.h \
+  C:/Users/Mustafa/Desktop/Connectify-New/profilepage.h \
+  C:/Users/Mustafa/Desktop/Connectify-New/searchpage.h \
+  C:/Users/Mustafa/Desktop/Connectify-New/signuppage.h

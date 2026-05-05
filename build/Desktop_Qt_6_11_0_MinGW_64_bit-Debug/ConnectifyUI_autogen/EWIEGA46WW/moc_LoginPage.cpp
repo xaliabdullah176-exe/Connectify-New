@@ -40,22 +40,23 @@ template <> constexpr inline auto LoginPage::qt_create_metaobjectdata<qt_meta_ta
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "LoginPage",
-        "loginSuccess",
+        "loginClicked",
         "",
-        "isAdmin",
-        "goToSignup",
+        "username",
+        "password",
+        "signupLinkClicked",
         "onLoginClicked"
     };
 
     QtMocHelpers::UintData qt_methods {
-        // Signal 'loginSuccess'
-        QtMocHelpers::SignalData<void(bool)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::Bool, 3 },
+        // Signal 'loginClicked'
+        QtMocHelpers::SignalData<void(const QString &, const QString &)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 3 }, { QMetaType::QString, 4 },
         }}),
-        // Signal 'goToSignup'
-        QtMocHelpers::SignalData<void()>(4, 2, QMC::AccessPublic, QMetaType::Void),
+        // Signal 'signupLinkClicked'
+        QtMocHelpers::SignalData<void()>(5, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'onLoginClicked'
-        QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -79,16 +80,16 @@ void LoginPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
     auto *_t = static_cast<LoginPage *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->loginSuccess((*reinterpret_cast<std::add_pointer_t<bool>>(_a[1]))); break;
-        case 1: _t->goToSignup(); break;
+        case 0: _t->loginClicked((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
+        case 1: _t->signupLinkClicked(); break;
         case 2: _t->onLoginClicked(); break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (LoginPage::*)(bool )>(_a, &LoginPage::loginSuccess, 0))
+        if (QtMocHelpers::indexOfMethod<void (LoginPage::*)(const QString & , const QString & )>(_a, &LoginPage::loginClicked, 0))
             return;
-        if (QtMocHelpers::indexOfMethod<void (LoginPage::*)()>(_a, &LoginPage::goToSignup, 1))
+        if (QtMocHelpers::indexOfMethod<void (LoginPage::*)()>(_a, &LoginPage::signupLinkClicked, 1))
             return;
     }
 }
@@ -125,13 +126,13 @@ int LoginPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void LoginPage::loginSuccess(bool _t1)
+void LoginPage::loginClicked(const QString & _t1, const QString & _t2)
 {
-    QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1);
+    QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1, _t2);
 }
 
 // SIGNAL 1
-void LoginPage::goToSignup()
+void LoginPage::signupLinkClicked()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }

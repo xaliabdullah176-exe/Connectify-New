@@ -43,7 +43,8 @@ template <> constexpr inline auto FeedPostCard::qt_create_metaobjectdata<qt_meta
         "likeClicked",
         "",
         "postID",
-        "commentClicked"
+        "commentClicked",
+        "deleteClicked"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -53,6 +54,10 @@ template <> constexpr inline auto FeedPostCard::qt_create_metaobjectdata<qt_meta
         }}),
         // Signal 'commentClicked'
         QtMocHelpers::SignalData<void(int)>(4, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 3 },
+        }}),
+        // Signal 'deleteClicked'
+        QtMocHelpers::SignalData<void(int)>(5, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::Int, 3 },
         }}),
     };
@@ -80,6 +85,7 @@ void FeedPostCard::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         switch (_id) {
         case 0: _t->likeClicked((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
         case 1: _t->commentClicked((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 2: _t->deleteClicked((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
         default: ;
         }
     }
@@ -87,6 +93,8 @@ void FeedPostCard::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         if (QtMocHelpers::indexOfMethod<void (FeedPostCard::*)(int )>(_a, &FeedPostCard::likeClicked, 0))
             return;
         if (QtMocHelpers::indexOfMethod<void (FeedPostCard::*)(int )>(_a, &FeedPostCard::commentClicked, 1))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (FeedPostCard::*)(int )>(_a, &FeedPostCard::deleteClicked, 2))
             return;
     }
 }
@@ -110,14 +118,14 @@ int FeedPostCard::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 3)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }
@@ -132,6 +140,12 @@ void FeedPostCard::likeClicked(int _t1)
 void FeedPostCard::commentClicked(int _t1)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 1, nullptr, _t1);
+}
+
+// SIGNAL 2
+void FeedPostCard::deleteClicked(int _t1)
+{
+    QMetaObject::activate<void>(this, &staticMetaObject, 2, nullptr, _t1);
 }
 namespace {
 struct qt_meta_tag_ZN12NewsFeedPageE_t {};
@@ -149,6 +163,7 @@ template <> constexpr inline auto NewsFeedPage::qt_create_metaobjectdata<qt_meta
         "likeClicked",
         "postID",
         "commentClicked",
+        "deletePostClicked",
         "logoutClicked",
         "goToProfile",
         "goToMessages",
@@ -171,20 +186,24 @@ template <> constexpr inline auto NewsFeedPage::qt_create_metaobjectdata<qt_meta
         QtMocHelpers::SignalData<void(int)>(7, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::Int, 6 },
         }}),
+        // Signal 'deletePostClicked'
+        QtMocHelpers::SignalData<void(int)>(8, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 6 },
+        }}),
         // Signal 'logoutClicked'
-        QtMocHelpers::SignalData<void()>(8, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'goToProfile'
         QtMocHelpers::SignalData<void()>(9, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'goToMessages'
+        // Signal 'goToProfile'
         QtMocHelpers::SignalData<void()>(10, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'goToSearch'
+        // Signal 'goToMessages'
         QtMocHelpers::SignalData<void()>(11, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'goToNotifications'
+        // Signal 'goToSearch'
         QtMocHelpers::SignalData<void()>(12, 2, QMC::AccessPublic, QMetaType::Void),
+        // Signal 'goToNotifications'
+        QtMocHelpers::SignalData<void()>(13, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'onPostBtnClicked'
-        QtMocHelpers::SlotData<void()>(13, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onSelectImageClicked'
         QtMocHelpers::SlotData<void()>(14, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onSelectImageClicked'
+        QtMocHelpers::SlotData<void()>(15, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -211,13 +230,14 @@ void NewsFeedPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 0: _t->createPostClicked((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
         case 1: _t->likeClicked((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
         case 2: _t->commentClicked((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 3: _t->logoutClicked(); break;
-        case 4: _t->goToProfile(); break;
-        case 5: _t->goToMessages(); break;
-        case 6: _t->goToSearch(); break;
-        case 7: _t->goToNotifications(); break;
-        case 8: _t->onPostBtnClicked(); break;
-        case 9: _t->onSelectImageClicked(); break;
+        case 3: _t->deletePostClicked((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 4: _t->logoutClicked(); break;
+        case 5: _t->goToProfile(); break;
+        case 6: _t->goToMessages(); break;
+        case 7: _t->goToSearch(); break;
+        case 8: _t->goToNotifications(); break;
+        case 9: _t->onPostBtnClicked(); break;
+        case 10: _t->onSelectImageClicked(); break;
         default: ;
         }
     }
@@ -228,15 +248,17 @@ void NewsFeedPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             return;
         if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)(int )>(_a, &NewsFeedPage::commentClicked, 2))
             return;
-        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::logoutClicked, 3))
+        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)(int )>(_a, &NewsFeedPage::deletePostClicked, 3))
             return;
-        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::goToProfile, 4))
+        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::logoutClicked, 4))
             return;
-        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::goToMessages, 5))
+        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::goToProfile, 5))
             return;
-        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::goToSearch, 6))
+        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::goToMessages, 6))
             return;
-        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::goToNotifications, 7))
+        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::goToSearch, 7))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::goToNotifications, 8))
             return;
     }
 }
@@ -260,14 +282,14 @@ int NewsFeedPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 11)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }
@@ -291,32 +313,38 @@ void NewsFeedPage::commentClicked(int _t1)
 }
 
 // SIGNAL 3
-void NewsFeedPage::logoutClicked()
+void NewsFeedPage::deletePostClicked(int _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
+    QMetaObject::activate<void>(this, &staticMetaObject, 3, nullptr, _t1);
 }
 
 // SIGNAL 4
-void NewsFeedPage::goToProfile()
+void NewsFeedPage::logoutClicked()
 {
     QMetaObject::activate(this, &staticMetaObject, 4, nullptr);
 }
 
 // SIGNAL 5
-void NewsFeedPage::goToMessages()
+void NewsFeedPage::goToProfile()
 {
     QMetaObject::activate(this, &staticMetaObject, 5, nullptr);
 }
 
 // SIGNAL 6
-void NewsFeedPage::goToSearch()
+void NewsFeedPage::goToMessages()
 {
     QMetaObject::activate(this, &staticMetaObject, 6, nullptr);
 }
 
 // SIGNAL 7
-void NewsFeedPage::goToNotifications()
+void NewsFeedPage::goToSearch()
 {
     QMetaObject::activate(this, &staticMetaObject, 7, nullptr);
+}
+
+// SIGNAL 8
+void NewsFeedPage::goToNotifications()
+{
+    QMetaObject::activate(this, &staticMetaObject, 8, nullptr);
 }
 QT_WARNING_POP
