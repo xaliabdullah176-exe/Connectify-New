@@ -1,4 +1,0 @@
-# Hashes of file build rules.
-ebe64bc94a586d3be65f42b407ea6cc5 .qt/rcc/qrc_resources.cpp
-2b54137f6e8a5c3dfcc13c3f1fbd4fec CMakeFiles/ConnectifyUI_autogen
-a652986a28bdd31ea25bf7eab8ef5989 ConnectifyUI_autogen/timestamp
