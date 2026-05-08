@@ -40,16 +40,19 @@ public:
                   int bannedUsers, int postsToReview);
 
     // ── Add a user row to the table ──
-    void addUserRow(int userID, QString name, QString role,
+    void addUserRow(int userID, QString name, QString avatarPath, QString role,
                     int postCount, bool isBanned);
 
     // ── Add a post to moderation section ──
     void addModPost(int postID, int ownerID, QString ownerName,
-                    QString content, int likes, int comments);
+                    QString content, QString imagePath, int likes, int comments);
 
     // ── Clear all rows (call before refresh) ──
     void clearUsers();
     void clearModPosts();
+
+    // ── Re-apply user list filter (call after repopulating rows) ──
+    void refreshUserSearch();
 
 signals:
     void deleteUserClicked(int userID);
@@ -61,6 +64,7 @@ signals:
     void navDashboard();
     void navUsers();
     void navPosts();
+    void createNewsClicked();
 
 private:
     // Sidebar
@@ -69,6 +73,7 @@ private:
     QPushButton *navDashBtn;
     QPushButton *navUsersBtn;
     QPushButton *navPostsBtn;
+    QPushButton *navNewsBtn;
     QPushButton *logoutBtn;
 
     // Topbar
@@ -83,6 +88,7 @@ private:
 
     // User table
     QVBoxLayout *userTableLayout;
+    QLineEdit   *userSearchBox = nullptr;
 
     // Mod posts grid
     QGridLayout *modPostsLayout;
@@ -101,9 +107,12 @@ private:
     QFrame*  makeStatCard   (QLabel *&numLabel, QString icon,
                          QString labelText, QString changeText,
                          bool isWarning = false);
-    QFrame*  makeUserRow    (int userID, QString name, QString role,
+    QFrame*  makeUserRow    (int userID, QString name, QString avatarPath, QString role,
                         int postCount, bool isBanned);
     QFrame*  makeModPostCard(int postID, int ownerID, QString ownerName,
-                            QString content, int likes, int comments);
+                            QString content, QString imagePath, int likes, int comments);
     QWidget* makeSidebarBtn (QPushButton *&btn, QString icon, QString text);
+
+private slots:
+    void applyUserSearchFilter();
 };

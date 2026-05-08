@@ -85,9 +85,13 @@ void User::showNewsFeed() {
 
     for (int i = 0; i < total; i++) {
         cout << "User: " << owner[i]->userName << endl;
-        char buffer[26];
-        ctime_s(buffer, sizeof(buffer), &feed[i]->timestamp);
-        cout << "Time: " << buffer;
+        char buffer[64];
+        std::tm* localTime = std::localtime(&feed[i]->timestamp);
+        if (localTime && std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", localTime)) {
+            cout << "Time: " << buffer << endl;
+        } else {
+            cout << "Time: unavailable" << endl;
+        }
         cout << "Content: " << feed[i]->content << endl;
         cout << "Likes: " << feed[i]->likeCount << endl;
 

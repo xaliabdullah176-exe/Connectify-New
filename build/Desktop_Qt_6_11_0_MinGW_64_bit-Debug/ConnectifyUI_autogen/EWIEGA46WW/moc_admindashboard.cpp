@@ -51,7 +51,9 @@ template <> constexpr inline auto AdminDashboard::qt_create_metaobjectdata<qt_me
         "logoutClicked",
         "navDashboard",
         "navUsers",
-        "navPosts"
+        "navPosts",
+        "createNewsClicked",
+        "applyUserSearchFilter"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -83,6 +85,10 @@ template <> constexpr inline auto AdminDashboard::qt_create_metaobjectdata<qt_me
         QtMocHelpers::SignalData<void()>(11, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'navPosts'
         QtMocHelpers::SignalData<void()>(12, 2, QMC::AccessPublic, QMetaType::Void),
+        // Signal 'createNewsClicked'
+        QtMocHelpers::SignalData<void()>(13, 2, QMC::AccessPublic, QMetaType::Void),
+        // Slot 'applyUserSearchFilter'
+        QtMocHelpers::SlotData<void()>(14, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -115,6 +121,8 @@ void AdminDashboard::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 6: _t->navDashboard(); break;
         case 7: _t->navUsers(); break;
         case 8: _t->navPosts(); break;
+        case 9: _t->createNewsClicked(); break;
+        case 10: _t->applyUserSearchFilter(); break;
         default: ;
         }
     }
@@ -136,6 +144,8 @@ void AdminDashboard::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         if (QtMocHelpers::indexOfMethod<void (AdminDashboard::*)()>(_a, &AdminDashboard::navUsers, 7))
             return;
         if (QtMocHelpers::indexOfMethod<void (AdminDashboard::*)()>(_a, &AdminDashboard::navPosts, 8))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (AdminDashboard::*)()>(_a, &AdminDashboard::createNewsClicked, 9))
             return;
     }
 }
@@ -159,14 +169,14 @@ int AdminDashboard::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 11;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 11)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 9;
+        _id -= 11;
     }
     return _id;
 }
@@ -223,5 +233,11 @@ void AdminDashboard::navUsers()
 void AdminDashboard::navPosts()
 {
     QMetaObject::activate(this, &staticMetaObject, 8, nullptr);
+}
+
+// SIGNAL 9
+void AdminDashboard::createNewsClicked()
+{
+    QMetaObject::activate(this, &staticMetaObject, 9, nullptr);
 }
 QT_WARNING_POP

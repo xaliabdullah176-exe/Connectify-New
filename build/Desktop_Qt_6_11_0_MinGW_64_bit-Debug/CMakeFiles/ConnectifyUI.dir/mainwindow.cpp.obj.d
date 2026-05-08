@@ -1,6 +1,6 @@
 CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj: \
- C:\Users\Mustafa\Desktop\Connectify-New\mainwindow.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\mainwindow.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\mainwindow.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\mainwindow.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QMainWindow \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qmainwindow.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -399,7 +399,11 @@ CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtGui/qpen.h \
  C:/Qt/6.11.0/mingw_64/include/QtGui/qtextoption.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qdialog.h \
- C:\Users\Mustafa\Desktop\Connectify-New\LoginPage.h \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QMessageBox \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qmessagebox.h \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+ C:/Qt/6.11.0/mingw_64/include/QtCore/QString \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\LoginPage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QLineEdit \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QLabel \
@@ -414,10 +418,12 @@ CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qlayout.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qlayoutitem.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qgridlayout.h \
- C:\Users\Mustafa\Desktop\Connectify-New\signuppage.h \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QCheckBox \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qcheckbox.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\signuppage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QHBoxLayout \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QFrame \
- C:\Users\Mustafa\Desktop\Connectify-New\newsfeedpage.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\newsfeedpage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QScrollArea \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qscrollarea.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
@@ -464,21 +470,32 @@ CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qfile.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qfileinfo.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qtimezone.h \
- C:\Users\Mustafa\Desktop\Connectify-New\profilepage.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\profilepage.h \
  C:/Qt/6.11.0/mingw_64/include/QtGui/QPixmap \
- C:\Users\Mustafa\Desktop\Connectify-New\searchpage.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\searchpage.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/QTimer \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qtimer.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qbasictimer.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qabstracteventdispatcher.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qeventloop.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qdeadlinetimer.h \
- C:\Users\Mustafa\Desktop\Connectify-New\messagepage.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\messagepage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QScrollBar \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qscrollbar.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qabstractslider.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/QDateTime \
- C:\Users\Mustafa\Desktop\Connectify-New\admindashboard.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\admindashboard.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QGridLayout \
- C:\Users\Mustafa\Desktop\Connectify-New\backend/user.h \
- C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/iostream
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\notificationpage.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\backend/user.h \
+ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/iostream \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QDateEdit \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qdatetimeedit.h \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qabstractspinbox.h \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qvalidator.h \
+ C:/Qt/6.11.0/mingw_64/include/QtCore/qregularexpression.h \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QDialog \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QDialogButtonBox \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QFormLayout \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qformlayout.h \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QLayout

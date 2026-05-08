@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QFrame>
+#include <QCheckBox>
 
 class SignupPage : public QWidget {
     Q_OBJECT
@@ -33,6 +34,7 @@ private:
     QLineEdit   *emailInput;
     QLineEdit   *passwordInput;
     QLineEdit   *confirmPasswordInput;
+    QCheckBox   *showPasswordCheck;
     QPushButton *signupBtn;
     QLabel      *errorLabel;
 

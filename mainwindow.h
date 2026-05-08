@@ -2,7 +2,9 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 #include <QInputDialog>
+#include <QMessageBox>
 #include <algorithm>
+#include <QString>
 
 // ── Frontend pages ──
 #include "LoginPage.h"
@@ -12,6 +14,7 @@
 #include "searchpage.h"
 #include "messagepage.h"
 #include "admindashboard.h"
+#include "notificationpage.h"
 
 #include "backend/user.h"
 
@@ -42,6 +45,8 @@ private slots:
     void onLikePost(int postID);
     void onCommentPost(int postID);
     void onDeletePost(int postID);
+    void onAdminCreateNews();
+    void onDeleteMyAccount();
 
     // ── Navigation ──
     void showLogin();
@@ -50,9 +55,15 @@ private slots:
     void showProfile();
     void showMessages();
     void showSearch();
+    void showNotifications();
     void showAdminDashboard();
 
 private:
+    enum class FeedViewMode {
+        Network, // friends + followers
+        Home     // own posts only
+    };
+
     QStackedWidget  *stack;
 
     // ── Pages ──
@@ -63,9 +74,12 @@ private:
     SearchPage      *searchPage;
     MessagePage     *messagePage;
     AdminDashboard  *adminPage;
+    NotificationPage *notifPage;
 
     // ── Session ──
     int m_loggedInIndex = -1;
+    int m_viewedUserID = -1;
+    FeedViewMode m_feedViewMode = FeedViewMode::Network;
 
     // ── Helpers ──
     void connectSignals();

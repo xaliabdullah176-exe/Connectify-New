@@ -1,6 +1,6 @@
 CMakeFiles/ConnectifyUI.dir/signuppage.cpp.obj: \
- C:\Users\Mustafa\Desktop\Connectify-New\signuppage.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\signuppage.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\signuppage.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\signuppage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qwidget.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -406,4 +406,6 @@ CMakeFiles/ConnectifyUI.dir/signuppage.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qlayoutitem.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qgridlayout.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QHBoxLayout \
- C:/Qt/6.11.0/mingw_64/include/QtWidgets/QFrame
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QFrame \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QCheckBox \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qcheckbox.h

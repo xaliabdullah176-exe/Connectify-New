@@ -29,6 +29,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj.d"
   "CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj"
   "CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj.d"
+  "CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.obj"
+  "CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.obj.d"
   "CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj"
   "CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj.d"
   "CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj"

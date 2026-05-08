@@ -18,9 +18,12 @@ public:
     void loadProfile(int    userID,
                      QString name,
                      QString handle,
+                     QString profileImagePath,
                      QString bio,
                      QString location,
                      QString joinDate,
+                     QString birthDate,
+                     QString githubUsername,
                      QString role,
                      int posts, int friends,
                      int followers, int following,
@@ -44,14 +47,19 @@ public:
 
     // ── Clear all posts (call before refresh) ──
     void clearPosts();
+    void clearFriends();
 
 signals:
+    void backClicked();
     void editProfileClicked();
     void createPostClicked();
     void viewAllFriendsClicked();
+    void deleteAccountClicked();
 
     // User clicked 🗑️ Delete
     void deletePostClicked(int postID);
+    void likeClicked(int postID);
+    void commentClicked(int postID);
 
 private:
     // Header widgets
@@ -61,7 +69,10 @@ private:
     QLabel      *bioLabel;
     QLabel      *locationLabel;
     QLabel      *joinDateLabel;
+    QPushButton *backBtn;
     QPushButton *editBtn;
+    QPushButton *deleteAccountBtn;
+    QPushButton *createPostBtn;
 
     // Stats
     QLabel *postsNum, *friendsNum, *followersNum, *followingNum;
@@ -69,9 +80,13 @@ private:
     // Left column
     QVBoxLayout *friendsLayout;
     QLabel      *friendsCountLabel;
+    QLabel      *aboutBirthLabel;
+    QLabel      *aboutGithubLabel;
+    QPushButton *viewAllFriendsBtn;
 
     // Right column (posts)
     QVBoxLayout *postsLayout;
+    bool         canDeletePosts = false;
 
     void setupUI();
     void applyStyles();

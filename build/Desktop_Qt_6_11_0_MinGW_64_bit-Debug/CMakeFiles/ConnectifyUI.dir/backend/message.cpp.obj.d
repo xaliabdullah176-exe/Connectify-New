@@ -1,6 +1,6 @@
 CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj: \
- C:\Users\Mustafa\Desktop\Connectify-New\backend\message.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\backend\user.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\backend\message.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\backend\user.h \
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/iostream \
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/requires_hosted.h \
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/c++config.h \

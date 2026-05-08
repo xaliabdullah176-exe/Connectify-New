@@ -5,8 +5,22 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+
+# Try to discover Qt via common environment variables first (portable across laptops).
+if(DEFINED ENV{QTDIR} AND NOT "$ENV{QTDIR}" STREQUAL "")
+    list(APPEND CMAKE_PREFIX_PATH "$ENV{QTDIR}")
+endif()
+if(DEFINED ENV{Qt6_DIR} AND NOT "$ENV{Qt6_DIR}" STREQUAL "")
+    list(APPEND CMAKE_PREFIX_PATH "$ENV{Qt6_DIR}")
+endif()
+
+find_package(Qt6 QUIET COMPONENTS Widgets)
+if(Qt6_FOUND)
+    set(QT_VERSION_MAJOR 6)
+else()
+    find_package(Qt5 REQUIRED COMPONENTS Widgets)
+    set(QT_VERSION_MAJOR 5)
+endif()
 set(PROJECT_SOURCES
     main.cpp
     mainwindow.cpp
@@ -26,6 +40,8 @@ set(PROJECT_SOURCES
     messagepage.cpp
     admindashboard.h
     admindashboard.cpp
+    notificationpage.h
+    notificationpage.cpp
     backend/user.cpp
     backend/post.cpp
     backend/message.cpp
@@ -50,7 +66,7 @@ else()
     endif()
 endif()
 target_link_libraries(ConnectifyUI PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-if(${QT_VERSION} VERSION_LESS 6.1.0)
+if(DEFINED QT_VERSION AND QT_VERSION VERSION_LESS "6.1.0")
     set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.ConnectifyUI)
 endif()
 set_target_properties(ConnectifyUI PROPERTIES

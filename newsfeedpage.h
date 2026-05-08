@@ -19,6 +19,7 @@ class FeedPostCard : public QFrame
 public:
     FeedPostCard(int postID,
                  const QString &ownerName,
+                 const QString &ownerAvatarPath,
                  const QString &content,
                  const QString &imagePath, // "" if text-only post
                  const QString &timeAgo,
@@ -54,11 +55,12 @@ public:
     explicit NewsFeedPage(QWidget *parent = nullptr);
 
     // ── Call after login ──
-    void loadCurrentUser(int userID, const QString &name);
+    void loadCurrentUser(int userID, const QString &name, const QString &avatarPath);
 
     // ── Add a post to the feed (call in timestamp order, latest first) ──
     void addPost(int postID,
                  const QString &ownerName,
+                 const QString &ownerAvatarPath,
                  const QString &content,
                  const QString &imagePath, // "" for text post
                  const QString &timeAgo,
@@ -74,6 +76,9 @@ public:
 
     // ── Update like count on a specific card ──
     void updatePostLikes(int postID, int newCount);
+
+    // ── Update notification badge count ──
+    void setNotifBadge(int count);
 
 signals:
     // ── Backend integration hooks ──
@@ -99,6 +104,8 @@ signals:
     void goToMessages();
     void goToSearch();
     void goToNotifications();
+    void showOwnPostsClicked();
+    void showNetworkPostsClicked();
 
 private slots:
     void onPostBtnClicked();
@@ -113,6 +120,8 @@ private:
     // ── Navbar ─────────────────────────────────────────
     QLabel *navUserNameLabel;
     QLabel *navAvatarLabel;
+    QPushButton *m_notifBtn;      // sidebar notification button
+    QLabel      *m_notifBadge;    // red badge label overlaid on notifBtn
 
     // ── Create post box ────────────────────────────────
     QTextEdit *postInput;

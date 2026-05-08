@@ -40,24 +40,40 @@ template <> constexpr inline auto ProfilePage::qt_create_metaobjectdata<qt_meta_
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "ProfilePage",
-        "editProfileClicked",
+        "backClicked",
         "",
+        "editProfileClicked",
         "createPostClicked",
         "viewAllFriendsClicked",
+        "deleteAccountClicked",
         "deletePostClicked",
-        "postID"
+        "postID",
+        "likeClicked",
+        "commentClicked"
     };
 
     QtMocHelpers::UintData qt_methods {
-        // Signal 'editProfileClicked'
+        // Signal 'backClicked'
         QtMocHelpers::SignalData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'createPostClicked'
+        // Signal 'editProfileClicked'
         QtMocHelpers::SignalData<void()>(3, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'viewAllFriendsClicked'
+        // Signal 'createPostClicked'
         QtMocHelpers::SignalData<void()>(4, 2, QMC::AccessPublic, QMetaType::Void),
+        // Signal 'viewAllFriendsClicked'
+        QtMocHelpers::SignalData<void()>(5, 2, QMC::AccessPublic, QMetaType::Void),
+        // Signal 'deleteAccountClicked'
+        QtMocHelpers::SignalData<void()>(6, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'deletePostClicked'
-        QtMocHelpers::SignalData<void(int)>(5, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::Int, 6 },
+        QtMocHelpers::SignalData<void(int)>(7, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 8 },
+        }}),
+        // Signal 'likeClicked'
+        QtMocHelpers::SignalData<void(int)>(9, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 8 },
+        }}),
+        // Signal 'commentClicked'
+        QtMocHelpers::SignalData<void(int)>(10, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 8 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
@@ -82,21 +98,33 @@ void ProfilePage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     auto *_t = static_cast<ProfilePage *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->editProfileClicked(); break;
-        case 1: _t->createPostClicked(); break;
-        case 2: _t->viewAllFriendsClicked(); break;
-        case 3: _t->deletePostClicked((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 0: _t->backClicked(); break;
+        case 1: _t->editProfileClicked(); break;
+        case 2: _t->createPostClicked(); break;
+        case 3: _t->viewAllFriendsClicked(); break;
+        case 4: _t->deleteAccountClicked(); break;
+        case 5: _t->deletePostClicked((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 6: _t->likeClicked((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 7: _t->commentClicked((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)()>(_a, &ProfilePage::editProfileClicked, 0))
+        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)()>(_a, &ProfilePage::backClicked, 0))
             return;
-        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)()>(_a, &ProfilePage::createPostClicked, 1))
+        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)()>(_a, &ProfilePage::editProfileClicked, 1))
             return;
-        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)()>(_a, &ProfilePage::viewAllFriendsClicked, 2))
+        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)()>(_a, &ProfilePage::createPostClicked, 2))
             return;
-        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)(int )>(_a, &ProfilePage::deletePostClicked, 3))
+        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)()>(_a, &ProfilePage::viewAllFriendsClicked, 3))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)()>(_a, &ProfilePage::deleteAccountClicked, 4))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)(int )>(_a, &ProfilePage::deletePostClicked, 5))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)(int )>(_a, &ProfilePage::likeClicked, 6))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (ProfilePage::*)(int )>(_a, &ProfilePage::commentClicked, 7))
             return;
     }
 }
@@ -120,39 +148,63 @@ int ProfilePage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 8;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 8)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 4;
+        _id -= 8;
     }
     return _id;
 }
 
 // SIGNAL 0
-void ProfilePage::editProfileClicked()
+void ProfilePage::backClicked()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 
 // SIGNAL 1
-void ProfilePage::createPostClicked()
+void ProfilePage::editProfileClicked()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }
 
 // SIGNAL 2
-void ProfilePage::viewAllFriendsClicked()
+void ProfilePage::createPostClicked()
 {
     QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
 }
 
 // SIGNAL 3
+void ProfilePage::viewAllFriendsClicked()
+{
+    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
+}
+
+// SIGNAL 4
+void ProfilePage::deleteAccountClicked()
+{
+    QMetaObject::activate(this, &staticMetaObject, 4, nullptr);
+}
+
+// SIGNAL 5
 void ProfilePage::deletePostClicked(int _t1)
 {
-    QMetaObject::activate<void>(this, &staticMetaObject, 3, nullptr, _t1);
+    QMetaObject::activate<void>(this, &staticMetaObject, 5, nullptr, _t1);
+}
+
+// SIGNAL 6
+void ProfilePage::likeClicked(int _t1)
+{
+    QMetaObject::activate<void>(this, &staticMetaObject, 6, nullptr, _t1);
+}
+
+// SIGNAL 7
+void ProfilePage::commentClicked(int _t1)
+{
+    QMetaObject::activate<void>(this, &staticMetaObject, 7, nullptr, _t1);
 }
 QT_WARNING_POP

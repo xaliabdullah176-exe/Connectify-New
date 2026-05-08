@@ -1,6 +1,6 @@
 CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj: \
- C:\Users\Mustafa\Desktop\Connectify-New\newsfeedpage.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\newsfeedpage.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\newsfeedpage.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\newsfeedpage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qwidget.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -458,4 +458,8 @@ CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qscrollbar.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qabstractslider.h \
  C:/Qt/6.11.0/mingw_64/include/QtGui/QPixmap \
- C:/Qt/6.11.0/mingw_64/include/QtCore/QFileInfo
+ C:/Qt/6.11.0/mingw_64/include/QtCore/QFileInfo \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPainter \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qpainter.h \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPainterPath \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qpainterpath.h

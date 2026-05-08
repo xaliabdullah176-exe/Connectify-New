@@ -30,6 +30,7 @@ class ChatListItem : public QFrame {
 public:
     ChatListItem(int userID,
                  const QString &name,
+                 const QString &avatarPath,
                  const QString &lastMessage,
                  const QString &time,
                  bool isOnline,
@@ -64,9 +65,13 @@ public:
     // Add a contact to the left chat list
     void addContact(int userID,
                     const QString &name,
+                    const QString &avatarPath,
                     const QString &lastMessage,
                     const QString &time,
                     bool isOnline = false);
+
+    // Clear all contacts
+    void clearContacts();
 
     // Add a message bubble to the open conversation
     // isSent = true  → right side (current user)
@@ -81,6 +86,7 @@ public:
     // Programmatically open a conversation
     void openConversation(int userID,
                           const QString &contactName,
+                          const QString &avatarPath,
                           bool isOnline);
 
 signals:

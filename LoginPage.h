@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QCheckBox>
 
 class LoginPage : public QWidget {
     Q_OBJECT
@@ -23,6 +24,7 @@ private slots:
 private:
     QLineEdit*   usernameEdit_;
     QLineEdit*   passwordEdit_;
+    QCheckBox*   showPasswordCheck_;
     QLabel*      errorLabel_;
     QPushButton* loginBtn_;
     QPushButton* signupBtn_;

@@ -56,10 +56,10 @@ RM = C:\Qt\Tools\CMake_64\bin\cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Mustafa\Desktop\Connectify-New
+CMAKE_SOURCE_DIR = "C:\Users\laptech\Downloads\Connectify (1)\Connectify"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug
+CMAKE_BINARY_DIR = "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -131,9 +131,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\\CMakeFiles\progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -511,6 +511,30 @@ newsfeedpage.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\ConnectifyUI.dir\build.make CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.s
 .PHONY : newsfeedpage.cpp.s
 
+notificationpage.obj: notificationpage.cpp.obj
+.PHONY : notificationpage.obj
+
+# target to build an object file
+notificationpage.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ConnectifyUI.dir\build.make CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.obj
+.PHONY : notificationpage.cpp.obj
+
+notificationpage.i: notificationpage.cpp.i
+.PHONY : notificationpage.i
+
+# target to preprocess a source file
+notificationpage.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ConnectifyUI.dir\build.make CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.i
+.PHONY : notificationpage.cpp.i
+
+notificationpage.s: notificationpage.cpp.s
+.PHONY : notificationpage.s
+
+# target to generate assembly for a file
+notificationpage.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ConnectifyUI.dir\build.make CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.s
+.PHONY : notificationpage.cpp.s
+
 profilepage.obj: profilepage.cpp.obj
 .PHONY : profilepage.obj
 
@@ -637,6 +661,9 @@ help:
 	@echo ... newsfeedpage.obj
 	@echo ... newsfeedpage.i
 	@echo ... newsfeedpage.s
+	@echo ... notificationpage.obj
+	@echo ... notificationpage.i
+	@echo ... notificationpage.s
 	@echo ... profilepage.obj
 	@echo ... profilepage.i
 	@echo ... profilepage.s

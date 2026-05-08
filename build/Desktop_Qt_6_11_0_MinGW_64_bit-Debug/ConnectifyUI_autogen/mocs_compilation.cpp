@@ -4,6 +4,7 @@
 #include "EWIEGA46WW/moc_mainwindow.cpp"
 #include "EWIEGA46WW/moc_messagepage.cpp"
 #include "EWIEGA46WW/moc_newsfeedpage.cpp"
+#include "EWIEGA46WW/moc_notificationpage.cpp"
 #include "EWIEGA46WW/moc_profilepage.cpp"
 #include "EWIEGA46WW/moc_searchpage.cpp"
 #include "EWIEGA46WW/moc_signuppage.cpp"

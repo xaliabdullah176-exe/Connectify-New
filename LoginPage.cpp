@@ -24,6 +24,8 @@ LoginPage::LoginPage(QWidget* parent) : QWidget(parent) {
     passwordEdit_->setPlaceholderText("Password");
     passwordEdit_->setEchoMode(QLineEdit::Password);
 
+    showPasswordCheck_ = new QCheckBox("Show password");
+
     errorLabel_ = new QLabel("");
     errorLabel_->setObjectName("errorLabel");
     errorLabel_->setAlignment(Qt::AlignCenter);
@@ -42,6 +44,7 @@ LoginPage::LoginPage(QWidget* parent) : QWidget(parent) {
     cardLayout->addSpacing(10);
     cardLayout->addWidget(usernameEdit_);
     cardLayout->addWidget(passwordEdit_);
+    cardLayout->addWidget(showPasswordCheck_);
     cardLayout->addWidget(errorLabel_);
     cardLayout->addWidget(loginBtn_);
     cardLayout->addWidget(signupBtn_);
@@ -54,6 +57,9 @@ LoginPage::LoginPage(QWidget* parent) : QWidget(parent) {
     connect(loginBtn_,     &QPushButton::clicked,     this, &LoginPage::onLoginClicked);
     connect(signupBtn_,    &QPushButton::clicked,     this, &LoginPage::signupLinkClicked);
     connect(passwordEdit_, &QLineEdit::returnPressed, this, &LoginPage::onLoginClicked);
+    connect(showPasswordCheck_, &QCheckBox::toggled, this, [this](bool checked) {
+        passwordEdit_->setEchoMode(checked ? QLineEdit::Normal : QLineEdit::Password);
+    });
 }
 
 void LoginPage::onLoginClicked() {
@@ -74,5 +80,6 @@ void LoginPage::showError(const QString& msg) {
 void LoginPage::clearFields() {
     usernameEdit_->clear();
     passwordEdit_->clear();
+    showPasswordCheck_->setChecked(false);
     errorLabel_->clear();
 }

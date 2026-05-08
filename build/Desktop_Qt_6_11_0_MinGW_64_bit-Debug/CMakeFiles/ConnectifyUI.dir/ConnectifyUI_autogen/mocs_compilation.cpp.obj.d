@@ -1,7 +1,7 @@
 CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj: \
- C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\mocs_compilation.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_LoginPage.cpp \
- C:/Users/Mustafa/Desktop/Connectify-New/LoginPage.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\mocs_compilation.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_LoginPage.cpp \
+ C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/LoginPage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qwidget.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -406,11 +406,13 @@ CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qlayout.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qlayoutitem.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qgridlayout.h \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QCheckBox \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qcheckbox.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qtmochelpers.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qtmocconstants.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/q20algorithm.h \
- C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_admindashboard.cpp \
- C:/Users/Mustafa/Desktop/Connectify-New/admindashboard.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_admindashboard.cpp \
+ C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/admindashboard.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QHBoxLayout \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QScrollArea \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qscrollarea.h \
@@ -419,16 +421,20 @@ CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QGridLayout \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QStackedWidget \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qstackedwidget.h \
- C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_mainwindow.cpp \
- C:/Users/Mustafa/Desktop/Connectify-New/mainwindow.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_mainwindow.cpp \
+ C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/mainwindow.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QMainWindow \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qmainwindow.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtabwidget.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QInputDialog \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qinputdialog.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qdialog.h \
- C:/Users/Mustafa/Desktop/Connectify-New/signuppage.h \
- C:/Users/Mustafa/Desktop/Connectify-New/newsfeedpage.h \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QMessageBox \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qmessagebox.h \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+ C:/Qt/6.11.0/mingw_64/include/QtCore/QString \
+ C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/signuppage.h \
+ C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/newsfeedpage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QTextEdit \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtextedit.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QFileDialog \
@@ -472,24 +478,26 @@ CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qfile.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qfileinfo.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qtimezone.h \
- C:/Users/Mustafa/Desktop/Connectify-New/profilepage.h \
+ C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/profilepage.h \
  C:/Qt/6.11.0/mingw_64/include/QtGui/QPixmap \
- C:/Users/Mustafa/Desktop/Connectify-New/searchpage.h \
+ C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/searchpage.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/QTimer \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qtimer.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qbasictimer.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qabstracteventdispatcher.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qeventloop.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qdeadlinetimer.h \
- C:/Users/Mustafa/Desktop/Connectify-New/messagepage.h \
+ C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/messagepage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QScrollBar \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qscrollbar.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qabstractslider.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/QDateTime \
- C:/Users/Mustafa/Desktop/Connectify-New/backend/user.h \
+ C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/notificationpage.h \
+ C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/backend/user.h \
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/iostream \
- C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_messagepage.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_newsfeedpage.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_profilepage.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_searchpage.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_signuppage.cpp
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_messagepage.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_newsfeedpage.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_notificationpage.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_profilepage.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_searchpage.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\EWIEGA46WW/moc_signuppage.cpp

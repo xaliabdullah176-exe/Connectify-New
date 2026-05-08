@@ -98,6 +98,10 @@ void SignupPage::setupUI() {
     confirmPasswordInput->setEchoMode(QLineEdit::Password);
     confirmPasswordInput->setFixedHeight(46);
     cardLayout->addWidget(confirmPasswordInput);
+
+    showPasswordCheck = new QCheckBox("Show passwords");
+    showPasswordCheck->setObjectName("showPassCheck");
+    cardLayout->addWidget(showPasswordCheck);
     cardLayout->addSpacing(8);
 
     // ── Error label ────────────────────────────────────
@@ -177,6 +181,12 @@ void SignupPage::setupUI() {
 
     connect(confirmPasswordInput, &QLineEdit::returnPressed,
             signupBtn, &QPushButton::click);
+
+    connect(showPasswordCheck, &QCheckBox::toggled, this, [this](bool checked) {
+        const auto mode = checked ? QLineEdit::Normal : QLineEdit::Password;
+        passwordInput->setEchoMode(mode);
+        confirmPasswordInput->setEchoMode(mode);
+    });
 }
 
 // ═══════════════════════════════════════════════════════
@@ -188,6 +198,7 @@ void SignupPage::clearFields() {
     emailInput->clear();
     passwordInput->clear();
     confirmPasswordInput->clear();
+    showPasswordCheck->setChecked(false);
     clearError();
 }
 
@@ -310,6 +321,13 @@ void SignupPage::applyStyles() {
         }
         #linkBtn:hover {
             color: #7c3aed;
+        }
+
+        #showPassCheck {
+            font-size: 12px;
+            color: #9ca3af;
+            background: transparent;
+            padding-left: 2px;
         }
 
     )");

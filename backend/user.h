@@ -11,6 +11,7 @@ class Post {
 public:
     int postID;
     string content;
+    string imagePath;
     int likeCount;
     std::vector<int> likedBy;
     string comments[50];
@@ -21,15 +22,17 @@ public:
     Post() {
         postID = 0;
         content = "";
+        imagePath = "";
         likeCount = 0;
         commentCount = 0;
         next = nullptr;
         timestamp = time(nullptr);
     }
 
-    Post(int id, string c) {
+    Post(int id, string c, string imgPath = "") {
         postID = id;
         content = c;
+        imagePath = imgPath;
         likeCount = 0;
         commentCount = 0;
         next = nullptr;
@@ -78,6 +81,10 @@ public:
     string password;
     string userName;
     string role;
+    bool isBanned;
+    string birthDate;
+    string githubUsername;
+    string profileImagePath;
 
     User** friends;
     int friendCount;
@@ -92,6 +99,10 @@ public:
 
     User() {
         userID = 0;
+        isBanned = false;
+        birthDate = "";
+        githubUsername = "";
+        profileImagePath = "";
         requestCount = 0;
         followerCount = 0;
         followingCount = 0;
@@ -120,6 +131,10 @@ public:
         password = other.password;
         userName = other.userName;
         role = other.role;
+        isBanned = other.isBanned;
+        birthDate = other.birthDate;
+        githubUsername = other.githubUsername;
+        profileImagePath = other.profileImagePath;
         friendCount = other.friendCount;
         requestCount = other.requestCount;
         followerCount = other.followerCount;
@@ -151,6 +166,10 @@ public:
             password = other.password;
             userName = other.userName;
             role = other.role;
+            isBanned = other.isBanned;
+            birthDate = other.birthDate;
+            githubUsername = other.githubUsername;
+            profileImagePath = other.profileImagePath;
             friendCount = other.friendCount;
             requestCount = other.requestCount;
             followerCount = other.followerCount;
@@ -198,6 +217,9 @@ public:
         userName = username;
         password = pass;
         role = "user";
+        birthDate = "";
+        githubUsername = "";
+        profileImagePath = "";
     }
 };
 
@@ -210,6 +232,9 @@ public:
         userName = username;
         password = pass;
         role = "admin";
+        birthDate = "";
+        githubUsername = "";
+        profileImagePath = "";
     }
 };
 
@@ -219,11 +244,13 @@ public:
     int senderID;
     int receiverID;
     string text;
+    time_t timestamp;
 
-    Message(int s, int r, string t) {
+    Message(int s, int r, string t, time_t ts = 0) {
         senderID = s;
         receiverID = r;
         text = t;
+        timestamp = ts;
     }
 };
 
@@ -245,7 +272,7 @@ public:
     }
 
     void resize();
-    void sendMessage(User* from, User* to, string text);
+    bool sendMessage(User* from, User* to, string text);
     void viewInbox(User* u);
 };
 
@@ -270,11 +297,13 @@ public:
     int    targetUserID;
     string message;
     time_t timestamp;
+    bool   seen;
 
     Notification() {
         targetUserID = -1;
         message = "";
         timestamp = 0;
+        seen = false;
     }
 };
 
@@ -298,6 +327,26 @@ public:
 
     void addNotification(int targetID, string msg);
     void showNotifications(int userID, string userName);
+
+    // UI accessors
+    int getCount() const { return notifCount; }
+    Notification* getAt(int i) const { return (i >= 0 && i < notifCount) ? notifications[i] : nullptr; }
+
+    // Count unseen notifications for a user
+    int countUnseen(int userID) const {
+        int cnt = 0;
+        for (int i = 0; i < notifCount; i++)
+            if (notifications[i]->targetUserID == userID && !notifications[i]->seen)
+                cnt++;
+        return cnt;
+    }
+
+    // Mark all notifications for a user as seen
+    void markAllSeen(int userID) {
+        for (int i = 0; i < notifCount; i++)
+            if (notifications[i]->targetUserID == userID)
+                notifications[i]->seen = true;
+    }
 
     // ===== FILE HANDLING =====
     void saveToFile(const string& filename);

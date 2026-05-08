@@ -1,6 +1,7 @@
-C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/EWIEGA46WW/moc_mainwindow.cpp: C:/Users/Mustafa/Desktop/Connectify-New/mainwindow.h \
-  C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/moc_predefs.h \
+C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/EWIEGA46WW/moc_mainwindow.cpp: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/mainwindow.h \
+  C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/moc_predefs.h \
   C:/Qt/6.11.0/mingw_64/include/QtCore/QDateTime \
+  C:/Qt/6.11.0/mingw_64/include/QtCore/QString \
   C:/Qt/6.11.0/mingw_64/include/QtCore/QTimer \
   C:/Qt/6.11.0/mingw_64/include/QtCore/q17memory.h \
   C:/Qt/6.11.0/mingw_64/include/QtCore/q20bit.h \
@@ -179,6 +180,7 @@ C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Deb
   C:/Qt/6.11.0/mingw_64/include/QtGui/qtransform.h \
   C:/Qt/6.11.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.11.0/mingw_64/include/QtGui/qwindowdefs_win.h \
+  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QCheckBox \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QFileDialog \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QFrame \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QGridLayout \
@@ -187,6 +189,7 @@ C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Deb
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QLabel \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QLineEdit \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QMainWindow \
+  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QMessageBox \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QPushButton \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QScrollArea \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QScrollBar \
@@ -198,7 +201,9 @@ C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Deb
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qabstractslider.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qboxlayout.h \
+  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qcheckbox.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qdialog.h \
+  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qfiledialog.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qframe.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qgridlayout.h \
@@ -208,6 +213,7 @@ C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Deb
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qlayoutitem.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qlineedit.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qmainwindow.h \
+  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qmessagebox.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qpushbutton.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qscrollarea.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qscrollbar.h \
@@ -463,11 +469,12 @@ C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Deb
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wctype.h \
-  C:/Users/Mustafa/Desktop/Connectify-New/LoginPage.h \
-  C:/Users/Mustafa/Desktop/Connectify-New/admindashboard.h \
-  C:/Users/Mustafa/Desktop/Connectify-New/backend/user.h \
-  C:/Users/Mustafa/Desktop/Connectify-New/messagepage.h \
-  C:/Users/Mustafa/Desktop/Connectify-New/newsfeedpage.h \
-  C:/Users/Mustafa/Desktop/Connectify-New/profilepage.h \
-  C:/Users/Mustafa/Desktop/Connectify-New/searchpage.h \
-  C:/Users/Mustafa/Desktop/Connectify-New/signuppage.h
+  C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/LoginPage.h \
+  C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/admindashboard.h \
+  C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/backend/user.h \
+  C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/messagepage.h \
+  C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/newsfeedpage.h \
+  C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/notificationpage.h \
+  C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/profilepage.h \
+  C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/searchpage.h \
+  C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/signuppage.h

@@ -1,4 +1,6 @@
 #include "profilepage.h"
+#include <QPainter>
+#include <QPainterPath>
 
 // ═══════════════════════════════════════════════════════
 //  CONSTRUCTOR
@@ -14,19 +16,51 @@ ProfilePage::ProfilePage(QWidget *parent) : QWidget(parent) {
 void ProfilePage::loadProfile(int    userID,
                                QString name,
                                QString handle,
+                               QString profileImagePath,
                                QString bio,
                                QString location,
                                QString joinDate,
+                               QString birthDate,
+                               QString githubUsername,
                                QString role,
                                int posts, int friends,
                                int followers, int following,
                                bool isOwn)
 {
-    // Avatar initials
-    QStringList parts = name.split(" ", Qt::SkipEmptyParts);
-    QString initials;
-    for (auto &p : parts) initials += p[0].toUpper();
-    avatarLabel->setText(initials.left(2));
+    // Avatar: photo (if set) else initials
+    auto setInitials = [&]() {
+        QStringList parts = name.split(" ", Qt::SkipEmptyParts);
+        QString initials;
+        for (auto &p : parts) initials += p[0].toUpper();
+        avatarLabel->setPixmap(QPixmap());
+        avatarLabel->setText(initials.left(2));
+    };
+
+    const QString imgPath = profileImagePath.trimmed();
+    if (!imgPath.isEmpty()) {
+        QPixmap px(imgPath);
+        if (!px.isNull()) {
+            const int size = avatarLabel->width() > 0 ? avatarLabel->width() : 88;
+            QPixmap scaled = px.scaled(size, size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+
+            QPixmap circle(size, size);
+            circle.fill(Qt::transparent);
+            QPainter painter(&circle);
+            painter.setRenderHint(QPainter::Antialiasing, true);
+            QPainterPath path;
+            path.addEllipse(0, 0, size, size);
+            painter.setClipPath(path);
+            painter.drawPixmap(0, 0, scaled);
+            painter.end();
+
+            avatarLabel->setText("");
+            avatarLabel->setPixmap(circle);
+        } else {
+            setInitials();
+        }
+    } else {
+        setInitials();
+    }
 
     nameLabel->setText(name);
     handleLabel->setText("@" + handle);
@@ -40,8 +74,26 @@ void ProfilePage::loadProfile(int    userID,
     followingNum->setText(QString::number(following));
 
     friendsCountLabel->setText("FRIENDS (" + QString::number(friends) + ")");
+    if (aboutBirthLabel) {
+        aboutBirthLabel->setText(QString("📅  %1").arg(birthDate.isEmpty() ? "Not set" : birthDate));
+    }
+    if (aboutGithubLabel) {
+        aboutGithubLabel->setText(QString("🔗  %1").arg(githubUsername.isEmpty() ? "Not set" : ("github.com/" + githubUsername)));
+    }
 
-    editBtn->setText(isOwn ? "✏️  Edit Profile" : "➕  Follow");
+    const bool isAdminProfile = (role.compare("admin", Qt::CaseInsensitive) == 0);
+    const bool allowCreatePost = isOwn && !isAdminProfile;
+    canDeletePosts = isOwn || isAdminProfile;
+
+    // Always show back button (even on My Profile) so user can return easily.
+    backBtn->setVisible(true);
+    editBtn->setVisible(isOwn);
+    editBtn->setText("✏️  Edit Profile");
+    if (deleteAccountBtn) {
+        // Never allow deleting admin from UI.
+        deleteAccountBtn->setVisible(isOwn && !isAdminProfile);
+    }
+    if (createPostBtn) createPostBtn->setVisible(allowCreatePost);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -93,10 +145,33 @@ void ProfilePage::addFriend(QString name, QString mutualCount) {
 void ProfilePage::clearPosts() {
     QLayoutItem *item;
     while ((item = postsLayout->takeAt(0)) != nullptr) {
-        delete item->widget();
+        if (item->widget()) item->widget()->deleteLater();
         delete item;
     }
     postsLayout->addStretch();
+}
+
+void ProfilePage::clearFriends() {
+    if (!friendsLayout) return;
+    bool hadViewAllButton = false;
+
+    while (friendsLayout->count() > 0) {
+        QLayoutItem *item = friendsLayout->takeAt(0);
+        QWidget *w = item ? item->widget() : nullptr;
+
+        if (w && w != viewAllFriendsBtn) {
+            w->deleteLater();
+        } else if (w == viewAllFriendsBtn) {
+            // Keep track so it can be reattached once after clearing.
+            hadViewAllButton = true;
+        }
+
+        delete item;
+    }
+
+    if (hadViewAllButton && viewAllFriendsBtn) {
+        friendsLayout->addWidget(viewAllFriendsBtn);
+    }
 }
 
 // ═══════════════════════════════════════════════════════
@@ -150,7 +225,7 @@ QFrame* ProfilePage::makePostCard(int postID, QString name, QString handle,
     topRow->addWidget(av);
     topRow->addLayout(nameCol);
     topRow->addStretch();
-    if (isOwnPost) {
+    if (canDeletePosts) {
         QPushButton *delBtn = new QPushButton("🗑️");
         delBtn->setObjectName("delBtn");
         delBtn->setCursor(Qt::PointingHandCursor);
@@ -209,23 +284,18 @@ QFrame* ProfilePage::makePostCard(int postID, QString name, QString handle,
     likeBtn->setFlat(true);
     likeBtn->setCursor(Qt::PointingHandCursor);
 
-    // Dummy toggle logic since profile page doesn't emit signals to MainWindow currently
-    connect(likeBtn, &QPushButton::clicked, this, [likeBtn]() mutable {
-        bool currentlyLiked = likeBtn->property("isLiked").toBool();
-        int cur = likeBtn->text().split("  ").last().toInt();
-        if (currentlyLiked) {
-            likeBtn->setProperty("isLiked", false);
-            likeBtn->setText(QString("♥  %1").arg(cur - 1));
-        } else {
-            likeBtn->setProperty("isLiked", true);
-            likeBtn->setText(QString("❤️  %1").arg(cur + 1));
-        }
+    connect(likeBtn, &QPushButton::clicked, this, [this, postID]() {
+        emit likeClicked(postID);
     });
 
     QPushButton *cmtBtn = new QPushButton("💬  " + QString::number(comments));
     cmtBtn->setObjectName("cmtBtn");
     cmtBtn->setFlat(true);
     cmtBtn->setCursor(Qt::PointingHandCursor);
+
+    connect(cmtBtn, &QPushButton::clicked, this, [this, postID]() {
+        emit commentClicked(postID);
+    });
 
     QPushButton *shareBtn = new QPushButton("↗  Share");
     shareBtn->setObjectName("shareBtn");
@@ -368,6 +438,15 @@ void ProfilePage::setupUI() {
     // Row: avatar left, edit button right
     QHBoxLayout *avatarRow = new QHBoxLayout();
     avatarRow->setContentsMargins(0, -44, 0, 0);  // pulls avatar up over cover
+
+    backBtn = new QPushButton("← Back");
+    backBtn->setObjectName("backBtn");
+    backBtn->setFixedHeight(34);
+    backBtn->setCursor(Qt::PointingHandCursor);
+    backBtn->hide();
+    avatarRow->addWidget(backBtn);
+    avatarRow->addSpacing(8);
+
     avatarRow->addWidget(avatarLabel);
     avatarRow->addStretch();
     editBtn = new QPushButton("✏️  Edit Profile");
@@ -375,6 +454,14 @@ void ProfilePage::setupUI() {
     editBtn->setFixedHeight(34);
     editBtn->setCursor(Qt::PointingHandCursor);
     avatarRow->addWidget(editBtn);
+
+    deleteAccountBtn = new QPushButton("🗑️  Delete Account");
+    deleteAccountBtn->setObjectName("deleteAccountBtn");
+    deleteAccountBtn->setFixedHeight(34);
+    deleteAccountBtn->setCursor(Qt::PointingHandCursor);
+    deleteAccountBtn->hide();
+    avatarRow->addSpacing(8);
+    avatarRow->addWidget(deleteAccountBtn);
     headerVl->addLayout(avatarRow);
 
     nameLabel = new QLabel("...");
@@ -452,8 +539,12 @@ void ProfilePage::setupUI() {
         aboutVl->addWidget(row);
     };
     addAboutRow("✉️", "user@email.com");
-    addAboutRow("📅", "Date of Birth");
-    addAboutRow("🔗", "github.com/username");
+    aboutBirthLabel = new QLabel("📅  Not set");
+    aboutBirthLabel->setObjectName("aboutRow");
+    aboutVl->addWidget(aboutBirthLabel);
+    aboutGithubLabel = new QLabel("🔗  Not set");
+    aboutGithubLabel->setObjectName("aboutRow");
+    aboutVl->addWidget(aboutGithubLabel);
     leftCol->addWidget(aboutCard);
 
     // Friends card
@@ -481,11 +572,11 @@ void ProfilePage::setupUI() {
     friendsLayout->setSpacing(0);
     friendsVl->addLayout(friendsLayout);
 
-    QPushButton *viewAllBtn = new QPushButton("View All Friends");
-    viewAllBtn->setObjectName("viewAllFullBtn");
-    viewAllBtn->setCursor(Qt::PointingHandCursor);
-    viewAllBtn->setFixedHeight(32);
-    friendsLayout->addWidget(viewAllBtn);   // addFriend inserts BEFORE this
+    viewAllFriendsBtn = new QPushButton("View All Friends");
+    viewAllFriendsBtn->setObjectName("viewAllFullBtn");
+    viewAllFriendsBtn->setCursor(Qt::PointingHandCursor);
+    viewAllFriendsBtn->setFixedHeight(32);
+    friendsLayout->addWidget(viewAllFriendsBtn);   // addFriend inserts BEFORE this
 
     leftCol->addWidget(friendsCard);
     leftCol->addStretch();
@@ -500,13 +591,13 @@ void ProfilePage::setupUI() {
     QHBoxLayout *postsHeader = new QHBoxLayout();
     QLabel *postsTitle = new QLabel("Posts");
     postsTitle->setObjectName("postsTitle");
-    QPushButton *createPost = new QPushButton("✏️  Create Post");
-    createPost->setObjectName("createPostBtn");
-    createPost->setCursor(Qt::PointingHandCursor);
-    createPost->setFixedHeight(32);
+    createPostBtn = new QPushButton("✏️  Create Post");
+    createPostBtn->setObjectName("createPostBtn");
+    createPostBtn->setCursor(Qt::PointingHandCursor);
+    createPostBtn->setFixedHeight(32);
     postsHeader->addWidget(postsTitle);
     postsHeader->addStretch();
-    postsHeader->addWidget(createPost);
+    postsHeader->addWidget(createPostBtn);
     rightCol->addLayout(postsHeader);
 
     // Posts container
@@ -521,9 +612,11 @@ void ProfilePage::setupUI() {
     root->addWidget(scroll);
 
     // ── Signals ───────────────────────────────────────────
+    connect(backBtn,    &QPushButton::clicked, this, &ProfilePage::backClicked);
     connect(editBtn,    &QPushButton::clicked, this, &ProfilePage::editProfileClicked);
-    connect(createPost, &QPushButton::clicked, this, &ProfilePage::createPostClicked);
-    connect(viewAllBtn, &QPushButton::clicked, this, &ProfilePage::viewAllFriendsClicked);
+    connect(deleteAccountBtn, &QPushButton::clicked, this, &ProfilePage::deleteAccountClicked);
+    connect(createPostBtn, &QPushButton::clicked, this, &ProfilePage::createPostClicked);
+    connect(viewAllFriendsBtn, &QPushButton::clicked, this, &ProfilePage::viewAllFriendsClicked);
     connect(viewAllTop, &QPushButton::clicked, this, &ProfilePage::viewAllFriendsClicked);
 }
 
@@ -560,10 +653,24 @@ void ProfilePage::applyStyles() {
         #metaLabel     { font-size:11px; color:#6b7280; }
 
         /* Edit button */
+        #backBtn       { background:rgba(124,58,237,0.12); color:#a78bfa;
+                         border:1.5px solid #7c3aed; border-radius:8px;
+                         padding:0 14px; font-size:12px; font-weight:600; }
+        #backBtn:hover { background:rgba(124,58,237,0.22); }
         #editBtn       { background:transparent; color:#a78bfa;
                          border:1.5px solid #7c3aed; border-radius:8px;
                          padding:0 16px; font-size:12px; font-weight:600; }
         #editBtn:hover { background:rgba(124,58,237,0.15); }
+        #deleteAccountBtn {
+            background:rgba(248,113,113,0.1);
+            color:#f87171;
+            border:1.5px solid rgba(248,113,113,0.35);
+            border-radius:8px;
+            padding:0 16px;
+            font-size:12px;
+            font-weight:700;
+        }
+        #deleteAccountBtn:hover { background:rgba(248,113,113,0.18); }
 
         /* Stats bar */
         #statsBar      { background:#12122a;

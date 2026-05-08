@@ -1,6 +1,6 @@
 CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj: \
- C:\Users\Mustafa\Desktop\Connectify-New\admindashboard.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\admindashboard.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\admindashboard.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\admindashboard.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qwidget.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -413,5 +413,11 @@ CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QGridLayout \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QStackedWidget \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qstackedwidget.h \
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/QSizePolicy \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QStyle \
- C:/Qt/6.11.0/mingw_64/include/QtWidgets/qstyle.h
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qstyle.h \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPixmap \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPainter \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qpainter.h \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPainterPath \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qpainterpath.h

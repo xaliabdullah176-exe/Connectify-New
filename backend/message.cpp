@@ -1,4 +1,5 @@
 #include "user.h"
+#include <ctime>
 void MessageSystem::resize() {
     Message** temp = new Message * [msgCount + 1];
     for (int i = 0; i < msgCount; i++)
@@ -6,10 +7,10 @@ void MessageSystem::resize() {
     delete[] msg;
     msg = temp;
 }
-void MessageSystem::sendMessage(User* from, User* to, string text) {
+bool MessageSystem::sendMessage(User* from, User* to, string text) {
     if (!from || !to || from == to) {
         cout << "invalid users" << endl;
-        return;
+        return false;
     }
 
     // check connection friends only
@@ -22,11 +23,12 @@ void MessageSystem::sendMessage(User* from, User* to, string text) {
     }
     if (!connected) {
         cout << "only connected users can message" << endl;
-        return;
+        return false;
     }
     resize();
-    msg[msgCount++] = new Message(from->userID, to->userID, text);
+    msg[msgCount++] = new Message(from->userID, to->userID, text, std::time(nullptr));
     cout << "message sent" << endl;
+    return true;
 }
 void MessageSystem::viewInbox(User* u) {
     if (u == nullptr) return;

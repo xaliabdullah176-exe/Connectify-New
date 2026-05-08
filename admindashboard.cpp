@@ -1,5 +1,24 @@
 #include "admindashboard.h"
+#include <QSizePolicy>
 #include <QStyle>
+#include <QPixmap>
+#include <QPainter>
+#include <QPainterPath>
+
+static QPixmap makeCirclePixmap(const QString &path, int size) {
+    QPixmap px(path);
+    if (px.isNull() || size <= 0) return QPixmap();
+    QPixmap scaled = px.scaled(size, size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+    QPixmap circle(size, size);
+    circle.fill(Qt::transparent);
+    QPainter painter(&circle);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QPainterPath clip;
+    clip.addEllipse(0, 0, size, size);
+    painter.setClipPath(clip);
+    painter.drawPixmap(0, 0, scaled);
+    return circle;
+}
 // ═══════════════════════════════════════════════════════
 //  CONSTRUCTOR
 // ═══════════════════════════════════════════════════════
@@ -34,26 +53,27 @@ void AdminDashboard::setStats(int totalUsers, int totalPosts,
 // ═══════════════════════════════════════════════════════
 //  ADD USER ROW
 // ═══════════════════════════════════════════════════════
-void AdminDashboard::addUserRow(int userID, QString name, QString role,
+void AdminDashboard::addUserRow(int userID, QString name, QString avatarPath, QString role,
                                 int postCount, bool isBanned)
 {
     // Insert before stretch at end
     userTableLayout->insertWidget(
         userTableLayout->count() - 1,
-        makeUserRow(userID, name, role, postCount, isBanned)
+        makeUserRow(userID, name, avatarPath, role, postCount, isBanned)
         );
+    applyUserSearchFilter();
 }
 
 // ═══════════════════════════════════════════════════════
 //  ADD MOD POST
 // ═══════════════════════════════════════════════════════
 void AdminDashboard::addModPost(int postID, int ownerID, QString ownerName,
-                                QString content, int likes, int comments)
+                                QString content, QString imagePath, int likes, int comments)
 {
     int row = modPostCount / 2;
     int col = modPostCount % 2;
     modPostsLayout->addWidget(
-        makeModPostCard(postID, ownerID, ownerName, content, likes, comments),
+        makeModPostCard(postID, ownerID, ownerName, content, imagePath, likes, comments),
         row, col
         );
     modPostCount++;
@@ -81,10 +101,39 @@ void AdminDashboard::clearModPosts() {
 }
 
 // ═══════════════════════════════════════════════════════
+//  USER SEARCH FILTER
+// ═══════════════════════════════════════════════════════
+void AdminDashboard::refreshUserSearch()
+{
+    applyUserSearchFilter();
+}
+
+void AdminDashboard::applyUserSearchFilter()
+{
+    if (!userSearchBox || !userTableLayout)
+        return;
+
+    const QString q = userSearchBox->text().trimmed().toLower();
+    for (int i = 0; i < userTableLayout->count(); ++i) {
+        QLayoutItem *item = userTableLayout->itemAt(i);
+        QWidget *w = item ? item->widget() : nullptr;
+        if (!w)
+            continue;
+        if (q.isEmpty()) {
+            w->setVisible(true);
+            continue;
+        }
+        const QString blob =
+            w->property("adminSearchText").toString().toLower();
+        w->setVisible(blob.contains(q));
+    }
+}
+
+// ═══════════════════════════════════════════════════════
 //  SET ACTIVE SIDEBAR BUTTON
 // ═══════════════════════════════════════════════════════
 void AdminDashboard::setActiveSidebarBtn(QPushButton *active) {
-    for (auto btn : {navDashBtn, navUsersBtn, navPostsBtn}) {
+    for (auto btn : {navDashBtn, navUsersBtn, navPostsBtn, navNewsBtn}) {
         btn->setProperty("active", btn == active);
         btn->style()->unpolish(btn);
         btn->style()->polish(btn);
@@ -127,7 +176,7 @@ QFrame* AdminDashboard::makeStatCard(QLabel *&numLabel, QString icon,
 // ═══════════════════════════════════════════════════════
 //  MAKE USER ROW
 // ═══════════════════════════════════════════════════════
-QFrame* AdminDashboard::makeUserRow(int userID, QString name,
+QFrame* AdminDashboard::makeUserRow(int userID, QString name, QString avatarPath,
                                     QString role, int postCount,
                                     bool isBanned)
 {
@@ -148,10 +197,24 @@ QFrame* AdminDashboard::makeUserRow(int userID, QString name,
     av->setObjectName("tableAvatar");
     av->setFixedSize(30, 30);
     av->setAlignment(Qt::AlignCenter);
-    QStringList parts = name.split(" ", Qt::SkipEmptyParts);
-    QString initials;
-    for (auto &p : parts) initials += p[0].toUpper();
-    av->setText(initials.left(2));
+    const QString path = avatarPath.trimmed();
+    if (!path.isEmpty()) {
+        QPixmap circle = makeCirclePixmap(path, 30);
+        if (!circle.isNull()) {
+            av->setText("");
+            av->setPixmap(circle);
+        } else {
+            QStringList parts = name.split(" ", Qt::SkipEmptyParts);
+            QString initials;
+            for (auto &p : parts) initials += p[0].toUpper();
+            av->setText(initials.left(2));
+        }
+    } else {
+        QStringList parts = name.split(" ", Qt::SkipEmptyParts);
+        QString initials;
+        for (auto &p : parts) initials += p[0].toUpper();
+        av->setText(initials.left(2));
+    }
 
     QVBoxLayout *nameCol = new QVBoxLayout();
     nameCol->setSpacing(1);
@@ -231,6 +294,13 @@ QFrame* AdminDashboard::makeUserRow(int userID, QString name,
     actWidget->setLayout(actions);
     hl->addWidget(actWidget);
 
+    const QString statusWord = isBanned ? QStringLiteral("banned")
+                                        : QStringLiteral("active");
+    row->setProperty(
+        "adminSearchText",
+        name + QLatin1Char(' ') + QString::number(userID) + QLatin1Char(' ')
+            + role + QLatin1Char(' ') + statusWord);
+
     return row;
 }
 
@@ -239,7 +309,7 @@ QFrame* AdminDashboard::makeUserRow(int userID, QString name,
 // ═══════════════════════════════════════════════════════
 QFrame* AdminDashboard::makeModPostCard(int postID, int ownerID,
                                         QString ownerName, QString content,
-                                        int likes, int comments)
+                                        QString imagePath, int likes, int comments)
 {
     QFrame *card = new QFrame();
     card->setObjectName("modCard");
@@ -257,6 +327,24 @@ QFrame* AdminDashboard::makeModPostCard(int postID, int ownerID,
     text->setObjectName("modContent");
     text->setWordWrap(true);
     vl->addWidget(text);
+
+    if (!imagePath.trimmed().isEmpty()) {
+        QLabel *imgLabel = new QLabel();
+        imgLabel->setObjectName("modPostImage");
+        imgLabel->setAlignment(Qt::AlignCenter);
+        imgLabel->setFixedHeight(180);
+
+        QPixmap px(imagePath);
+        if (!px.isNull()) {
+            imgLabel->setPixmap(
+                px.scaled(520, 180, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)
+            );
+        } else {
+            imgLabel->setText("Image not found");
+            imgLabel->setObjectName("modPostImageMissing");
+        }
+        vl->addWidget(imgLabel);
+    }
 
     QHBoxLayout *footer = new QHBoxLayout();
     footer->setSpacing(8);
@@ -336,21 +424,10 @@ void AdminDashboard::setupUI() {
         navVl->addWidget(btn);
     };
 
-    makeNavBtn(navDashBtn,  "📊", "Dashboard");
-    makeNavBtn(navUsersBtn, "👥", "All Users");
-    makeNavBtn(navPostsBtn, "📝", "Moderate Posts");
-
-    // Extra nav items (non-functional for now)
-    for (auto &item : QStringList{"🔔   Notifications",
-                                  "🔍   Search",
-                                  "⚙️   Settings"}) {
-        QPushButton *btn = new QPushButton(item);
-        btn->setObjectName("navBtn");
-        btn->setFixedHeight(42);
-        btn->setFlat(true);
-        btn->setCursor(Qt::PointingHandCursor);
-        navVl->addWidget(btn);
-    }
+    makeNavBtn(navDashBtn,     "📊", "Dashboard");
+    makeNavBtn(navUsersBtn,    "👥", "All Users");
+    makeNavBtn(navPostsBtn,    "📝", "Moderate Posts");
+    makeNavBtn(navNewsBtn,     "📰", "Post News");
 
     navVl->addStretch();
     sideVl->addWidget(navArea);
@@ -415,14 +492,8 @@ void AdminDashboard::setupUI() {
     logoutBtn->setFixedHeight(32);
     logoutBtn->setCursor(Qt::PointingHandCursor);
 
-    QPushButton *notifBtn = new QPushButton("🔔");
-    notifBtn->setObjectName("notifBtn");
-    notifBtn->setFixedSize(34, 34);
-    notifBtn->setCursor(Qt::PointingHandCursor);
-
     topHl->addWidget(titleWidget);
     topHl->addStretch();
-    topHl->addWidget(notifBtn);
     topHl->addWidget(logoutBtn);
     rightVl->addWidget(topbar);
 
@@ -475,7 +546,7 @@ void AdminDashboard::setupUI() {
     contentStack->addWidget(dashboardPage);   // index 0
 
     // ── PAGE 1: All Users ─────────────────────────────────
-    QWidget *usersPage = new QWidget();
+    usersPage = new QWidget();
     QScrollArea *usersScroll = new QScrollArea();
     usersScroll->setWidgetResizable(true);
     usersScroll->setFrameShape(QFrame::NoFrame);
@@ -489,14 +560,17 @@ void AdminDashboard::setupUI() {
     QHBoxLayout *usersHeader = new QHBoxLayout();
     QLabel *usersTitle = new QLabel("All Users");
     usersTitle->setObjectName("sectionTitle");
-    QLineEdit *searchBox = new QLineEdit();
-    searchBox->setObjectName("searchBox");
-    searchBox->setPlaceholderText("🔍  Search users...");
-    searchBox->setFixedWidth(200);
-    searchBox->setFixedHeight(32);
+    userSearchBox = new QLineEdit();
+    userSearchBox->setObjectName("searchBox");
+    userSearchBox->setPlaceholderText("🔍  Search users...");
+    userSearchBox->setMinimumWidth(220);
+    userSearchBox->setFixedHeight(32);
+    userSearchBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     usersHeader->addWidget(usersTitle);
     usersHeader->addStretch();
-    usersHeader->addWidget(searchBox);
+    usersHeader->addWidget(userSearchBox, 1);
+    connect(userSearchBox, &QLineEdit::textChanged,
+            this, &AdminDashboard::applyUserSearchFilter);
     usersVl->addLayout(usersHeader);
 
     // Table header
@@ -528,7 +602,7 @@ void AdminDashboard::setupUI() {
     contentStack->addWidget(usersPage);   // index 1
 
     // ── PAGE 2: Moderate Posts ────────────────────────────
-    QWidget *postsPage = new QWidget();
+    postsPage = new QWidget();
     QScrollArea *postsScroll = new QScrollArea();
     postsScroll->setWidgetResizable(true);
     postsScroll->setFrameShape(QFrame::NoFrame);
@@ -577,6 +651,11 @@ void AdminDashboard::setupUI() {
         pageTitleLabel->setText("All Users");
         pageSubLabel->setText("Manage, ban, or remove users");
         setActiveSidebarBtn(navUsersBtn);
+        if (userSearchBox) {
+            userSearchBox->setFocus();
+            userSearchBox->selectAll();
+            applyUserSearchFilter();
+        }
         emit navUsers();
     });
     connect(navPostsBtn, &QPushButton::clicked, this, [this]() {
@@ -585,6 +664,14 @@ void AdminDashboard::setupUI() {
         pageSubLabel->setText("Review and delete inappropriate content");
         setActiveSidebarBtn(navPostsBtn);
         emit navPosts();
+    });
+    connect(navNewsBtn, &QPushButton::clicked, this, [this]() {
+        // Keep user on a meaningful page; open the news composer.
+        contentStack->setCurrentIndex(2);
+        pageTitleLabel->setText("Post News");
+        pageSubLabel->setText("Send announcement to all users");
+        setActiveSidebarBtn(navNewsBtn);
+        emit createNewsClicked();
     });
     connect(logoutBtn, &QPushButton::clicked,
             this, &AdminDashboard::logoutClicked);
@@ -633,16 +720,18 @@ void AdminDashboard::applyStyles() {
         #pageTitle       { font-size:16px; font-weight:700;
                            color:#ffffff; }
         #pageSub         { font-size:11px; color:#6b7280; }
-        #notifBtn        { background:rgba(124,58,237,0.15);
-                           border:1px solid #2d1b69; border-radius:8px;
-                           font-size:16px; }
-        #notifBtn:hover  { background:rgba(124,58,237,0.25); }
         #logoutBtn       { background:rgba(239,68,68,0.1);
                            color:#f87171;
                            border:1px solid rgba(239,68,68,0.3);
                            border-radius:8px; padding:0 14px;
                            font-size:12px; font-weight:600; }
         #logoutBtn:hover { background:rgba(239,68,68,0.2); }
+        #postNewsBtn     { background:rgba(52,211,153,0.1);
+                           color:#34d399;
+                           border:1px solid rgba(52,211,153,0.3);
+                           border-radius:8px; padding:0 14px;
+                           font-size:12px; font-weight:600; }
+        #postNewsBtn:hover { background:rgba(52,211,153,0.2); }
 
         /* Stat cards */
         #statCard        { background:#12122a;
@@ -732,6 +821,10 @@ void AdminDashboard::applyStyles() {
         #modCard:hover   { border:1px solid #4c1d95; }
         #modUser         { font-size:11px; color:#a78bfa; }
         #modContent      { font-size:12px; color:#d1d5db; }
+        #modPostImage    { background:#1a0a3d; border-radius:8px; }
+        #modPostImageMissing {
+            font-size:12px; color:#9ca3af; background:#1a0a3d; border-radius:8px;
+        }
         #modMeta         { font-size:10px; color:#6b7280; }
         #btnModDelete    { background:rgba(248,113,113,0.1);
                            color:#f87171;

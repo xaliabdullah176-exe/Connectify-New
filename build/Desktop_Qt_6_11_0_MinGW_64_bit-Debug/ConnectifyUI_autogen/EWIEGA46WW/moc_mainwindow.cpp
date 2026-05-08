@@ -57,12 +57,15 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "postID",
         "onCommentPost",
         "onDeletePost",
+        "onAdminCreateNews",
+        "onDeleteMyAccount",
         "showLogin",
         "showSignup",
         "showNewsFeed",
         "showProfile",
         "showMessages",
         "showSearch",
+        "showNotifications",
         "showAdminDashboard"
     };
 
@@ -97,20 +100,26 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         QtMocHelpers::SlotData<void(int)>(17, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { QMetaType::Int, 15 },
         }}),
-        // Slot 'showLogin'
+        // Slot 'onAdminCreateNews'
         QtMocHelpers::SlotData<void()>(18, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'showSignup'
+        // Slot 'onDeleteMyAccount'
         QtMocHelpers::SlotData<void()>(19, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'showNewsFeed'
+        // Slot 'showLogin'
         QtMocHelpers::SlotData<void()>(20, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'showProfile'
+        // Slot 'showSignup'
         QtMocHelpers::SlotData<void()>(21, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'showMessages'
+        // Slot 'showNewsFeed'
         QtMocHelpers::SlotData<void()>(22, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'showSearch'
+        // Slot 'showProfile'
         QtMocHelpers::SlotData<void()>(23, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'showAdminDashboard'
+        // Slot 'showMessages'
         QtMocHelpers::SlotData<void()>(24, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'showSearch'
+        QtMocHelpers::SlotData<void()>(25, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'showNotifications'
+        QtMocHelpers::SlotData<void()>(26, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'showAdminDashboard'
+        QtMocHelpers::SlotData<void()>(27, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -142,13 +151,16 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 5: _t->onLikePost((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
         case 6: _t->onCommentPost((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
         case 7: _t->onDeletePost((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 8: _t->showLogin(); break;
-        case 9: _t->showSignup(); break;
-        case 10: _t->showNewsFeed(); break;
-        case 11: _t->showProfile(); break;
-        case 12: _t->showMessages(); break;
-        case 13: _t->showSearch(); break;
-        case 14: _t->showAdminDashboard(); break;
+        case 8: _t->onAdminCreateNews(); break;
+        case 9: _t->onDeleteMyAccount(); break;
+        case 10: _t->showLogin(); break;
+        case 11: _t->showSignup(); break;
+        case 12: _t->showNewsFeed(); break;
+        case 13: _t->showProfile(); break;
+        case 14: _t->showMessages(); break;
+        case 15: _t->showSearch(); break;
+        case 16: _t->showNotifications(); break;
+        case 17: _t->showAdminDashboard(); break;
         default: ;
         }
     }
@@ -173,14 +185,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 18;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
+        if (_id < 18)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 15;
+        _id -= 18;
     }
     return _id;
 }

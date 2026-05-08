@@ -1,20 +1,20 @@
 {
 	"AUTOGEN_COMMAND_LINE_LENGTH_MAX" : 32000,
-	"BUILD_DIR" : "C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen",
-	"CMAKE_BINARY_DIR" : "C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug",
-	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug",
-	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/Mustafa/Desktop/Connectify-New",
+	"BUILD_DIR" : "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen",
+	"CMAKE_BINARY_DIR" : "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/laptech/Downloads/Connectify (1)/Connectify",
 	"CMAKE_EXECUTABLE" : "C:/Qt/Tools/CMake_64/bin/cmake.exe",
 	"CMAKE_LIST_FILES" : 
 	[
-		"C:/Users/Mustafa/Desktop/Connectify-New/CMakeLists.txt",
-		"C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qtcreator/cmake-helper/qtcreator-project.cmake",
-		"C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qtcreator/cmake-helper/package-manager.cmake",
+		"C:/Users/laptech/Downloads/Connectify (1)/Connectify/CMakeLists.txt",
+		"C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qtcreator/cmake-helper/qtcreator-project.cmake",
+		"C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qtcreator/cmake-helper/package-manager.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeDetermineSystem.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeSystem.cmake.in",
-		"C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeSystem.cmake",
+		"C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeSystem.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeMinGWFindMake.cmake",
-		"C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qtcreator/cmake-helper/maintenance_tool_provider.cmake",
+		"C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qtcreator/cmake-helper/maintenance_tool_provider.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Platform/Windows-Initialize.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake",
@@ -67,7 +67,7 @@
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeFindBinUtils.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/GNU-FindBinUtils.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeCXXCompiler.cmake.in",
-		"C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeCXXCompiler.cmake",
+		"C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeCXXCompiler.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeGenericSystem.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake",
@@ -82,7 +82,7 @@
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Platform/Windows-GNU.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeDetermineRCCompiler.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeRCCompiler.cmake.in",
-		"C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeRCCompiler.cmake",
+		"C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeRCCompiler.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeRCInformation.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Platform/Windows-windres.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeTestRCCompiler.cmake",
@@ -99,7 +99,7 @@
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeDetermineCompilerSupport.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Internal/FeatureTesting.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeCXXCompiler.cmake.in",
-		"C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeCXXCompiler.cmake",
+		"C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeCXXCompiler.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Platform/Windows-GNU-CXX-ABI.cmake",
 		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake",
 		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/Qt6ConfigVersionImpl.cmake",
@@ -349,119 +349,79 @@
 		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6Widgets/Qt6QModernWindowsStylePluginTargets-relwithdebinfo.cmake",
 		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6Widgets/Qt6QModernWindowsStylePluginAdditionalTargetInfo.cmake",
 		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6Widgets/Qt6WidgetsVersionlessAliasTargets.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/Qt6ConfigVersionImpl.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/Qt6Config.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicCMakeEarlyPolicyHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicCMakeHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/Qt6ConfigExtras.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicCMakeVersionHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtInstallPaths.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/Qt6TargetsPrecheck.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtFeature.cmake",
-		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CheckCXXCompilerFlag.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtFeatureCommon.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicAndroidHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicAppleHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicCMakeHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicCMakeVersionHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicExternalProjectHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicFinalizerHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicFindPackageHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicGitHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicPluginHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicPluginHelpers_v2.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomAttributionHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomCommonGenerationHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomCpeHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomCycloneDXHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomDocumentNamespaceHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomDepHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomFileHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomGenerationHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomGenerationCycloneDXHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomLicenseHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomOpsHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomPurlHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomPythonHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomQtEntityHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicSbomSystemDepHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicTargetHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicTestHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicToolHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicWalkLibsHelpers.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/QtPublicWindowsHelpers.cmake",
-		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeFindDependencyMacro.cmake",
-		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6/Qt6Dependencies.cmake",
 		"C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6Core/Qt6CoreConfigureFileTemplate.in",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/GNUInstallDirs.cmake"
 	],
-	"CMAKE_SOURCE_DIR" : "C:/Users/Mustafa/Desktop/Connectify-New",
+	"CMAKE_SOURCE_DIR" : "C:/Users/laptech/Downloads/Connectify (1)/Connectify",
 	"CROSS_CONFIG" : false,
-	"DEP_FILE" : "C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/deps",
+	"DEP_FILE" : "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "ConnectifyUI_autogen/timestamp",
 	"HEADERS" : 
 	[
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/LoginPage.h",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/LoginPage.h",
 			"MU",
 			"EWIEGA46WW/moc_LoginPage.cpp",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/admindashboard.h",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/admindashboard.h",
 			"MU",
 			"EWIEGA46WW/moc_admindashboard.cpp",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/backend/user.h",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/backend/user.h",
 			"MU",
 			"FVSNT77ZGO/moc_user.cpp",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/mainwindow.h",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/messagepage.h",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/messagepage.h",
 			"MU",
 			"EWIEGA46WW/moc_messagepage.cpp",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/newsfeedpage.h",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/newsfeedpage.h",
 			"MU",
 			"EWIEGA46WW/moc_newsfeedpage.cpp",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/profilepage.h",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/notificationpage.h",
+			"MU",
+			"EWIEGA46WW/moc_notificationpage.cpp",
+			null
+		],
+		[
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/profilepage.h",
 			"MU",
 			"EWIEGA46WW/moc_profilepage.cpp",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/searchpage.h",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/searchpage.h",
 			"MU",
 			"EWIEGA46WW/moc_searchpage.cpp",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/signuppage.h",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/signuppage.h",
 			"MU",
 			"EWIEGA46WW/moc_signuppage.cpp",
 			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
-	"INCLUDE_DIR" : "C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/include",
-	"MOC_COMPILATION_FILE" : "C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/mocs_compilation.cpp",
+	"INCLUDE_DIR" : "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/include",
+	"MOC_COMPILATION_FILE" : "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/mocs_compilation.cpp",
 	"MOC_DEFINITIONS" : 
 	[
 		"MINGW_HAS_SECURE_API=1",
@@ -518,70 +478,103 @@
 		"-c",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp"
 	],
-	"MOC_PREDEFS_FILE" : "C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/moc_predefs.h",
+	"MOC_PREDEFS_FILE" : "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : 
 	[
-		"C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp"
+		"C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp"
 	],
 	"MULTI_CONFIG" : false,
-	"PARALLEL" : 4,
-	"PARSE_CACHE_FILE" : "C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/ConnectifyUI_autogen.dir/ParseCache.txt",
+	"PARALLEL" : 2,
+	"PARSE_CACHE_FILE" : "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/ConnectifyUI_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "C:/Qt/6.11.0/mingw_64/bin/moc.exe",
 	"QT_UIC_EXECUTABLE" : "C:/Qt/6.11.0/mingw_64/bin/uic.exe",
 	"QT_VERSION_MAJOR" : 6,
 	"QT_VERSION_MINOR" : 11,
-	"SETTINGS_FILE" : "C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/ConnectifyUI_autogen.dir/AutogenUsed.txt",
+	"SETTINGS_FILE" : "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/ConnectifyUI_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[ "C:/Users/Mustafa/Desktop/Connectify-New/LoginPage.cpp", "MU", null ],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/admindashboard.cpp",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/LoginPage.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/backend/message.cpp",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/admindashboard.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/backend/notification.cpp",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/backend/message.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/backend/post.cpp",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/backend/notification.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/backend/search.cpp",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/backend/post.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/backend/user.cpp",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/backend/search.cpp",
 			"MU",
 			null
 		],
-		[ "C:/Users/Mustafa/Desktop/Connectify-New/main.cpp", "MU", null ],
-		[ "C:/Users/Mustafa/Desktop/Connectify-New/mainwindow.cpp", "MU", null ],
-		[ "C:/Users/Mustafa/Desktop/Connectify-New/messagepage.cpp", "MU", null ],
 		[
-			"C:/Users/Mustafa/Desktop/Connectify-New/newsfeedpage.cpp",
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/backend/user.cpp",
 			"MU",
 			null
 		],
-		[ "C:/Users/Mustafa/Desktop/Connectify-New/profilepage.cpp", "MU", null ],
-		[ "C:/Users/Mustafa/Desktop/Connectify-New/searchpage.cpp", "MU", null ],
-		[ "C:/Users/Mustafa/Desktop/Connectify-New/signuppage.cpp", "MU", null ]
+		[
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/main.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/mainwindow.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/messagepage.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/newsfeedpage.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/notificationpage.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/profilepage.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/searchpage.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/laptech/Downloads/Connectify (1)/Connectify/signuppage.cpp",
+			"MU",
+			null
+		]
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],
 	"UIC_SKIP" : 
 	[
-		"C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp"
+		"C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp"
 	],
 	"UIC_UI_FILES" : [],
 	"USE_BETTER_GRAPH" : true,

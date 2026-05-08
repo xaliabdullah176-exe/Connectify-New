@@ -17,6 +17,7 @@ struct SearchUser {
     QString name;
     QString username;
     QString bio;
+    QString avatarPath;
     bool    isFriend;
 };
 
@@ -46,11 +47,11 @@ public:
     explicit SearchPage(QWidget *parent = nullptr);
 
     // Call after login
-    void loadCurrentUser(int userID, const QString &name);
+    void loadCurrentUser(int userID, const QString &name, const QString &avatarPath);
 
     // Add a user to the full list (call for every user on load)
     void addUser(int userID, const QString &name,
-                 const QString &username, const QString &bio,
+                 const QString &username, const QString &bio, const QString &avatarPath,
                  bool isFriend = false);
 
     // Clear all results

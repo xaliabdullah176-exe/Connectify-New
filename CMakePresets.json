@@ -1,0 +1,53 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "qt-debug",
+      "displayName": "Qt Debug (Portable)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-qt-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_PREFIX_PATH": "$env{QTDIR};$env{Qt6_DIR}"
+      }
+    },
+    {
+      "name": "qt-mingw-debug",
+      "displayName": "Qt MinGW Debug",
+      "generator": "MinGW Makefiles",
+      "binaryDir": "${sourceDir}/build-mingw-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_PREFIX_PATH": "$env{QTDIR};$env{Qt6_DIR}"
+      }
+    },
+    {
+      "name": "msvc-debug",
+      "displayName": "MSVC Debug",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build-msvc-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "qt-debug",
+      "configurePreset": "qt-debug"
+    },
+    {
+      "name": "qt-mingw-debug",
+      "configurePreset": "qt-mingw-debug"
+    },
+    {
+      "name": "msvc-debug",
+      "configurePreset": "msvc-debug"
+    }
+  ]
+}

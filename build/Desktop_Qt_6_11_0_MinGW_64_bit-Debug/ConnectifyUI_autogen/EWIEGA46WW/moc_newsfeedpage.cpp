@@ -169,6 +169,8 @@ template <> constexpr inline auto NewsFeedPage::qt_create_metaobjectdata<qt_meta
         "goToMessages",
         "goToSearch",
         "goToNotifications",
+        "showOwnPostsClicked",
+        "showNetworkPostsClicked",
         "onPostBtnClicked",
         "onSelectImageClicked"
     };
@@ -200,10 +202,14 @@ template <> constexpr inline auto NewsFeedPage::qt_create_metaobjectdata<qt_meta
         QtMocHelpers::SignalData<void()>(12, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'goToNotifications'
         QtMocHelpers::SignalData<void()>(13, 2, QMC::AccessPublic, QMetaType::Void),
+        // Signal 'showOwnPostsClicked'
+        QtMocHelpers::SignalData<void()>(14, 2, QMC::AccessPublic, QMetaType::Void),
+        // Signal 'showNetworkPostsClicked'
+        QtMocHelpers::SignalData<void()>(15, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'onPostBtnClicked'
-        QtMocHelpers::SlotData<void()>(14, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(16, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onSelectImageClicked'
-        QtMocHelpers::SlotData<void()>(15, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(17, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -236,8 +242,10 @@ void NewsFeedPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 6: _t->goToMessages(); break;
         case 7: _t->goToSearch(); break;
         case 8: _t->goToNotifications(); break;
-        case 9: _t->onPostBtnClicked(); break;
-        case 10: _t->onSelectImageClicked(); break;
+        case 9: _t->showOwnPostsClicked(); break;
+        case 10: _t->showNetworkPostsClicked(); break;
+        case 11: _t->onPostBtnClicked(); break;
+        case 12: _t->onSelectImageClicked(); break;
         default: ;
         }
     }
@@ -259,6 +267,10 @@ void NewsFeedPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::goToSearch, 7))
             return;
         if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::goToNotifications, 8))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::showOwnPostsClicked, 9))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (NewsFeedPage::*)()>(_a, &NewsFeedPage::showNetworkPostsClicked, 10))
             return;
     }
 }
@@ -282,14 +294,14 @@ int NewsFeedPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 13;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 13)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 11;
+        _id -= 13;
     }
     return _id;
 }
@@ -346,5 +358,17 @@ void NewsFeedPage::goToSearch()
 void NewsFeedPage::goToNotifications()
 {
     QMetaObject::activate(this, &staticMetaObject, 8, nullptr);
+}
+
+// SIGNAL 9
+void NewsFeedPage::showOwnPostsClicked()
+{
+    QMetaObject::activate(this, &staticMetaObject, 9, nullptr);
+}
+
+// SIGNAL 10
+void NewsFeedPage::showNetworkPostsClicked()
+{
+    QMetaObject::activate(this, &staticMetaObject, 10, nullptr);
 }
 QT_WARNING_POP

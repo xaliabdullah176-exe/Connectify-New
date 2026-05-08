@@ -261,10 +261,12 @@ void handleLikePost() {
             bool isLiked = target->posts[i]->toggleLike(users[loggedInIndex]->userID);
             if (isLiked) {
                 cout << "Post liked!" << endl;
-                notifSystem.addNotification(
-                    target->userID,
-                    users[loggedInIndex]->userName + " ne aapki post like ki."
-                );
+                if (target->userID != users[loggedInIndex]->userID) {
+                    notifSystem.addNotification(
+                        target->userID,
+                        users[loggedInIndex]->userName + " ne aapki post like ki."
+                    );
+                }
             } else {
                 cout << "Post unliked!" << endl;
             }
@@ -308,10 +310,12 @@ void handleCommentPost() {
                 users[loggedInIndex]->userName + ": " + comment
             );
             cout << "Comment added!" << endl;
-            notifSystem.addNotification(
-                target->userID,
-                users[loggedInIndex]->userName + " ne aapki post pe comment kiya."
-            );
+            if (target->userID != users[loggedInIndex]->userID) {
+                notifSystem.addNotification(
+                    target->userID,
+                    users[loggedInIndex]->userName + " ne aapki post pe comment kiya."
+                );
+            }
             found = true;
             break;
         }

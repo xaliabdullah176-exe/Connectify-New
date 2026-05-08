@@ -1,6 +1,23 @@
 #include "searchpage.h"
 #include <QStyle>
 #include <QMouseEvent>
+#include <QPainter>
+#include <QPainterPath>
+
+static QPixmap makeCirclePixmap(const QString &path, int size) {
+    QPixmap px(path);
+    if (px.isNull() || size <= 0) return QPixmap();
+    QPixmap scaled = px.scaled(size, size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+    QPixmap circle(size, size);
+    circle.fill(Qt::transparent);
+    QPainter painter(&circle);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QPainterPath clip;
+    clip.addEllipse(0, 0, size, size);
+    painter.setClipPath(clip);
+    painter.drawPixmap(0, 0, scaled);
+    return circle;
+}
 
 // ═══════════════════════════════════════════════════════
 //  SEARCH RESULT ROW
@@ -20,11 +37,24 @@ SearchResultRow::SearchResultRow(const SearchUser &user, QWidget *parent)
     avatar->setObjectName("resultAvatar");
     avatar->setFixedSize(46, 46);
     avatar->setAlignment(Qt::AlignCenter);
-
-    QStringList parts = user.name.split(" ", Qt::SkipEmptyParts);
-    QString initials;
-    for (auto &p : parts) initials += p[0].toUpper();
-    avatar->setText(initials.left(2));
+    const QString path = user.avatarPath.trimmed();
+    if (!path.isEmpty()) {
+        QPixmap circle = makeCirclePixmap(path, 46);
+        if (!circle.isNull()) {
+            avatar->setText("");
+            avatar->setPixmap(circle);
+        } else {
+            QStringList parts = user.name.split(" ", Qt::SkipEmptyParts);
+            QString initials;
+            for (auto &p : parts) initials += p[0].toUpper();
+            avatar->setText(initials.left(2));
+        }
+    } else {
+        QStringList parts = user.name.split(" ", Qt::SkipEmptyParts);
+        QString initials;
+        for (auto &p : parts) initials += p[0].toUpper();
+        avatar->setText(initials.left(2));
+    }
     hl->addWidget(avatar);
 
     // ── Name + username + bio ─────────────────────────
@@ -86,26 +116,36 @@ SearchPage::SearchPage(QWidget *parent) : QWidget(parent) {
 // ═══════════════════════════════════════════════════════
 //  LOAD CURRENT USER
 // ═══════════════════════════════════════════════════════
-void SearchPage::loadCurrentUser(int userID, const QString &name) {
+void SearchPage::loadCurrentUser(int userID, const QString &name, const QString &avatarPath) {
     m_currentUserID   = userID;
     m_currentUserName = name;
 
     currentUserNameLabel->setText(name);
 
-    QStringList parts = name.split(" ", Qt::SkipEmptyParts);
-    QString initials;
-    for (auto &p : parts) initials += p[0].toUpper();
-    currentUserAvatarLabel->setText(initials.left(2));
+    const QString path = avatarPath.trimmed();
+    if (!path.isEmpty()) {
+        QPixmap circle = makeCirclePixmap(path, 28);
+        if (!circle.isNull()) {
+            currentUserAvatarLabel->setText("");
+            currentUserAvatarLabel->setPixmap(circle);
+        } else {
+            currentUserAvatarLabel->setPixmap(QPixmap());
+            currentUserAvatarLabel->setText(makeInitials(name));
+        }
+    } else {
+        currentUserAvatarLabel->setPixmap(QPixmap());
+        currentUserAvatarLabel->setText(makeInitials(name));
+    }
 }
 
 // ═══════════════════════════════════════════════════════
 //  ADD USER
 // ═══════════════════════════════════════════════════════
 void SearchPage::addUser(int userID, const QString &name,
-                          const QString &username, const QString &bio,
+                          const QString &username, const QString &bio, const QString &avatarPath,
                           bool isFriend)
 {
-    m_allUsers.append({userID, name, username, bio, isFriend});
+    m_allUsers.append({userID, name, username, bio, avatarPath, isFriend});
     // Show all by default
     showResults(m_allUsers);
 }

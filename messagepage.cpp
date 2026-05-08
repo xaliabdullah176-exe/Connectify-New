@@ -3,6 +3,23 @@
 #include <QMouseEvent>
 #include <QTimer>
 #include <QApplication>
+#include <QPainter>
+#include <QPainterPath>
+
+static QPixmap makeCirclePixmap(const QString &path, int size) {
+    QPixmap px(path);
+    if (px.isNull() || size <= 0) return QPixmap();
+    QPixmap scaled = px.scaled(size, size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+    QPixmap circle(size, size);
+    circle.fill(Qt::transparent);
+    QPainter painter(&circle);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QPainterPath clip;
+    clip.addEllipse(0, 0, size, size);
+    painter.setClipPath(clip);
+    painter.drawPixmap(0, 0, scaled);
+    return circle;
+}
 
 // ═══════════════════════════════════════════════════════
 //  MESSAGE BUBBLE
@@ -37,6 +54,7 @@ MessageBubble::MessageBubble(const QString &text,
 // ═══════════════════════════════════════════════════════
 ChatListItem::ChatListItem(int userID,
                            const QString &name,
+                           const QString &avatarPath,
                            const QString &lastMessage,
                            const QString &time,
                            bool isOnline,
@@ -59,11 +77,24 @@ ChatListItem::ChatListItem(int userID,
     avatar->setFixedSize(40, 40);
     avatar->setAlignment(Qt::AlignCenter);
 
-    // Initials
-    QStringList parts = name.split(" ", Qt::SkipEmptyParts);
-    QString initials;
-    for (auto &p : parts) initials += p[0].toUpper();
-    avatar->setText(initials.left(2));
+    const QString path = avatarPath.trimmed();
+    if (!path.isEmpty()) {
+        QPixmap circle = makeCirclePixmap(path, 40);
+        if (!circle.isNull()) {
+            avatar->setText("");
+            avatar->setPixmap(circle);
+        } else {
+            QStringList parts = name.split(" ", Qt::SkipEmptyParts);
+            QString initials;
+            for (auto &p : parts) initials += p[0].toUpper();
+            avatar->setText(initials.left(2));
+        }
+    } else {
+        QStringList parts = name.split(" ", Qt::SkipEmptyParts);
+        QString initials;
+        for (auto &p : parts) initials += p[0].toUpper();
+        avatar->setText(initials.left(2));
+    }
 
     // Online indicator
     if (isOnline) {
@@ -133,17 +164,25 @@ MessagePage::MessagePage(QWidget *parent) : QWidget(parent) {
 void MessagePage::loadCurrentUser(int userID, const QString &name) {
     m_currentUserID   = userID;
     m_currentUserName = name;
+    m_openChatUserID = -1;
+
+    // Important when switching accounts: clear previous user's open chat UI/state.
+    clearMessages();
+    conversationWidget->hide();
+    placeholderWidget->show();
+    messageInput->clear();
 }
 
 // ═══════════════════════════════════════════════════════
 //  ADD CONTACT
 // ═══════════════════════════════════════════════════════
 void MessagePage::addContact(int userID, const QString &name,
+                             const QString &avatarPath,
                               const QString &lastMessage,
                               const QString &time, bool isOnline)
 {
     ChatListItem *item = new ChatListItem(
-        userID, name, lastMessage, time, isOnline);
+        userID, name, avatarPath, lastMessage, time, isOnline);
 
     connect(item, &ChatListItem::clicked,
             this, &MessagePage::onContactClicked);
@@ -151,6 +190,14 @@ void MessagePage::addContact(int userID, const QString &name,
     // Insert before the stretch at the end
     chatListLayout->insertWidget(chatListLayout->count() - 1, item);
     chatItems.append(item);
+}
+
+void MessagePage::clearContacts() {
+    for (auto *item : chatItems) {
+        chatListLayout->removeWidget(item);
+        delete item;
+    }
+    chatItems.clear();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -197,6 +244,7 @@ void MessagePage::clearMessages() {
 // ═══════════════════════════════════════════════════════
 void MessagePage::openConversation(int userID,
                                     const QString &contactName,
+                                    const QString &avatarPath,
                                     bool isOnline)
 {
     m_openChatUserID = userID;
@@ -207,7 +255,20 @@ void MessagePage::openConversation(int userID,
     chatStatusLabel->style()->unpolish(chatStatusLabel);
     chatStatusLabel->style()->polish(chatStatusLabel);
 
-    chatAvatarLabel->setText(makeInitials(contactName));
+    const QString path = avatarPath.trimmed();
+    if (!path.isEmpty()) {
+        QPixmap circle = makeCirclePixmap(path, 38);
+        if (!circle.isNull()) {
+            chatAvatarLabel->setText("");
+            chatAvatarLabel->setPixmap(circle);
+        } else {
+            chatAvatarLabel->setPixmap(QPixmap());
+            chatAvatarLabel->setText(makeInitials(contactName));
+        }
+    } else {
+        chatAvatarLabel->setPixmap(QPixmap());
+        chatAvatarLabel->setText(makeInitials(contactName));
+    }
 
     placeholderWidget->hide();
     conversationWidget->show();

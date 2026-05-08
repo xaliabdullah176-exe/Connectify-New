@@ -1,6 +1,6 @@
 CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj: \
- C:\Users\Mustafa\Desktop\Connectify-New\messagepage.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\messagepage.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\messagepage.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\messagepage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qwidget.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -448,4 +448,8 @@ CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtCore/QTimer \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qtimer.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QApplication \
- C:/Qt/6.11.0/mingw_64/include/QtWidgets/qapplication.h
+ C:/Qt/6.11.0/mingw_64/include/QtWidgets/qapplication.h \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPainter \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qpainter.h \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPainterPath \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qpainterpath.h

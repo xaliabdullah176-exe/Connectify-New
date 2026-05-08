@@ -1,5 +1,5 @@
-C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/EWIEGA46WW/moc_signuppage.cpp: C:/Users/Mustafa/Desktop/Connectify-New/signuppage.h \
-  C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/moc_predefs.h \
+C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/EWIEGA46WW/moc_signuppage.cpp: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/signuppage.h \
+  C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/moc_predefs.h \
   C:/Qt/6.11.0/mingw_64/include/QtCore/q17memory.h \
   C:/Qt/6.11.0/mingw_64/include/QtCore/q20bit.h \
   C:/Qt/6.11.0/mingw_64/include/QtCore/q20functional.h \
@@ -162,6 +162,7 @@ C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Deb
   C:/Qt/6.11.0/mingw_64/include/QtGui/qtransform.h \
   C:/Qt/6.11.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.11.0/mingw_64/include/QtGui/qwindowdefs_win.h \
+  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QCheckBox \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QFrame \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QHBoxLayout \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QLabel \
@@ -171,6 +172,7 @@ C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Deb
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QWidget \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qabstractbutton.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qboxlayout.h \
+  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qcheckbox.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qframe.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qgridlayout.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qlabel.h \

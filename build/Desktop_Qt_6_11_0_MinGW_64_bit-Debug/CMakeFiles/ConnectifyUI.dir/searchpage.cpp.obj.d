@@ -1,6 +1,6 @@
 CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj: \
- C:\Users\Mustafa\Desktop\Connectify-New\searchpage.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\searchpage.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\searchpage.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\searchpage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qwidget.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -440,4 +440,8 @@ CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qcoreapplication_platform.h \
  C:/Qt/6.11.0/mingw_64/include/QtGui/qinputmethod.h \
  C:/Qt/6.11.0/mingw_64/include/QtCore/qlocale.h \
- C:/Qt/6.11.0/mingw_64/include/QtGui/qguiapplication_platform.h
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qguiapplication_platform.h \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPainter \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qpainter.h \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPainterPath \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qpainterpath.h

@@ -52,10 +52,10 @@ RM = C:\Qt\Tools\CMake_64\bin\cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Mustafa\Desktop\Connectify-New
+CMAKE_SOURCE_DIR = "C:\Users\laptech\Downloads\Connectify (1)\Connectify"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug
+CMAKE_BINARY_DIR = "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug"
 
 # Utility rule file for ConnectifyUI_autogen.
 
@@ -70,9 +70,9 @@ CMakeFiles/ConnectifyUI_autogen: ConnectifyUI_autogen/timestamp
 ConnectifyUI_autogen/timestamp: C:/Qt/6.11.0/mingw_64/bin/moc.exe
 ConnectifyUI_autogen/timestamp: C:/Qt/6.11.0/mingw_64/bin/uic.exe
 ConnectifyUI_autogen/timestamp: CMakeFiles/ConnectifyUI_autogen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target ConnectifyUI"
-	C:\Qt\Tools\CMake_64\bin\cmake.exe -E cmake_autogen C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/ConnectifyUI_autogen.dir/AutogenInfo.json Debug
-	C:\Qt\Tools\CMake_64\bin\cmake.exe -E touch C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/timestamp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target ConnectifyUI"
+	C:\Qt\Tools\CMake_64\bin\cmake.exe -E cmake_autogen "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/ConnectifyUI_autogen.dir/AutogenInfo.json" Debug
+	C:\Qt\Tools\CMake_64\bin\cmake.exe -E touch "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/timestamp"
 
 ConnectifyUI_autogen: CMakeFiles/ConnectifyUI_autogen
 ConnectifyUI_autogen: ConnectifyUI_autogen/timestamp
@@ -88,6 +88,6 @@ CMakeFiles/ConnectifyUI_autogen.dir/clean:
 .PHONY : CMakeFiles/ConnectifyUI_autogen.dir/clean
 
 CMakeFiles/ConnectifyUI_autogen.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Mustafa\Desktop\Connectify-New C:\Users\Mustafa\Desktop\Connectify-New C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles\ConnectifyUI_autogen.dir\DependInfo.cmake "--color=$(COLOR)"
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "C:\Users\laptech\Downloads\Connectify (1)\Connectify" "C:\Users\laptech\Downloads\Connectify (1)\Connectify" "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug" "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug" "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles\ConnectifyUI_autogen.dir\DependInfo.cmake" "--color=$(COLOR)"
 .PHONY : CMakeFiles/ConnectifyUI_autogen.dir/depend
 

@@ -52,10 +52,10 @@ RM = C:\Qt\Tools\CMake_64\bin\cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Mustafa\Desktop\Connectify-New
+CMAKE_SOURCE_DIR = "C:\Users\laptech\Downloads\Connectify (1)\Connectify"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug
+CMAKE_BINARY_DIR = "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/ConnectifyUI.dir/depend.make
@@ -68,258 +68,273 @@ include CMakeFiles/ConnectifyUI.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/ConnectifyUI.dir/flags.make
 
-.qt/rcc/qrc_resources.cpp: C:/Users/Mustafa/Desktop/Connectify-New/style.qss
+.qt/rcc/qrc_resources.cpp: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/style.qss
 .qt/rcc/qrc_resources.cpp: .qt/rcc/resources.qrc
 .qt/rcc/qrc_resources.cpp: C:/Qt/6.11.0/mingw_64/bin/rcc.exe
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Running rcc for resource resources"
-	C:\Qt\6.11.0\mingw_64\bin\rcc.exe --output C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp --name resources C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/resources.qrc --no-zstd
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Running rcc for resource resources"
+	C:\Qt\6.11.0\mingw_64\bin\rcc.exe --output "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp" --name resources "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/resources.qrc" --no-zstd
 
 ConnectifyUI_autogen/timestamp: C:/Qt/6.11.0/mingw_64/bin/moc.exe
 ConnectifyUI_autogen/timestamp: C:/Qt/6.11.0/mingw_64/bin/uic.exe
 ConnectifyUI_autogen/timestamp: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Automatic MOC and UIC for target ConnectifyUI"
-	C:\Qt\Tools\CMake_64\bin\cmake.exe -E cmake_autogen C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/ConnectifyUI_autogen.dir/AutogenInfo.json Debug
-	C:\Qt\Tools\CMake_64\bin\cmake.exe -E touch C:/Users/Mustafa/Desktop/Connectify-New/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/timestamp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Automatic MOC and UIC for target ConnectifyUI"
+	C:\Qt\Tools\CMake_64\bin\cmake.exe -E cmake_autogen "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/CMakeFiles/ConnectifyUI_autogen.dir/AutogenInfo.json" Debug
+	C:\Qt\Tools\CMake_64\bin\cmake.exe -E touch "C:/Users/laptech/Downloads/Connectify (1)/Connectify/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/ConnectifyUI_autogen/timestamp"
 
 CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
 CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj: ConnectifyUI_autogen/mocs_compilation.cpp
 CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\ConnectifyUI_autogen\mocs_compilation.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\ConnectifyUI_autogen\mocs_compilation.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\mocs_compilation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\ConnectifyUI_autogen\mocs_compilation.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\ConnectifyUI_autogen\mocs_compilation.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\mocs_compilation.cpp"
 
 CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\mocs_compilation.cpp > CMakeFiles\ConnectifyUI.dir\ConnectifyUI_autogen\mocs_compilation.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\mocs_compilation.cpp" > CMakeFiles\ConnectifyUI.dir\ConnectifyUI_autogen\mocs_compilation.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/ConnectifyUI_autogen/mocs_compilation.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\mocs_compilation.cpp -o CMakeFiles\ConnectifyUI.dir\ConnectifyUI_autogen\mocs_compilation.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\ConnectifyUI_autogen\mocs_compilation.cpp" -o CMakeFiles\ConnectifyUI.dir\ConnectifyUI_autogen\mocs_compilation.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/main.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/main.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/main.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/main.cpp
+CMakeFiles/ConnectifyUI.dir/main.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/main.cpp
 CMakeFiles/ConnectifyUI.dir/main.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ConnectifyUI.dir/main.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/main.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\main.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\main.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ConnectifyUI.dir/main.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/main.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\main.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\main.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\main.cpp"
 
 CMakeFiles/ConnectifyUI.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/main.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\main.cpp > CMakeFiles\ConnectifyUI.dir\main.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\main.cpp" > CMakeFiles\ConnectifyUI.dir\main.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/main.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\main.cpp -o CMakeFiles\ConnectifyUI.dir\main.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\main.cpp" -o CMakeFiles\ConnectifyUI.dir\main.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/mainwindow.cpp
+CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/mainwindow.cpp
 CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\mainwindow.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\mainwindow.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\mainwindow.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\mainwindow.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\mainwindow.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\mainwindow.cpp"
 
 CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\mainwindow.cpp > CMakeFiles\ConnectifyUI.dir\mainwindow.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\mainwindow.cpp" > CMakeFiles\ConnectifyUI.dir\mainwindow.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/mainwindow.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\mainwindow.cpp -o CMakeFiles\ConnectifyUI.dir\mainwindow.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\mainwindow.cpp" -o CMakeFiles\ConnectifyUI.dir\mainwindow.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/LoginPage.cpp
+CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/LoginPage.cpp
 CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\LoginPage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\LoginPage.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\LoginPage.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\LoginPage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\LoginPage.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\LoginPage.cpp"
 
 CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\LoginPage.cpp > CMakeFiles\ConnectifyUI.dir\LoginPage.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\LoginPage.cpp" > CMakeFiles\ConnectifyUI.dir\LoginPage.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/LoginPage.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\LoginPage.cpp -o CMakeFiles\ConnectifyUI.dir\LoginPage.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\LoginPage.cpp" -o CMakeFiles\ConnectifyUI.dir\LoginPage.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/signuppage.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/signuppage.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/signuppage.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/signuppage.cpp
+CMakeFiles/ConnectifyUI.dir/signuppage.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/signuppage.cpp
 CMakeFiles/ConnectifyUI.dir/signuppage.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ConnectifyUI.dir/signuppage.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/signuppage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\signuppage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\signuppage.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\signuppage.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ConnectifyUI.dir/signuppage.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/signuppage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\signuppage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\signuppage.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\signuppage.cpp"
 
 CMakeFiles/ConnectifyUI.dir/signuppage.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/signuppage.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\signuppage.cpp > CMakeFiles\ConnectifyUI.dir\signuppage.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\signuppage.cpp" > CMakeFiles\ConnectifyUI.dir\signuppage.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/signuppage.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/signuppage.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\signuppage.cpp -o CMakeFiles\ConnectifyUI.dir\signuppage.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\signuppage.cpp" -o CMakeFiles\ConnectifyUI.dir\signuppage.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/newsfeedpage.cpp
+CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/newsfeedpage.cpp
 CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\newsfeedpage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\newsfeedpage.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\newsfeedpage.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\newsfeedpage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\newsfeedpage.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\newsfeedpage.cpp"
 
 CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\newsfeedpage.cpp > CMakeFiles\ConnectifyUI.dir\newsfeedpage.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\newsfeedpage.cpp" > CMakeFiles\ConnectifyUI.dir\newsfeedpage.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/newsfeedpage.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\newsfeedpage.cpp -o CMakeFiles\ConnectifyUI.dir\newsfeedpage.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\newsfeedpage.cpp" -o CMakeFiles\ConnectifyUI.dir\newsfeedpage.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/profilepage.cpp
+CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/profilepage.cpp
 CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\profilepage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\profilepage.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\profilepage.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\profilepage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\profilepage.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\profilepage.cpp"
 
 CMakeFiles/ConnectifyUI.dir/profilepage.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/profilepage.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\profilepage.cpp > CMakeFiles\ConnectifyUI.dir\profilepage.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\profilepage.cpp" > CMakeFiles\ConnectifyUI.dir\profilepage.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/profilepage.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/profilepage.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\profilepage.cpp -o CMakeFiles\ConnectifyUI.dir\profilepage.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\profilepage.cpp" -o CMakeFiles\ConnectifyUI.dir\profilepage.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/searchpage.cpp
+CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/searchpage.cpp
 CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\searchpage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\searchpage.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\searchpage.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\searchpage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\searchpage.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\searchpage.cpp"
 
 CMakeFiles/ConnectifyUI.dir/searchpage.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/searchpage.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\searchpage.cpp > CMakeFiles\ConnectifyUI.dir\searchpage.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\searchpage.cpp" > CMakeFiles\ConnectifyUI.dir\searchpage.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/searchpage.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/searchpage.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\searchpage.cpp -o CMakeFiles\ConnectifyUI.dir\searchpage.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\searchpage.cpp" -o CMakeFiles\ConnectifyUI.dir\searchpage.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/messagepage.cpp
+CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/messagepage.cpp
 CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\messagepage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\messagepage.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\messagepage.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\messagepage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\messagepage.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\messagepage.cpp"
 
 CMakeFiles/ConnectifyUI.dir/messagepage.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/messagepage.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\messagepage.cpp > CMakeFiles\ConnectifyUI.dir\messagepage.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\messagepage.cpp" > CMakeFiles\ConnectifyUI.dir\messagepage.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/messagepage.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/messagepage.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\messagepage.cpp -o CMakeFiles\ConnectifyUI.dir\messagepage.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\messagepage.cpp" -o CMakeFiles\ConnectifyUI.dir\messagepage.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/admindashboard.cpp
+CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/admindashboard.cpp
 CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\admindashboard.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\admindashboard.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\admindashboard.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\admindashboard.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\admindashboard.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\admindashboard.cpp"
 
 CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\admindashboard.cpp > CMakeFiles\ConnectifyUI.dir\admindashboard.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\admindashboard.cpp" > CMakeFiles\ConnectifyUI.dir\admindashboard.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\admindashboard.cpp -o CMakeFiles\ConnectifyUI.dir\admindashboard.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\admindashboard.cpp" -o CMakeFiles\ConnectifyUI.dir\admindashboard.cpp.s
+
+CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
+CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
+CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/notificationpage.cpp
+CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\notificationpage.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\notificationpage.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\notificationpage.cpp"
+
+CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.i"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\notificationpage.cpp" > CMakeFiles\ConnectifyUI.dir\notificationpage.cpp.i
+
+CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.s"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\notificationpage.cpp" -o CMakeFiles\ConnectifyUI.dir\notificationpage.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/backend/user.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/backend/user.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/backend/user.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/backend/user.cpp
+CMakeFiles/ConnectifyUI.dir/backend/user.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/backend/user.cpp
 CMakeFiles/ConnectifyUI.dir/backend/user.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/ConnectifyUI.dir/backend/user.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/backend/user.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\backend\user.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\backend\user.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\backend\user.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/ConnectifyUI.dir/backend/user.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/backend/user.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\backend\user.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\backend\user.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\user.cpp"
 
 CMakeFiles/ConnectifyUI.dir/backend/user.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/backend/user.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\backend\user.cpp > CMakeFiles\ConnectifyUI.dir\backend\user.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\user.cpp" > CMakeFiles\ConnectifyUI.dir\backend\user.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/backend/user.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/backend/user.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\backend\user.cpp -o CMakeFiles\ConnectifyUI.dir\backend\user.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\user.cpp" -o CMakeFiles\ConnectifyUI.dir\backend\user.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/backend/post.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/backend/post.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/backend/post.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/backend/post.cpp
+CMakeFiles/ConnectifyUI.dir/backend/post.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/backend/post.cpp
 CMakeFiles/ConnectifyUI.dir/backend/post.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/ConnectifyUI.dir/backend/post.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/backend/post.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\backend\post.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\backend\post.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\backend\post.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/ConnectifyUI.dir/backend/post.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/backend/post.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\backend\post.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\backend\post.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\post.cpp"
 
 CMakeFiles/ConnectifyUI.dir/backend/post.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/backend/post.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\backend\post.cpp > CMakeFiles\ConnectifyUI.dir\backend\post.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\post.cpp" > CMakeFiles\ConnectifyUI.dir\backend\post.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/backend/post.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/backend/post.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\backend\post.cpp -o CMakeFiles\ConnectifyUI.dir\backend\post.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\post.cpp" -o CMakeFiles\ConnectifyUI.dir\backend\post.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/backend/message.cpp
+CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/backend/message.cpp
 CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\backend\message.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\backend\message.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\backend\message.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\backend\message.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\backend\message.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\message.cpp"
 
 CMakeFiles/ConnectifyUI.dir/backend/message.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/backend/message.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\backend\message.cpp > CMakeFiles\ConnectifyUI.dir\backend\message.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\message.cpp" > CMakeFiles\ConnectifyUI.dir\backend\message.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/backend/message.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/backend/message.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\backend\message.cpp -o CMakeFiles\ConnectifyUI.dir\backend\message.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\message.cpp" -o CMakeFiles\ConnectifyUI.dir\backend\message.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/backend/notification.cpp
+CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/backend/notification.cpp
 CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\backend\notification.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\backend\notification.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\backend\notification.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\backend\notification.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\backend\notification.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\notification.cpp"
 
 CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\backend\notification.cpp > CMakeFiles\ConnectifyUI.dir\backend\notification.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\notification.cpp" > CMakeFiles\ConnectifyUI.dir\backend\notification.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/backend/notification.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\backend\notification.cpp -o CMakeFiles\ConnectifyUI.dir\backend\notification.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\notification.cpp" -o CMakeFiles\ConnectifyUI.dir\backend\notification.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/backend/search.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/backend/search.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
-CMakeFiles/ConnectifyUI.dir/backend/search.cpp.obj: C:/Users/Mustafa/Desktop/Connectify-New/backend/search.cpp
+CMakeFiles/ConnectifyUI.dir/backend/search.cpp.obj: C:/Users/laptech/Downloads/Connectify\ (1)/Connectify/backend/search.cpp
 CMakeFiles/ConnectifyUI.dir/backend/search.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/ConnectifyUI.dir/backend/search.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/backend/search.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\backend\search.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\backend\search.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\backend\search.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/ConnectifyUI.dir/backend/search.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/backend/search.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\backend\search.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\backend\search.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\search.cpp"
 
 CMakeFiles/ConnectifyUI.dir/backend/search.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/backend/search.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\backend\search.cpp > CMakeFiles\ConnectifyUI.dir\backend\search.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\search.cpp" > CMakeFiles\ConnectifyUI.dir\backend\search.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/backend/search.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/backend/search.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\backend\search.cpp -o CMakeFiles\ConnectifyUI.dir\backend\search.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\backend\search.cpp" -o CMakeFiles\ConnectifyUI.dir\backend\search.cpp.s
 
 CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.obj: CMakeFiles/ConnectifyUI.dir/flags.make
 CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.obj: CMakeFiles/ConnectifyUI.dir/includes_CXX.rsp
 CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.obj: .qt/rcc/qrc_resources.cpp
 CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.obj: CMakeFiles/ConnectifyUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp.obj -c C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.obj -MF CMakeFiles\ConnectifyUI.dir\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp.obj.d -o CMakeFiles\ConnectifyUI.dir\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp.obj -c "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp"
 
 CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp > CMakeFiles\ConnectifyUI.dir\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp.i
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp" > CMakeFiles\ConnectifyUI.dir\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp.i
 
 CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ConnectifyUI.dir/build/Desktop_Qt_6_11_0_MinGW_64_bit-Debug/.qt/rcc/qrc_resources.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp -o CMakeFiles\ConnectifyUI.dir\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp.s
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp" -o CMakeFiles\ConnectifyUI.dir\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\.qt\rcc\qrc_resources.cpp.s
 
 # Object files for target ConnectifyUI
 ConnectifyUI_OBJECTS = \
@@ -333,6 +348,7 @@ ConnectifyUI_OBJECTS = \
 "CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj" \
 "CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj" \
 "CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj" \
+"CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.obj" \
 "CMakeFiles/ConnectifyUI.dir/backend/user.cpp.obj" \
 "CMakeFiles/ConnectifyUI.dir/backend/post.cpp.obj" \
 "CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj" \
@@ -353,6 +369,7 @@ ConnectifyUI.exe: CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj
 ConnectifyUI.exe: CMakeFiles/ConnectifyUI.dir/searchpage.cpp.obj
 ConnectifyUI.exe: CMakeFiles/ConnectifyUI.dir/messagepage.cpp.obj
 ConnectifyUI.exe: CMakeFiles/ConnectifyUI.dir/admindashboard.cpp.obj
+ConnectifyUI.exe: CMakeFiles/ConnectifyUI.dir/notificationpage.cpp.obj
 ConnectifyUI.exe: CMakeFiles/ConnectifyUI.dir/backend/user.cpp.obj
 ConnectifyUI.exe: CMakeFiles/ConnectifyUI.dir/backend/post.cpp.obj
 ConnectifyUI.exe: CMakeFiles/ConnectifyUI.dir/backend/message.cpp.obj
@@ -367,7 +384,7 @@ ConnectifyUI.exe: C:/Qt/6.11.0/mingw_64/lib/libQt6EntryPoint.a
 ConnectifyUI.exe: CMakeFiles/ConnectifyUI.dir/linkLibs.rsp
 ConnectifyUI.exe: CMakeFiles/ConnectifyUI.dir/objects1.rsp
 ConnectifyUI.exe: CMakeFiles/ConnectifyUI.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable ConnectifyUI.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_20) "Linking CXX executable ConnectifyUI.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\ConnectifyUI.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -380,6 +397,6 @@ CMakeFiles/ConnectifyUI.dir/clean:
 
 CMakeFiles/ConnectifyUI.dir/depend: .qt/rcc/qrc_resources.cpp
 CMakeFiles/ConnectifyUI.dir/depend: ConnectifyUI_autogen/timestamp
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Mustafa\Desktop\Connectify-New C:\Users\Mustafa\Desktop\Connectify-New C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug C:\Users\Mustafa\Desktop\Connectify-New\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles\ConnectifyUI.dir\DependInfo.cmake "--color=$(COLOR)"
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "C:\Users\laptech\Downloads\Connectify (1)\Connectify" "C:\Users\laptech\Downloads\Connectify (1)\Connectify" "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug" "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug" "C:\Users\laptech\Downloads\Connectify (1)\Connectify\build\Desktop_Qt_6_11_0_MinGW_64_bit-Debug\CMakeFiles\ConnectifyUI.dir\DependInfo.cmake" "--color=$(COLOR)"
 .PHONY : CMakeFiles/ConnectifyUI.dir/depend
 

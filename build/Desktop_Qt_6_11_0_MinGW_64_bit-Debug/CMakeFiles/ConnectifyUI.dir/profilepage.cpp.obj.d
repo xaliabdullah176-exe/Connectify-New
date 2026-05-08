@@ -1,6 +1,6 @@
 CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj: \
- C:\Users\Mustafa\Desktop\Connectify-New\profilepage.cpp \
- C:\Users\Mustafa\Desktop\Connectify-New\profilepage.h \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\profilepage.cpp \
+ C:\Users\laptech\Downloads\Connectify\ (1)\Connectify\profilepage.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qwidget.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -404,4 +404,10 @@ CMakeFiles/ConnectifyUI.dir/profilepage.cpp.obj: \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qscrollarea.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QFrame \
- C:/Qt/6.11.0/mingw_64/include/QtGui/QPixmap
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPixmap \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPainter \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qpainter.h \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qtextoption.h \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qpen.h \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/QPainterPath \
+ C:/Qt/6.11.0/mingw_64/include/QtGui/qpainterpath.h

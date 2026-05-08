@@ -3,12 +3,30 @@
 #include <QPixmap>
 #include <QFileInfo>
 #include <ctime>
+#include <QPainter>
+#include <QPainterPath>
+
+static QPixmap makeCirclePixmap(const QString &path, int size) {
+    QPixmap px(path);
+    if (px.isNull() || size <= 0) return QPixmap();
+    QPixmap scaled = px.scaled(size, size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+    QPixmap circle(size, size);
+    circle.fill(Qt::transparent);
+    QPainter painter(&circle);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QPainterPath clip;
+    clip.addEllipse(0, 0, size, size);
+    painter.setClipPath(clip);
+    painter.drawPixmap(0, 0, scaled);
+    return circle;
+}
 
 // ═══════════════════════════════════════════════════════
 //  FeedPostCard — single post card
 // ═══════════════════════════════════════════════════════
 FeedPostCard::FeedPostCard(int postID,
                            const QString &ownerName,
+                           const QString &ownerAvatarPath,
                            const QString &content,
                            const QString &imagePath,
                            const QString &timeAgo,
@@ -39,10 +57,24 @@ FeedPostCard::FeedPostCard(int postID,
     av->setObjectName("miniAvatar");
     av->setFixedSize(40, 40);
     av->setAlignment(Qt::AlignCenter);
-    QStringList parts = ownerName.split(" ", Qt::SkipEmptyParts);
-    QString initials;
-    for (auto &p : parts) initials += p[0].toUpper();
-    av->setText(initials.left(2));
+    const QString aPath = ownerAvatarPath.trimmed();
+    if (!aPath.isEmpty()) {
+        QPixmap circle = makeCirclePixmap(aPath, 40);
+        if (!circle.isNull()) {
+            av->setText("");
+            av->setPixmap(circle);
+        } else {
+            QStringList parts = ownerName.split(" ", Qt::SkipEmptyParts);
+            QString initials;
+            for (auto &p : parts) initials += p[0].toUpper();
+            av->setText(initials.left(2));
+        }
+    } else {
+        QStringList parts = ownerName.split(" ", Qt::SkipEmptyParts);
+        QString initials;
+        for (auto &p : parts) initials += p[0].toUpper();
+        av->setText(initials.left(2));
+    }
 
     // Name + time
     QVBoxLayout *nameCol = new QVBoxLayout();
@@ -211,15 +243,25 @@ NewsFeedPage::NewsFeedPage(QWidget *parent) : QWidget(parent) {
 // ═══════════════════════════════════════════════════════
 //  LOAD CURRENT USER
 // ═══════════════════════════════════════════════════════
-void NewsFeedPage::loadCurrentUser(int userID, const QString &name) {
+void NewsFeedPage::loadCurrentUser(int userID, const QString &name, const QString &avatarPath) {
     m_currentUserID   = userID;
     m_currentUserName = name;
 
     // Update navbar avatar + name
-    QStringList parts = name.split(" ", Qt::SkipEmptyParts);
-    QString initials;
-    for (auto &p : parts) initials += p[0].toUpper();
-    navAvatarLabel->setText(initials.left(2));
+    const QString path = avatarPath.trimmed();
+    if (!path.isEmpty()) {
+        QPixmap circle = makeCirclePixmap(path, 34);
+        if (!circle.isNull()) {
+            navAvatarLabel->setText("");
+            navAvatarLabel->setPixmap(circle);
+        } else {
+            navAvatarLabel->setPixmap(QPixmap());
+            navAvatarLabel->setText(makeInitials(name));
+        }
+    } else {
+        navAvatarLabel->setPixmap(QPixmap());
+        navAvatarLabel->setText(makeInitials(name));
+    }
     navUserNameLabel->setText(name);
 }
 
@@ -228,6 +270,7 @@ void NewsFeedPage::loadCurrentUser(int userID, const QString &name) {
 // ═══════════════════════════════════════════════════════
 void NewsFeedPage::addPost(int postID,
                            const QString &ownerName,
+                           const QString &ownerAvatarPath,
                            const QString &content,
                            const QString &imagePath,
                            const QString &timeAgo,
@@ -239,7 +282,7 @@ void NewsFeedPage::addPost(int postID,
                            bool isOwnPost)
 {
     FeedPostCard *card = new FeedPostCard(
-        postID, ownerName, content, imagePath,
+        postID, ownerName, ownerAvatarPath, content, imagePath,
         timeAgo, likes, comments, canInteract, isLikedByMe, commentsList, isOwnPost
     );
 
@@ -257,7 +300,7 @@ void NewsFeedPage::addPost(int postID,
 void NewsFeedPage::clearFeed() {
     QLayoutItem *item;
     while ((item = feedLayout->takeAt(0)) != nullptr) {
-        if (item->widget()) delete item->widget();
+        if (item->widget()) item->widget()->deleteLater();
         delete item;
     }
     feedLayout->addStretch();
@@ -271,6 +314,25 @@ void NewsFeedPage::updatePostLikes(int postID, int newCount) {
     for (auto *c : cards) {
         // FeedPostCard doesn't expose postID publicly, handled via optimistic UI
         // You can extend FeedPostCard to expose getPostID() if needed
+    }
+}
+
+// ═══════════════════════════════════════════════════════
+//  SET NOTIFICATION BADGE
+// ═══════════════════════════════════════════════════════
+void NewsFeedPage::setNotifBadge(int count) {
+    if (!m_notifBadge) return;
+    if (count <= 0) {
+        m_notifBadge->hide();
+    } else {
+        QString label = count > 99 ? "99+" : QString::number(count);
+        m_notifBadge->setText(label);
+        m_notifBadge->show();
+        // Reposition badge to top-right of button
+        if (m_notifBtn) {
+            int bx = m_notifBtn->width() - 22;
+            m_notifBadge->move(bx < 0 ? 150 : bx, 4);
+        }
     }
 }
 
@@ -422,13 +484,36 @@ void NewsFeedPage::setupUI() {
         return btn;
     };
 
+    QPushButton *feedBtn      = makeMenuItem("📰", "Feed");
     QPushButton *homeBtn      = makeMenuItem("🏠", "Home");
     QPushButton *profileBtn   = makeMenuItem("👤", "My Profile");
     QPushButton *friendsBtn   = makeMenuItem("👥", "Friends");
     QPushButton *msgBtn       = makeMenuItem("💬", "Messages");
     QPushButton *searchBtn    = makeMenuItem("🔍", "Search");
-    QPushButton *notifBtn     = makeMenuItem("🔔", "Notifications");
-    (void)homeBtn; (void)friendsBtn; // suppress unused warning
+
+    // ── Notification button with badge overlay ───────────────────────────
+    QWidget *notifWrapper = new QWidget();
+    notifWrapper->setFixedHeight(44);
+    QHBoxLayout *notifWrapLayout = new QHBoxLayout(notifWrapper);
+    notifWrapLayout->setContentsMargins(0, 0, 0, 0);
+    notifWrapLayout->setSpacing(0);
+
+    m_notifBtn = new QPushButton("🔔  Notifications");
+    m_notifBtn->setObjectName("menuItem");
+    m_notifBtn->setFlat(true);
+    m_notifBtn->setCursor(Qt::PointingHandCursor);
+    m_notifBtn->setFixedHeight(44);
+    notifWrapLayout->addWidget(m_notifBtn);
+
+    m_notifBadge = new QLabel(notifWrapper);
+    m_notifBadge->setObjectName("notifBadge");
+    m_notifBadge->setFixedSize(18, 18);
+    m_notifBadge->setAlignment(Qt::AlignCenter);
+    m_notifBadge->move(notifWrapper->width() - 24, 4);
+    m_notifBadge->hide();
+    leftLayout->addWidget(notifWrapper);
+
+    QPushButton *notifBtn = m_notifBtn; // alias for connect() below
 
     leftLayout->addStretch();
     bodyLayout->addWidget(leftSidebar);
@@ -516,49 +601,6 @@ void NewsFeedPage::setupUI() {
 
     bodyLayout->addWidget(centerCol, 1);
 
-    // ── RIGHT SIDEBAR ─────────────────────────────────
-    QWidget *rightSidebar = new QWidget();
-    rightSidebar->setObjectName("sideCard");
-    rightSidebar->setFixedWidth(220);
-    QVBoxLayout *rightLayout = new QVBoxLayout(rightSidebar);
-    rightLayout->setContentsMargins(14, 16, 14, 16);
-    rightLayout->setSpacing(8);
-
-    QLabel *suggestTitle = new QLabel("SUGGESTED USERS");
-    suggestTitle->setObjectName("cardTitle");
-    rightLayout->addWidget(suggestTitle);
-    rightLayout->addSpacing(4);
-
-    // Placeholder suggestion items
-    auto makeSuggestRow = [&](const QString &initials, const QString &name) {
-        QWidget *row = new QWidget();
-        QHBoxLayout *rl = new QHBoxLayout(row);
-        rl->setContentsMargins(0, 4, 0, 4);
-        rl->setSpacing(10);
-        QLabel *av = new QLabel(initials);
-        av->setObjectName("miniAvatar");
-        av->setFixedSize(34, 34);
-        av->setAlignment(Qt::AlignCenter);
-        QLabel *nm = new QLabel(name);
-        nm->setObjectName("friendName");
-        QPushButton *flw = new QPushButton("Follow");
-        flw->setObjectName("followBtn");
-        flw->setCursor(Qt::PointingHandCursor);
-        flw->setFixedHeight(26);
-        rl->addWidget(av);
-        rl->addWidget(nm);
-        rl->addStretch();
-        rl->addWidget(flw);
-        rightLayout->addWidget(row);
-    };
-
-    makeSuggestRow("AK", "Ali Khan");
-    makeSuggestRow("SM", "Sara Malik");
-    makeSuggestRow("UH", "Usman Haider");
-
-    rightLayout->addStretch();
-    bodyLayout->addWidget(rightSidebar);
-
     mainLayout->addWidget(body, 1);
 
     // ── Wire up signals ────────────────────────────────
@@ -566,8 +608,11 @@ void NewsFeedPage::setupUI() {
     connect(selectImageBtn, &QPushButton::clicked, this, &NewsFeedPage::onSelectImageClicked);
     connect(logoutBtn,      &QPushButton::clicked, this, &NewsFeedPage::logoutClicked);
     connect(profileBtn,     &QPushButton::clicked, this, &NewsFeedPage::goToProfile);
+    connect(feedBtn,        &QPushButton::clicked, this, &NewsFeedPage::showNetworkPostsClicked);
+    connect(homeBtn,        &QPushButton::clicked, this, &NewsFeedPage::showOwnPostsClicked);
     connect(msgBtn,         &QPushButton::clicked, this, &NewsFeedPage::goToMessages);
     connect(searchBtn,      &QPushButton::clicked, this, &NewsFeedPage::goToSearch);
+    connect(friendsBtn,     &QPushButton::clicked, this, &NewsFeedPage::goToSearch);
     connect(notifBtn,       &QPushButton::clicked, this, &NewsFeedPage::goToNotifications);
     connect(msgNavBtn,      &QPushButton::clicked, this, &NewsFeedPage::goToMessages);
     connect(searchNavBtn,   &QPushButton::clicked, this, &NewsFeedPage::goToSearch);
@@ -755,6 +800,16 @@ void NewsFeedPage::applyStyles() {
             background:transparent; border:none; padding:2px 8px;
         }
         #hintLabel { font-size:10px; color:#374151; background:transparent; }
+
+        /* ── Notification badge ─────────────────────────────────── */
+        #notifBadge {
+            background:#ef4444;
+            color:#ffffff;
+            border-radius:9px;
+            font-size:10px;
+            font-weight:800;
+            border:2px solid #0d0d1a;
+        }
 
     )");
 }
