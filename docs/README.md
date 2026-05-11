@@ -1,293 +1,152 @@
-[README.md](https://github.com/user-attachments/files/27322582/README.md)
-<div align="center">
+# Connectify
 
-# 🔗 Connectify
-### A C++ Social Media Management System
-
-![C++](https://img.shields.io/badge/C%2B%2B-17-blue?style=for-the-badge&logo=cplusplus)
-![Qt](https://img.shields.io/badge/Qt-6.11-green?style=for-the-badge&logo=qt)
-![CMake](https://img.shields.io/badge/CMake-3.16+-red?style=for-the-badge&logo=cmake)
-![License](https://img.shields.io/badge/License-Academic-purple?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
-
-> *"Connect with the world — built from scratch with pure C++ and OOP principles."*
-
-**BS Software Engineering — 2nd Semester | FAST NUCES Lahore**
-**Course: Object Oriented Programming | Section: BSE-2B**
-
-</div>
+A social media desktop application built in **C++17** with **Qt6**, demonstrating core Object-Oriented Programming principles through custom pointer-based data structures — no STL containers used.
 
 ---
 
-## 📌 Table of Contents
+## Features
 
-- [About The Project](#-about-the-project)
-- [Features](#-features)
-- [OOP Architecture](#-oop-architecture)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Screenshots](#-screenshots)
-- [Team](#-team)
-
----
-
-## 🚀 About The Project
-
-**Connectify** is a fully functional, GUI-based social networking desktop application built entirely in **C++ with Qt Widgets**. Developed as a semester project for OOP at FAST NUCES Lahore, it simulates core features of a modern social media platform — from user authentication and news feeds to private messaging and admin moderation.
-
-The project demonstrates a professional-grade command of **Object-Oriented Programming** principles through a clean, modular architecture — with a dark purple-themed UI that rivals real-world applications.
-
----
-
-## ✨ Features
-
-### 👤 User Management
-- Secure **Signup & Login** with credential validation
-- Role-Based Access Control — `User` and `Admin` perspectives
-- Account deletion with full data cleanup
-
-### 📰 News Feed
-- Dynamic feed showing posts from followed users
-- Sorted by timestamp — latest first
-- Create, like, and comment on posts
-
-### 📝 Post System
-- **Text Posts** and **Image Posts** (Polymorphism in action)
-- Like counter with optimistic UI updates
-- Comment system with notification triggers
-
-### 👥 Social Graph
-- Send, accept, and reject friend requests
-- Follow / Unfollow system
-- Friends-only messaging restriction
-
-### 💬 Private Messaging
-- One-to-one messaging between connected users
-- Inbox view per user
-- Friends-only access control
-
-### 🔍 Search & Discovery
-- Search users by keyword/username
-- View user profiles
-- Send friend requests directly from search
-
-### 🔔 Notification Engine
-- Real-time alerts for likes, comments, and friend requests
-- Per-user notification history
-
-### 🛡️ Admin Dashboard
-- View all registered users and their stats
-- Delete inappropriate posts or ban users
-- Platform-wide statistics overview
-
-### 💾 Data Persistence
-- File-based storage using `fstream`
-- All data saved on exit, loaded on startup
-- Separate files: `users.txt`, `posts.txt`, `messages.txt`, `relations.txt`
-
----
-
-## 🏗️ OOP Architecture
-
-Connectify is built on four pillars of Object-Oriented Programming:
-
-### Encapsulation
-```cpp
-class User {
-private:
-    string password;     // Never exposed publicly
-    string email;
-public:
-    string getPassword() { return password; }  // Controlled access
-};
-```
-
-### Inheritance
-```
-Person (Abstract Base)
-├── User       → Regular platform user
-│   └── NormalUser
-└── Admin      → Elevated permissions
-
-Post (Abstract Base)
-├── TextPost   → Text-only content
-└── ImagePost  → Media content
-```
-
-### Abstraction
-```cpp
-class Post {
-public:
-    virtual void display() = 0;  // Pure virtual — forces implementation
-};
-```
-
-### Polymorphism
-```cpp
-// Same function call — different behavior
-TextPost*  tp = new TextPost(id, content);
-ImagePost* ip = new ImagePost(id, content, imagePath);
-
-tp->display();  // Shows text
-ip->display();  // Shows image + caption
-```
-
----
-
-## 🛠️ Tech Stack
-
-| Technology | Purpose |
+| Feature | Description |
 |---|---|
-| **C++ 17** | Core application logic |
-| **Qt 6.11 Widgets** | GUI framework — pure code, no QML |
-| **CMake 3.16+** | Build system |
-| **fstream** | File-based data persistence |
-| **Git + GitHub** | Version control & collaboration |
-| **Qt Creator** | IDE |
+| 👤 Auth | Register, login, logout with hashed passwords |
+| 📰 Feed | News feed showing posts from followed users |
+| ✍️ Posts | Create and view text posts |
+| ❤️ Likes | Like and unlike posts |
+| 👥 Follow | Follow and unfollow other users |
+| 🔍 Search | Search users and posts by keyword |
+| 💬 Messages | Direct messaging between users |
+| 🔔 Notifications | Like and follow notifications |
+| 🛡️ Admin | Ban users, delete posts, view all accounts |
+| 💾 Persistence | All data saved to plain text `.dat` files |
 
 ---
 
-## 📁 Project Structure
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Language | C++17 |
+| GUI Framework | Qt 6 (Widgets) |
+| Build System | CMake 3.16+ |
+| Compiler | GCC 13+ (MinGW on Windows) |
+| Data Storage | Custom pipe-delimited flat files |
+
+---
+
+## OOP Concepts Demonstrated
+
+- **Inheritance** — `Person → User / Admin`, `Post → TextPost / ImagePost`
+- **Polymorphism** — virtual `display()` and `getRole()` on base classes
+- **Encapsulation** — all data private, exposed through getters/setters
+- **Abstract Classes** — `Person` and `Post` have pure virtual methods
+- **Custom Data Structures** — singly/doubly linked lists, raw pointer arrays (no STL containers)
+- **Singleton Pattern** — `AuthManager`, `FileManager`, `Session`, `NotificationManager`
+
+---
+
+## Project Structure
 
 ```
-ConnectifyUI/
-│
-├── backend/                    ← Pure C++ business logic
-│   ├── user.h                  ← Core: User, Post, Admin, NormalUser classes
-│   ├── user.cpp                ← User methods, signup, login, global functions
-│   ├── post.cpp                ← Post creation, news feed logic
-│   ├── message.cpp             ← MessageSystem implementation
-│   ├── notification.cpp        ← NotificationSystem implementation
-│   └── search.cpp              ← Search users & posts
-│
-├── LoginPage.h / .cpp          ← Login screen
-├── signuppage.h / .cpp         ← Registration screen
-├── newsfeedpage.h / .cpp       ← Main feed with create post
-├── profilepage.h / .cpp        ← User profile view
-├── searchpage.h / .cpp         ← User & post search
-├── messagepage.h / .cpp        ← Private messaging
-├── admindashboard.h / .cpp     ← Admin control panel
-│
-├── mainwindow.h / .cpp         ← QStackedWidget — navigation hub
-├── style.qss                   ← Global dark purple theme
-├── CMakeLists.txt              ← Build configuration
-└── main.cpp                    ← App entry point
+Connectify/
+├── CMakeLists.txt
+├── run.bat                        ← double-click to build & run (Windows)
+├── data/                          ← auto-generated flat file database
+│   ├── users.dat
+│   ├── posts.dat
+│   ├── friends.dat
+│   ├── friend_requests.dat
+│   ├── messages.dat
+│   └── notifications.dat
+└── src/
+    ├── main.cpp
+    ├── models/                    ← pure C++ domain classes
+    │   ├── Array.h                ← generic dynamic pointer array
+    │   ├── Person.h / .cpp        ← abstract base
+    │   ├── User.h / .cpp
+    │   ├── Admin.h / .cpp
+    │   ├── UserTable.h            ← raw User** array
+    │   ├── Post.h / .cpp          ← abstract base
+    │   ├── TextPost.h / .cpp
+    │   ├── ImagePost.h / .cpp
+    │   ├── PostList.h             ← singly-linked list of Post*
+    │   ├── Comment.h              ← singly-linked list of comments
+    │   ├── LikeList.h             ← raw int* array of user IDs
+    │   ├── FollowArray.h          ← raw int* array for follow graph
+    │   ├── Message.h              ← doubly-linked list of messages
+    │   └── Notification.h         ← singly-linked list of notifications
+    ├── managers/                  ← business logic singletons
+    │   ├── FileManager.h / .cpp   ← all file I/O
+    │   ├── AuthManager.h / .cpp   ← login, signup, ban
+    │   ├── NewsFeed.h / .cpp      ← feed generation + sorting
+    │   ├── FriendGraph.h / .cpp   ← follow requests
+    │   ├── MessageManager.h / .cpp
+    │   ├── NotificationManager.h / .cpp
+    │   └── SearchEngine.h / .cpp
+    ├── ui/                        ← Qt6 UI layer
+    │   ├── Session.h / .cpp       ← logged-in user singleton
+    │   ├── MainWindow.h / .cpp    ← QStackedWidget router
+    │   ├── pages/
+    │   │   ├── LoginPage
+    │   │   ├── SignupPage
+    │   │   ├── FeedPage
+    │   │   ├── ProfilePage
+    │   │   ├── MessagesPage
+    │   │   ├── SearchPage
+    │   │   ├── NotifsPage
+    │   │   └── AdminPage
+    │   └── widgets/
+    │       ├── PostCard           ← reusable post display widget
+    │       └── ChatBubble         ← message bubble widget
+    └── resources/
+        ├── style.qss              ← global Qt stylesheet
+        └── resources.qrc
 ```
 
 ---
 
-## 🚀 Getting Started
+## Quick Start
 
 ### Prerequisites
 
-- Qt 6.11+ installed ([Download](https://www.qt.io/download-open-source))
+- MSYS2 with `mingw-w64-ucrt-x86_64-gcc`, `qt6-base`, `qt6-tools` installed
 - CMake 3.16+
-- MinGW 13.1+ (included with Qt)
-- Git
+- `C:\msys64\ucrt64\bin` on your system PATH
 
-### Installation
+### First-time build
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/xaliabdullah176-exe/Connectify-New.git
-cd Connectify-New
-
-# 2. Configure with CMake
-cmake -S . -B build -G "Ninja" -DCMAKE_PREFIX_PATH="C:/Qt/6.11.0/mingw_64"
-
-# 3. Build
-cmake --build build
-
-# 4. Deploy Qt DLLs
-"C:/Qt/6.11.0/mingw_64/bin/windeployqt.exe" ./build/ConnectifyUI.exe
-
-# 5. Run
-./build/ConnectifyUI.exe
+```powershell
+cd C:\Programming\Connectify
+mkdir build && cd build
+cmake .. -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:\msys64\ucrt64" -DCMAKE_CXX_COMPILER="C:/msys64/ucrt64/bin/g++.exe"
+mingw32-make -j4
+.\Connectify.exe
 ```
 
-### Default Admin Credentials
-```
-Username: admin
-Password: admin123
+### Every time after that
+
+```powershell
+# From project root — just double-click run.bat or:
+C:\Programming\Connectify\run.bat
 ```
 
 ---
 
-## 🎨 UI Theme
+## Default Credentials
 
-Connectify uses a custom dark purple theme across all pages:
-
-| Element | Color |
-|---|---|
-| Background | `#0d0d1a` |
-| Card Background | `#12122a` |
-| Primary Accent | `#7c3aed` |
-| Light Accent | `#a78bfa` |
-| Border | `#1e1e3a` |
-| Text | `#ffffff` |
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@connectify.com` | `admin123` |
+| User | register via Sign Up screen | your choice |
 
 ---
 
-## 🧭 Navigation Flow
+## Resetting Data
 
-```
-App Start → loadData()
-    │
-    ▼
-LoginPage ←─────────────────────────────┐
-    │ loginClicked()                     │
-    ▼                                    │
-[login() returns index]                  │
-    │                                    │
-    ├─ role == "admin" → AdminDashboard  │
-    │                                    │
-    └─ role == "user"  → NewsFeedPage    │
-                             │           │
-             ┌───────────────┼───────────┤
-             ▼               ▼           │
-        ProfilePage    MessagePage       │
-             │               │           │
-             └──→ SearchPage ─┘          │
-                                         │
-    SignupPage ───→ auto-login ──→ NewsFeedPage
-```
+Delete any `.dat` file inside `data\` — it will be recreated empty on next launch.  
+To reset everything: `Remove-Item C:\Programming\Connectify\build\data\*.dat`
 
 ---
 
-## 👨‍💻 Team
+## License
 
-**Project Team 05 — BSE-2B | FAST NUCES Lahore**
-
-| Role | Name | Roll No | Contribution |
-|---|---|---|---|
-| **Team Lead** | Ali Abdullah | 25L-3022 | Frontend (Login, Signup, NewsFeed), Integration, GitHub |
-| Member | Farzam Zeeshan | 25L-3049 | Backend Logic, Admin Features |
-| Member | Mustafa Amir | 25L-3107 | News Feed Logic, Notifications |
-| Member | M. Arslan | 25L-3080 | Frontend (Profile, Search, Messages, Admin Dashboard) |
-| Member | Saad Amin | 25L-3045 | File Handling, Data Persistence |
-| Member | Muhammad Khubaib | 25L-3026 | Social Graph, Friend System |
-
-**Submitted To:** Mam Hina Iqbal & Syed Saad Ali
-
----
-
-## 📚 Key Learning Outcomes
-
-Through this project, our team gained hands-on experience with:
-
-- Designing scalable **class hierarchies** with abstract base classes
-- Implementing **dynamic memory management** with `new`/`delete`
-- Building **event-driven GUIs** with Qt Signals & Slots
-- Managing **team collaboration** with Git branching strategies
-- Writing **modular, maintainable C++ code** in a real-world context
-
----
-
-<div align="center">
-
-**Built with 💜 by Team 05 — FAST NUCES Lahore**
-
-*"From zero to social media platform — one commit at a time."*
-
-</div>
+OOP Course Project — BSE-2B
