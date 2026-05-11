@@ -2,3 +2,8 @@
 build/
 build-*/
 .qtcreator/*.user*
+
+# make-folder-txt
+.txtconfig
+.txtignore
+CONNECT.txt
