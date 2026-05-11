@@ -8,12 +8,12 @@
   "configurePresets": [
     {
       "name": "qt-debug",
-      "displayName": "Qt Debug (Portable)",
+      "displayName": "Qt Debug with Ninja (portable)",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build-qt-debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_PREFIX_PATH": "$env{QTDIR};$env{Qt6_DIR}"
+        "CMAKE_PREFIX_PATH": "$env{QTDIR};$env{Qt6_DIR};C:/msys64/ucrt64"
       }
     },
     {
@@ -23,16 +23,17 @@
       "binaryDir": "${sourceDir}/build-mingw-debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_PREFIX_PATH": "$env{QTDIR};$env{Qt6_DIR}"
+        "CMAKE_PREFIX_PATH": "$env{QTDIR};$env{Qt6_DIR};C:/msys64/ucrt64"
       }
     },
     {
       "name": "msvc-debug",
-      "displayName": "MSVC Debug",
-      "generator": "Visual Studio 17 2022",
+      "displayName": "MSVC Debug (VS 18 2026)",
+      "generator": "Visual Studio 18 2026",
       "binaryDir": "${sourceDir}/build-msvc-debug",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_PREFIX_PATH": "$env{QTDIR};$env{Qt6_DIR};C:/msys64/ucrt64"
       }
     }
   ],
