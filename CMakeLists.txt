@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # ---------------------------------------------------------------------------
-# Qt discovery — checks env vars first, then common install locations
+# Qt discovery — checks env vars first, then msys2/ucrt64 fallback
 # ---------------------------------------------------------------------------
 if(DEFINED ENV{QTDIR} AND NOT "$ENV{QTDIR}" STREQUAL "")
     list(APPEND CMAKE_PREFIX_PATH "$ENV{QTDIR}")
@@ -16,7 +16,6 @@ endif()
 if(DEFINED ENV{Qt6_DIR} AND NOT "$ENV{Qt6_DIR}" STREQUAL "")
     list(APPEND CMAKE_PREFIX_PATH "$ENV{Qt6_DIR}")
 endif()
-# msys2/ucrt64 fallback (common on Windows)
 list(APPEND CMAKE_PREFIX_PATH "C:/msys64/ucrt64")
 
 find_package(Qt6 QUIET COMPONENTS Widgets)
@@ -28,7 +27,7 @@ else()
 endif()
 
 # ---------------------------------------------------------------------------
-# Source files — paths relative to project root after restructure
+# Source files
 # ---------------------------------------------------------------------------
 set(PROJECT_SOURCES
     # Qt entry point
@@ -58,7 +57,7 @@ set(PROJECT_SOURCES
     # Integration header
     frontend/integration/mainwindow_integration.h
 
-    # Backend (pure C++ logic)
+    # Backend
     backend/src/user.cpp
     backend/src/post.cpp
     backend/src/message.cpp
@@ -88,11 +87,20 @@ endif()
 
 # ---------------------------------------------------------------------------
 # Include directories
+# "backend" is listed so MOC can resolve #include "user.h" without
+# any relative "../" paths, which break during the autogen step.
 # ---------------------------------------------------------------------------
 target_include_directories(ConnectifyUI PRIVATE
     backend/include
+    backend
     frontend/pages
     frontend/integration
+)
+
+# Pass include dirs explicitly to MOC so it never needs relative paths
+set_target_properties(ConnectifyUI PROPERTIES
+    AUTOMOC_MOC_OPTIONS
+        "-I${CMAKE_SOURCE_DIR}/backend/include;-I${CMAKE_SOURCE_DIR}/backend"
 )
 
 # ---------------------------------------------------------------------------

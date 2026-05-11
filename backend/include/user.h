@@ -7,7 +7,8 @@
 using namespace std;
 
 // ==================== POST CLASS ====================
-class Post {
+class Post
+{
 public:
     int postID;
     string content;
@@ -16,10 +17,11 @@ public:
     std::vector<int> likedBy;
     string comments[50];
     int commentCount;
-    Post* next;
+    Post *next;
     time_t timestamp;
 
-    Post() {
+    Post()
+    {
         postID = 0;
         content = "";
         imagePath = "";
@@ -29,7 +31,8 @@ public:
         timestamp = time(nullptr);
     }
 
-    Post(int id, string c, string imgPath = "") {
+    Post(int id, string c, string imgPath = "")
+    {
         postID = id;
         content = c;
         imagePath = imgPath;
@@ -39,9 +42,12 @@ public:
         timestamp = time(nullptr);
     }
 
-    bool toggleLike(int userID) {
-        for (auto it = likedBy.begin(); it != likedBy.end(); ++it) {
-            if (*it == userID) {
+    bool toggleLike(int userID)
+    {
+        for (auto it = likedBy.begin(); it != likedBy.end(); ++it)
+        {
+            if (*it == userID)
+            {
                 likedBy.erase(it);
                 likeCount--;
                 return false;
@@ -52,19 +58,24 @@ public:
         return true;
     }
 
-    bool hasLiked(int userID) {
-        for (int id : likedBy) {
-            if (id == userID) return true;
+    bool hasLiked(int userID)
+    {
+        for (int id : likedBy)
+        {
+            if (id == userID)
+                return true;
         }
         return false;
     }
 
-    void addComment(string c) {
+    void addComment(string c)
+    {
         if (commentCount < 50)
             comments[commentCount++] = c;
     }
 
-    void display() {
+    void display()
+    {
         cout << "Post ID   : " << postID << endl;
         cout << "Content   : " << content << endl;
         cout << "Likes     : " << likeCount << endl;
@@ -75,7 +86,8 @@ public:
 };
 
 // ==================== USER CLASS (BASE) ====================
-class User {
+class User
+{
 public:
     int userID;
     string password;
@@ -87,18 +99,19 @@ public:
     string email;
     string profileImagePath;
 
-    User** friends;
+    User **friends;
     int friendCount;
-    User** request;
+    User **request;
     int requestCount;
-    User** follower;
+    User **follower;
     int followerCount;
-    User** following;
+    User **following;
     int followingCount;
-    Post** posts;
+    Post **posts;
     int postCount;
 
-    User() {
+    User()
+    {
         userID = 0;
         isBanned = false;
         birthDate = "";
@@ -110,14 +123,15 @@ public:
         followingCount = 0;
         friendCount = 0;
         postCount = 0;
-        friends = new User * [1];
-        request = new User * [1];
-        follower = new User * [1];
-        following = new User * [1];
-        posts = new Post * [1];
+        friends = new User *[1];
+        request = new User *[1];
+        follower = new User *[1];
+        following = new User *[1];
+        posts = new Post *[1];
     }
 
-    virtual ~User() {
+    virtual ~User()
+    {
         delete[] friends;
         delete[] request;
         delete[] follower;
@@ -128,7 +142,8 @@ public:
     }
 
     // Copy constructor (shallow copy of pointer arrays)
-    User(const User& other) {
+    User(const User &other)
+    {
         userID = other.userID;
         password = other.password;
         userName = other.userName;
@@ -144,21 +159,28 @@ public:
         followingCount = other.followingCount;
         postCount = other.postCount;
 
-        friends = new User * [friendCount + 1];
-        request = new User * [requestCount + 1];
-        follower = new User * [followerCount + 1];
-        following = new User * [followingCount + 1];
-        posts = new Post * [postCount + 1];
+        friends = new User *[friendCount + 1];
+        request = new User *[requestCount + 1];
+        follower = new User *[followerCount + 1];
+        following = new User *[followingCount + 1];
+        posts = new Post *[postCount + 1];
 
-        for (int i = 0; i < friendCount; i++) friends[i] = other.friends[i];
-        for (int i = 0; i < requestCount; i++) request[i] = other.request[i];
-        for (int i = 0; i < followerCount; i++) follower[i] = other.follower[i];
-        for (int i = 0; i < followingCount; i++) following[i] = other.following[i];
-        for (int i = 0; i < postCount; i++) posts[i] = other.posts[i];
+        for (int i = 0; i < friendCount; i++)
+            friends[i] = other.friends[i];
+        for (int i = 0; i < requestCount; i++)
+            request[i] = other.request[i];
+        for (int i = 0; i < followerCount; i++)
+            follower[i] = other.follower[i];
+        for (int i = 0; i < followingCount; i++)
+            following[i] = other.following[i];
+        for (int i = 0; i < postCount; i++)
+            posts[i] = other.posts[i];
     }
 
-    User& operator=(const User& other) {
-        if (this != &other) {
+    User &operator=(const User &other)
+    {
+        if (this != &other)
+        {
             delete[] friends;
             delete[] request;
             delete[] follower;
@@ -180,43 +202,50 @@ public:
             followingCount = other.followingCount;
             postCount = other.postCount;
 
-            friends = new User * [friendCount + 1];
-            request = new User * [requestCount + 1];
-            follower = new User * [followerCount + 1];
-            following = new User * [followingCount + 1];
-            posts = new Post * [postCount + 1];
+            friends = new User *[friendCount + 1];
+            request = new User *[requestCount + 1];
+            follower = new User *[followerCount + 1];
+            following = new User *[followingCount + 1];
+            posts = new Post *[postCount + 1];
 
-            for (int i = 0; i < friendCount; i++) friends[i] = other.friends[i];
-            for (int i = 0; i < requestCount; i++) request[i] = other.request[i];
-            for (int i = 0; i < followerCount; i++) follower[i] = other.follower[i];
-            for (int i = 0; i < followingCount; i++) following[i] = other.following[i];
-            for (int i = 0; i < postCount; i++) posts[i] = other.posts[i];
+            for (int i = 0; i < friendCount; i++)
+                friends[i] = other.friends[i];
+            for (int i = 0; i < requestCount; i++)
+                request[i] = other.request[i];
+            for (int i = 0; i < followerCount; i++)
+                follower[i] = other.follower[i];
+            for (int i = 0; i < followingCount; i++)
+                following[i] = other.following[i];
+            for (int i = 0; i < postCount; i++)
+                posts[i] = other.posts[i];
         }
         return *this;
     }
 
     // Utility
-    void resize(User**& u, int count);
+    void resize(User **&u, int count);
 
     // Social
-    bool sendRequest(User* u);
-    void follow(User* to);
-    void acceptRequest(User* u);
-    void rejectRequest(User* u);
+    bool sendRequest(User *u);
+    void follow(User *to);
+    void acceptRequest(User *u);
+    void rejectRequest(User *u);
 
     // Posts
-    void createPost(Post* p);
+    void createPost(Post *p);
     bool deletePost(int postID);
     void showPosts();
     void showNewsFeed();
 };
 
 // ==================== SUBCLASSES ====================
-class NormalUser : public User {
+class NormalUser : public User
+{
 public:
     NormalUser() { role = "user"; }
 
-    NormalUser(int id, string username, string pass, string em = "") {
+    NormalUser(int id, string username, string pass, string em = "")
+    {
         userID = id;
         userName = username;
         password = pass;
@@ -228,11 +257,13 @@ public:
     }
 };
 
-class Admin : public User {
+class Admin : public User
+{
 public:
     Admin() { role = "admin"; }
 
-    Admin(int id, string username, string pass, string em = "") {
+    Admin(int id, string username, string pass, string em = "")
+    {
         userID = id;
         userName = username;
         password = pass;
@@ -245,14 +276,16 @@ public:
 };
 
 // ==================== MESSAGE CLASS ====================
-class Message {
+class Message
+{
 public:
     int senderID;
     int receiverID;
     string text;
     time_t timestamp;
 
-    Message(int s, int r, string t, time_t ts = 0) {
+    Message(int s, int r, string t, time_t ts = 0)
+    {
         senderID = s;
         receiverID = r;
         text = t;
@@ -261,31 +294,34 @@ public:
 };
 
 // ==================== MESSAGE SYSTEM CLASS ====================
-class MessageSystem {
+class MessageSystem
+{
 public:
-    Message** msg;
+    Message **msg;
     int msgCount;
 
-    MessageSystem() {
-        msg = new Message * [1];
+    MessageSystem()
+    {
+        msg = new Message *[1];
         msgCount = 0;
     }
 
-    ~MessageSystem() {
+    ~MessageSystem()
+    {
         for (int i = 0; i < msgCount; i++)
             delete msg[i];
         delete[] msg;
     }
 
     void resize();
-    bool sendMessage(User* from, User* to, string text);
-    bool sendGroupMessage(User* from, int groupID, const string& text);
+    bool sendMessage(User *from, User *to, string text);
+    bool sendGroupMessage(User *from, int groupID, const string &text);
     void removeMessagesForGroup(int groupID);
-    void viewInbox(User* u);
+    void viewInbox(User *u);
 };
 
 // ==================== GLOBAL VARIABLES ====================
-extern User** users;   // pointer array
+extern User **users; // pointer array
 extern int userCount;
 
 // ==================== GLOBAL FUNCTIONS ====================
@@ -294,28 +330,31 @@ bool emailTaken(string e, int exceptUserID = -1);
 bool adminExist();
 void resizeUsers();
 void signup(int id, string usern, string pass, string rol, string email = "");
-int  login(string u, string pass);
+int login(string u, string pass);
 void removeUserReferences(int targetID);
 void deleteAccount(int index);
 void adminDelete(int adminIndex, string u);
 void display(int adminIndex);
 
 // ==================== NOTIFICATION CLASS ====================
-enum NotificationKind : int {
+enum NotificationKind : int
+{
     NotifNormal = 0,
     NotifFriendRequest = 1
 };
 
-class Notification {
+class Notification
+{
 public:
-    int    targetUserID;
+    int targetUserID;
     string message;
     time_t timestamp;
-    bool   seen;
-    int    kind;            // NotificationKind
-    int    relatedUserID;   // e.g. friend-request sender when kind == NotifFriendRequest
+    bool seen;
+    int kind;          // NotificationKind
+    int relatedUserID; // e.g. friend-request sender when kind == NotifFriendRequest
 
-    Notification() {
+    Notification()
+    {
         targetUserID = -1;
         message = "";
         timestamp = 0;
@@ -325,35 +364,39 @@ public:
     }
 };
 
-class NotificationSystem {
-    Notification** notifications;
+class NotificationSystem
+{
+    Notification **notifications;
     int notifCount;
 
     void resize();
 
 public:
-    NotificationSystem() {
+    NotificationSystem()
+    {
         notifications = nullptr;
         notifCount = 0;
     }
 
-    ~NotificationSystem() {
+    ~NotificationSystem()
+    {
         for (int i = 0; i < notifCount; i++)
             delete notifications[i];
         delete[] notifications;
     }
 
     void addNotification(int targetID, string msg);
-    void addFriendRequestNotification(int targetUserID, int fromUserID, const string& message);
+    void addFriendRequestNotification(int targetUserID, int fromUserID, const string &message);
     void removeFriendRequestNotifications(int targetUserID, int fromUserID);
     void showNotifications(int userID, string userName);
 
     // UI accessors
     int getCount() const { return notifCount; }
-    Notification* getAt(int i) const { return (i >= 0 && i < notifCount) ? notifications[i] : nullptr; }
+    Notification *getAt(int i) const { return (i >= 0 && i < notifCount) ? notifications[i] : nullptr; }
 
     // Count unseen notifications for a user
-    int countUnseen(int userID) const {
+    int countUnseen(int userID) const
+    {
         int cnt = 0;
         for (int i = 0; i < notifCount; i++)
             if (notifications[i]->targetUserID == userID && !notifications[i]->seen)
@@ -362,15 +405,16 @@ public:
     }
 
     // Mark all notifications for a user as seen
-    void markAllSeen(int userID) {
+    void markAllSeen(int userID)
+    {
         for (int i = 0; i < notifCount; i++)
             if (notifications[i]->targetUserID == userID)
                 notifications[i]->seen = true;
     }
 
     // ===== FILE HANDLING =====
-    void saveToFile(const string& filename);
-    void loadFromFile(const string& filename);
+    void saveToFile(const string &filename);
+    void loadFromFile(const string &filename);
 };
 
 void searchUsers(string keyword);
@@ -379,7 +423,8 @@ void searchPosts(string keyword);
 extern NotificationSystem notifSystem;
 
 // ==================== GROUP CHAT ====================
-class Group {
+class Group
+{
 public:
     int groupID;
     string name;
@@ -390,52 +435,56 @@ public:
     Group() : groupID(0), name(""), iconPath(""), creatorID(0) {}
 };
 
-class GroupSystem {
+class GroupSystem
+{
 public:
-    Group** groups;
+    Group **groups;
     int groupCount;
 
     GroupSystem();
     ~GroupSystem();
 
     void resizeGroups();
-    Group* createGroup(User* creator, const string& name, const string& iconPath,
-                       const std::vector<int>& friendUserIDs);
-    Group* findGroup(int groupID);
-    bool   setGroupName(int groupID, User* actor, const string& newName);
-    bool   addMembersToGroup(int groupID, User* actor, const std::vector<int>& friendUserIDs);
-    bool   removeMember(int groupID, User* actor, int memberUserID);
-    static bool isMember(Group* g, int userID);
-    void   removeUserFromAllGroups(int userID);
+    Group *createGroup(User *creator, const string &name, const string &iconPath,
+                       const std::vector<int> &friendUserIDs);
+    Group *findGroup(int groupID);
+    bool setGroupName(int groupID, User *actor, const string &newName);
+    bool addMembersToGroup(int groupID, User *actor, const std::vector<int> &friendUserIDs);
+    bool removeMember(int groupID, User *actor, int memberUserID);
+    static bool isMember(Group *g, int userID);
+    void removeUserFromAllGroups(int userID);
 };
 
 extern GroupSystem groupSystem;
-extern int         nextGroupID;
+extern int nextGroupID;
 
 // ==================== REPORTS & BAN APPEALS ====================
-struct UserReport {
-    int    reporterID;
-    int    reportedID;
+struct UserReport
+{
+    int reporterID;
+    int reportedID;
     time_t timestamp;
 };
 
-struct BanAppeal {
-    int    userID;
+struct BanAppeal
+{
+    int userID;
     string message;
     time_t timestamp;
 };
 
-class ModerationSystem {
+class ModerationSystem
+{
 public:
     std::vector<UserReport> reports;
-    std::vector<BanAppeal>  pendingAppeals;
+    std::vector<BanAppeal> pendingAppeals;
 
-    bool addReport(User* reporter, int reportedUserID);
+    bool addReport(User *reporter, int reportedUserID);
     void clearReportsAgainst(int reportedUserID);
-    int  reportCountAgainst(int reportedUserID) const;
+    int reportCountAgainst(int reportedUserID) const;
     bool alreadyReportedPair(int reporterID, int reportedID) const;
 
-    void addAppeal(int userID, const string& msg);
+    void addAppeal(int userID, const string &msg);
     bool hasPendingAppeal(int userID) const;
     void removeAppealsFor(int userID);
 };
@@ -445,5 +494,5 @@ extern ModerationSystem modSystem;
 int getFirstAdminUserID();
 
 // ==================== FILE HANDLING ====================
-void saveData();   // call on exit
-void loadData();   // call on startup
+void saveData(); // call on exit
+void loadData(); // call on startup

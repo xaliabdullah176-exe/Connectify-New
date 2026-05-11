@@ -19,13 +19,14 @@
 #include "backend/user.h"
 
 // ── Backend globals (defined in user.cpp / main.cpp) ──
-extern User**              users;
-extern int                 userCount;
-extern int                 nextID;
-extern MessageSystem       msgSystem;
-extern NotificationSystem  notifSystem;
+extern User **users;
+extern int userCount;
+extern int nextID;
+extern MessageSystem msgSystem;
+extern NotificationSystem notifSystem;
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
@@ -35,9 +36,9 @@ public:
 private slots:
     // ── Auth ──
     void onLoginClicked(const QString &username, const QString &password);
-    void onLoginSuccess(bool isAdmin);   // from existing LoginPage signal
+    void onLoginSuccess(bool isAdmin); // from existing LoginPage signal
     void onSignupClicked(const QString &fullName, const QString &username,
-                         const QString &email,    const QString &password);
+                         const QString &email, const QString &password);
     void onLogout();
 
     // ── Feed actions ──
@@ -59,21 +60,22 @@ private slots:
     void showAdminDashboard();
 
 private:
-    enum class FeedViewMode {
+    enum class FeedViewMode
+    {
         Network, // friends + followers
         Home     // own posts only
     };
 
-    QStackedWidget  *stack;
+    QStackedWidget *stack;
 
     // ── Pages ──
-    LoginPage       *loginPage;
-    SignupPage      *signupPage;
-    NewsFeedPage    *feedPage;
-    ProfilePage     *profilePage;
-    SearchPage      *searchPage;
-    MessagePage     *messagePage;
-    AdminDashboard  *adminPage;
+    LoginPage *loginPage;
+    SignupPage *signupPage;
+    NewsFeedPage *feedPage;
+    ProfilePage *profilePage;
+    SearchPage *searchPage;
+    MessagePage *messagePage;
+    AdminDashboard *adminPage;
     NotificationPage *notifPage;
 
     // ── Session ──
