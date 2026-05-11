@@ -1,5 +1,5 @@
 #include "notificationpage.h"
-#include "backend/user.h"
+#include "user.h"
 #include <QDateTime>
 
 extern NotificationSystem notifSystem;
@@ -93,34 +93,39 @@ FriendRequestNotifRow::FriendRequestNotifRow(const QString &message, const QStri
     hl->addWidget(icon);
     hl->addLayout(rightCol);
 
-    connect(acceptBtn, &QPushButton::clicked, this, [acceptBtn, declineBtn, this]() {
+    connect(acceptBtn, &QPushButton::clicked, this, [acceptBtn, declineBtn, this]()
+            {
         acceptBtn->setEnabled(false);
         declineBtn->setEnabled(false);
-        emit accepted(m_fromUserId);
-    });
-    connect(declineBtn, &QPushButton::clicked, this, [acceptBtn, declineBtn, this]() {
+        emit accepted(m_fromUserId); });
+    connect(declineBtn, &QPushButton::clicked, this, [acceptBtn, declineBtn, this]()
+            {
         acceptBtn->setEnabled(false);
         declineBtn->setEnabled(false);
-        emit declined(m_fromUserId);
-    });
+        emit declined(m_fromUserId); });
 }
 
 // ═══════════════════════════════════════════════════════
 //  NOTIFICATION PAGE
 // ═══════════════════════════════════════════════════════
-NotificationPage::NotificationPage(QWidget *parent) : QWidget(parent) {
+NotificationPage::NotificationPage(QWidget *parent) : QWidget(parent)
+{
     setupUI();
     applyStyles();
 }
 
-void NotificationPage::clearNotifications() {
+void NotificationPage::clearNotifications()
+{
     // Remove only dynamic notification rows; keep persistent emptyLabel + stretch.
-    for (int i = listLayout->count() - 1; i >= 0; --i) {
+    for (int i = listLayout->count() - 1; i >= 0; --i)
+    {
         QLayoutItem *item = listLayout->itemAt(i);
-        if (!item || !item->widget()) continue;
+        if (!item || !item->widget())
+            continue;
 
         QWidget *w = item->widget();
-        if (w == emptyLabel) continue;
+        if (w == emptyLabel)
+            continue;
 
         listLayout->removeWidget(w);
         w->deleteLater();
@@ -128,39 +133,49 @@ void NotificationPage::clearNotifications() {
     emptyLabel->show();
 }
 
-void NotificationPage::loadNotifications(int userID) {
+void NotificationPage::loadNotifications(int userID)
+{
     clearNotifications();
 
     int count = 0;
     // Iterate in reverse to show newest first
-    for (int i = notifSystem.getCount() - 1; i >= 0; i--) {
+    for (int i = notifSystem.getCount() - 1; i >= 0; i--)
+    {
         auto *n = notifSystem.getAt(i);
-        if (n->targetUserID != userID) continue;
+        if (n->targetUserID != userID)
+            continue;
 
         QString timeStr = "";
-        if (n->timestamp > 0) {
+        if (n->timestamp > 0)
+        {
             QDateTime dt = QDateTime::fromSecsSinceEpoch(n->timestamp);
             timeStr = dt.toString("dd MMM, hh:mm AP");
         }
 
         const QString msg = QString::fromStdString(n->message);
-        if (n->kind == NotifFriendRequest && n->relatedUserID >= 0) {
+        if (n->kind == NotifFriendRequest && n->relatedUserID >= 0)
+        {
             FriendRequestNotifRow *fr = new FriendRequestNotifRow(msg, timeStr, n->relatedUserID);
             connect(fr, &FriendRequestNotifRow::accepted, this, &NotificationPage::friendRequestAccepted);
             connect(fr, &FriendRequestNotifRow::declined, this, &NotificationPage::friendRequestDeclined);
             listLayout->insertWidget(listLayout->count() - 1, fr);
-        } else {
+        }
+        else
+        {
             NotifRow *row = new NotifRow(msg, timeStr);
             listLayout->insertWidget(listLayout->count() - 1, row);
         }
         count++;
     }
 
-    if (count > 0) emptyLabel->hide();
-    else emptyLabel->show();
+    if (count > 0)
+        emptyLabel->hide();
+    else
+        emptyLabel->show();
 }
 
-void NotificationPage::setupUI() {
+void NotificationPage::setupUI()
+{
     QVBoxLayout *root = new QVBoxLayout(this);
     root->setContentsMargins(0, 0, 0, 0);
     root->setSpacing(0);
@@ -213,7 +228,8 @@ void NotificationPage::setupUI() {
     root->addWidget(scroll);
 }
 
-void NotificationPage::applyStyles() {
+void NotificationPage::applyStyles()
+{
     setStyleSheet(R"(
         QWidget        { background:#0d0d1a; color:#eeeeee;
                          font-family:'Segoe UI'; }

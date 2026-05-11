@@ -54,8 +54,10 @@ set(PROJECT_SOURCES
     frontend/pages/notificationpage.h
     frontend/pages/notificationpage.cpp
 
-    # Integration header
-    frontend/integration/mainwindow_integration.h
+    # NOTE: mainwindow_integration.h is intentionally NOT listed here.
+    # It is a pass-through header that just includes mainwindow.h.
+    # Listing it separately caused MOC to generate a second moc_mainwindow
+    # that redefined the same MainWindow class → duplicate symbol errors.
 
     # Backend
     backend/src/user.cpp
@@ -87,7 +89,7 @@ endif()
 
 # ---------------------------------------------------------------------------
 # Include directories
-# "backend" is listed so MOC can resolve #include "user.h" without
+# "backend/include" is listed so MOC can resolve #include "user.h" without
 # any relative "../" paths, which break during the autogen step.
 # ---------------------------------------------------------------------------
 target_include_directories(ConnectifyUI PRIVATE

@@ -16,7 +16,7 @@
 #include "admindashboard.h"
 #include "notificationpage.h"
 
-#include "backend/user.h"
+#include "user.h"
 
 // ── Backend globals (defined in user.cpp / main.cpp) ──
 extern User **users;

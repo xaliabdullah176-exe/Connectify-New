@@ -4,9 +4,10 @@
 // ═══════════════════════════════════════════════════════════════════
 
 #pragma once
+#include "mainwindow.h"
 #include <QMainWindow>
 #include <QStackedWidget>
-
+#include "notificationpage.h"
 // ── Frontend pages ──
 #include "loginpage.h"
 #include "signuppage.h"

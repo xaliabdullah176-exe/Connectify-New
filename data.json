@@ -1,0 +1,49 @@
+{
+    "banAppeals": [
+    ],
+    "groups": [
+    ],
+    "messages": [
+    ],
+    "nextGroupID": 1,
+    "nextID": 3,
+    "posts": [
+    ],
+    "relations": {
+        "followers": [
+        ],
+        "following": [
+        ],
+        "friends": [
+        ],
+        "requests": [
+        ]
+    },
+    "userCount": 2,
+    "userReports": [
+    ],
+    "users": [
+        {
+            "birthDate": "",
+            "email": "",
+            "githubUsername": "",
+            "isBanned": false,
+            "password": "Mustafa_tech123",
+            "profileImagePath": "",
+            "role": "admin",
+            "userID": 1,
+            "userName": "Jeffrey_epstien"
+        },
+        {
+            "birthDate": "",
+            "email": "saadamin691@gmail.com",
+            "githubUsername": "",
+            "isBanned": false,
+            "password": "23457890",
+            "profileImagePath": "",
+            "role": "user",
+            "userID": 2,
+            "userName": "SENODROOM"
+        }
+    ]
+}

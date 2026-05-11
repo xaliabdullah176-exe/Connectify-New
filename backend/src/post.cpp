@@ -1,17 +1,32 @@
 #include "user.h"
 
-void User::createPost(Post* p) {
-    resize((User**&)posts, postCount);  // reuse resize pattern
+// ==================== FIX: proper Post** resize (no UB cast) ====================
+void User::resizePosts(Post **&p, int count)
+{
+    Post **temp = new Post *[count + 1];
+    for (int i = 0; i < count; i++)
+        temp[i] = p[i];
+    delete[] p;
+    p = temp;
+}
+
+void User::createPost(Post *p)
+{
+    // FIX: was resize((User**&)posts, postCount) — undefined behaviour.
+    // Now uses the correctly-typed resizePosts helper.
+    resizePosts(posts, postCount);
     posts[postCount++] = p;
 }
 
-bool User::deletePost(int postID) {
-    for (int i = 0; i < postCount; i++) {
-        if (posts[i]->postID == postID) {
+bool User::deletePost(int postID)
+{
+    for (int i = 0; i < postCount; i++)
+    {
+        if (posts[i]->postID == postID)
+        {
             delete posts[i];
-            for (int j = i; j < postCount - 1; j++) {
+            for (int j = i; j < postCount - 1; j++)
                 posts[j] = posts[j + 1];
-            }
             postCount--;
             return true;
         }
@@ -19,91 +34,92 @@ bool User::deletePost(int postID) {
     return false;
 }
 
-void User::showPosts() {
-    if (postCount == 0) { cout << "No posts yet." << endl; return; }
+void User::showPosts()
+{
+    if (postCount == 0)
+    {
+        cout << "No posts yet." << endl;
+        return;
+    }
     for (int i = 0; i < postCount; i++)
         posts[i]->display();
 }
 
-void User::showNewsFeed() {
+void User::showNewsFeed()
+{
     int total = 0;
 
-    // STEP 1: count posts from followed users
-    for (int i = 0; i < followingCount; i++) {
+    // count posts from followed users
+    for (int i = 0; i < followingCount; i++)
         total += following[i]->postCount;
-    }
 
-    // include your own posts
+    // include own posts
     total += postCount;
 
-    // if no posts
-    if (total == 0) {
+    if (total == 0)
+    {
         cout << "No posts available\n";
         return;
     }
 
-    //: allocate exact memory
-    Post** feed = new Post * [total];
-    User** owner = new User * [total];
+    Post **feed = new Post *[total];
+    User **owner = new User *[total];
 
     int idx = 0;
 
-    //  collect posts from followed users
-    for (int i = 0; i < followingCount; i++) {
-        User* u = following[i];
-
-        for (int j = 0; j < u->postCount; j++) {
+    for (int i = 0; i < followingCount; i++)
+    {
+        User *u = following[i];
+        for (int j = 0; j < u->postCount; j++)
+        {
             feed[idx] = u->posts[j];
             owner[idx] = u;
             idx++;
         }
     }
 
-    // include own posts
-    for (int i = 0; i < postCount; i++) {
+    for (int i = 0; i < postCount; i++)
+    {
         feed[idx] = posts[i];
         owner[idx] = this;
         idx++;
     }
 
-    //  sort by timestamp (latest first)
-    for (int i = 0; i < total - 1; i++) {
-        for (int j = i + 1; j < total; j++) {
-            if (feed[i]->timestamp < feed[j]->timestamp) {
-                Post* ptemp = feed[i];
+    // sort by timestamp (latest first)
+    for (int i = 0; i < total - 1; i++)
+    {
+        for (int j = i + 1; j < total; j++)
+        {
+            if (feed[i]->timestamp < feed[j]->timestamp)
+            {
+                Post *ptemp = feed[i];
                 feed[i] = feed[j];
                 feed[j] = ptemp;
-                User* utemp = owner[i];
+                User *utemp = owner[i];
                 owner[i] = owner[j];
                 owner[j] = utemp;
             }
         }
     }
 
-    
     cout << "\n========== NEWS FEED ==========\n";
 
-    for (int i = 0; i < total; i++) {
+    for (int i = 0; i < total; i++)
+    {
         cout << "User: " << owner[i]->userName << endl;
         char buffer[64];
-        std::tm* localTime = std::localtime(&feed[i]->timestamp);
-        if (localTime && std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", localTime)) {
+        std::tm *localTime = std::localtime(&feed[i]->timestamp);
+        if (localTime && std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", localTime))
             cout << "Time: " << buffer << endl;
-        } else {
+        else
             cout << "Time: unavailable" << endl;
-        }
         cout << "Content: " << feed[i]->content << endl;
         cout << "Likes: " << feed[i]->likeCount << endl;
-
-        for (int j = 0; j < feed[i]->commentCount; j++) {
+        for (int j = 0; j < feed[i]->commentCount; j++)
             cout << " - " << feed[i]->comments[j] << endl;
-        }
-
         cout << "-----------------------------\n";
     }
 
-   
     delete[] feed;
     delete[] owner;
 }
-

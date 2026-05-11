@@ -225,6 +225,9 @@ public:
     // Utility
     void resize(User **&u, int count);
 
+    // FIX: dedicated resize for Post** to avoid undefined-behaviour cast
+    void resizePosts(Post **&p, int count);
+
     // Social
     bool sendRequest(User *u);
     void follow(User *to);
