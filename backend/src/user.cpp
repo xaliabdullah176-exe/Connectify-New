@@ -1,6 +1,5 @@
 #include <iostream>
 #include "user.h"
-#include <algorithm>
 #include <ctime>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -185,16 +184,30 @@ int login(string u, string pass) {
 
 void removeUserReferences(int targetID) {
     groupSystem.removeUserFromAllGroups(targetID);
-    modSystem.reports.erase(
-        std::remove_if(modSystem.reports.begin(), modSystem.reports.end(),
-            [targetID](const UserReport& r) {
-                return r.reporterID == targetID || r.reportedID == targetID;
-            }),
-        modSystem.reports.end());
-    modSystem.pendingAppeals.erase(
-        std::remove_if(modSystem.pendingAppeals.begin(), modSystem.pendingAppeals.end(),
-            [targetID](const BanAppeal& a) { return a.userID == targetID; }),
-        modSystem.pendingAppeals.end());
+
+    // Remove all reports where the deleted user was reporter OR reported
+    // Old: erase-remove with std::remove_if (needs <algorithm>)
+    // New: write-pointer loop — keep only elements we want
+    int writeR = 0;
+    for (int i = 0; i < (int)modSystem.reports.size(); i++) {
+        bool involvedInReport = (modSystem.reports[i].reporterID == targetID ||
+                                 modSystem.reports[i].reportedID == targetID);
+        if (!involvedInReport) {
+            modSystem.reports[writeR] = modSystem.reports[i];
+            writeR++;
+        }
+    }
+    modSystem.reports.resize(writeR); // trim the vector to kept elements
+
+    // Remove all ban appeals submitted by the deleted user
+    int writeA = 0;
+    for (int i = 0; i < (int)modSystem.pendingAppeals.size(); i++) {
+        if (modSystem.pendingAppeals[i].userID != targetID) {
+            modSystem.pendingAppeals[writeA] = modSystem.pendingAppeals[i];
+            writeA++;
+        }
+    }
+    modSystem.pendingAppeals.resize(writeA); // trim the vector
     for (int i = 0; i < userCount; i++) {
         User* u = users[i];
         if (u->userID == targetID) continue;
@@ -351,11 +364,21 @@ bool GroupSystem::removeMember(int groupID, User* actor, int memberUserID) {
     Group* g = findGroup(groupID);
     if (!g || !actor || actor->userID != g->creatorID) return false;
     if (memberUserID == actor->userID) return false;
-    auto& v = g->memberIDs;
-    auto it = std::find(v.begin(), v.end(), memberUserID);
-    if (it == v.end()) return false;
-    v.erase(it);
-    return true;
+
+    // Old: auto it = std::find(v.begin(), v.end(), memberUserID);  (needs <algorithm>)
+    // New: manually find the index using a simple for loop
+    for (int i = 0; i < (int)g->memberIDs.size(); i++) {
+        if (g->memberIDs[i] == memberUserID) {
+            // Shift all elements after position i one step to the left
+            for (int j = i; j < (int)g->memberIDs.size() - 1; j++) {
+                g->memberIDs[j] = g->memberIDs[j + 1];
+            }
+            // Shrink the vector by one
+            g->memberIDs.resize(g->memberIDs.size() - 1);
+            return true;
+        }
+    }
+    return false; // member not found
 }
 
 int getFirstAdminUserID() {
@@ -371,22 +394,31 @@ bool ModerationSystem::alreadyReportedPair(int reporterID, int reportedID) const
     return false;
 }
 
-bool ModerationSystem::addReport(User* reporter, int reportedUserID) {
+bool ModerationSystem::addReport(User* reporter, int reportedUserID, const string& reason) {
     if (!reporter || reportedUserID == reporter->userID) return false;
     if (alreadyReportedPair(reporter->userID, reportedUserID)) return false;
+
     UserReport ur;
     ur.reporterID = reporter->userID;
     ur.reportedID = reportedUserID;
-    ur.timestamp = std::time(nullptr);
+    ur.reason     = reason;          // Store why the report was made
+    ur.timestamp  = std::time(nullptr);
     reports.push_back(ur);
     return true;
 }
 
 void ModerationSystem::clearReportsAgainst(int reportedUserID) {
-    reports.erase(
-        std::remove_if(reports.begin(), reports.end(),
-            [reportedUserID](const UserReport& r) { return r.reportedID == reportedUserID; }),
-        reports.end());
+    // Old: erase + std::remove_if (needs <algorithm>)
+    // New: write-pointer loop — copy only reports we want to KEEP
+    int write = 0;
+    for (int i = 0; i < (int)reports.size(); i++) {
+        if (reports[i].reportedID != reportedUserID) {
+            reports[write] = reports[i]; // keep this report
+            write++;
+        }
+        // else: skip it (effectively removing it)
+    }
+    reports.resize(write); // shrink vector to only kept elements
 }
 
 int ModerationSystem::reportCountAgainst(int reportedUserID) const {
@@ -413,19 +445,34 @@ void ModerationSystem::addAppeal(int userID, const string& msg) {
 }
 
 void ModerationSystem::removeAppealsFor(int userID) {
-    pendingAppeals.erase(
-        std::remove_if(pendingAppeals.begin(), pendingAppeals.end(),
-            [userID](const BanAppeal& a) { return a.userID == userID; }),
-        pendingAppeals.end());
+    // Old: erase + std::remove_if (needs <algorithm>)
+    // New: write-pointer loop — keep only appeals from OTHER users
+    int write = 0;
+    for (int i = 0; i < (int)pendingAppeals.size(); i++) {
+        if (pendingAppeals[i].userID != userID) {
+            pendingAppeals[write] = pendingAppeals[i]; // keep this appeal
+            write++;
+        }
+        // else: skip it (effectively removing it)
+    }
+    pendingAppeals.resize(write); // shrink vector to only kept elements
 }
 
 void GroupSystem::removeUserFromAllGroups(int userID) {
     int i = 0;
     while (i < groupCount) {
         Group* g = groups[i];
-        auto& v = g->memberIDs;
-        v.erase(std::remove(v.begin(), v.end(), userID), v.end());
-        if (v.empty()) {
+        // Old: v.erase(std::remove(v.begin(), v.end(), userID), v.end()); (needs <algorithm>)
+        // New: write-pointer loop — keep all member IDs except the one being removed
+        int w = 0;
+        for (int k = 0; k < (int)g->memberIDs.size(); k++) {
+            if (g->memberIDs[k] != userID) {
+                g->memberIDs[w] = g->memberIDs[k];
+                w++;
+            }
+        }
+        g->memberIDs.resize(w); // shrink to only kept members
+        if (g->memberIDs.empty()) {
             const int gid = g->groupID;
             msgSystem.removeMessagesForGroup(gid);
             delete g;
@@ -469,6 +516,7 @@ void saveData() {
             pObj["ownerID"] = users[i]->userID;
             pObj["content"] = QString::fromStdString(p->content);
             pObj["imagePath"] = QString::fromStdString(p->imagePath);
+            pObj["videoPath"] = QString::fromStdString(p->videoPath);
             pObj["timestamp"] = (qint64)p->timestamp;
             pObj["likeCount"] = p->likeCount;
             
@@ -551,7 +599,8 @@ void saveData() {
         QJsonObject o;
         o["reporterID"] = r.reporterID;
         o["reportedID"] = r.reportedID;
-        o["timestamp"] = (qint64)r.timestamp;
+        o["reason"]     = QString::fromStdString(r.reason); // Save the report reason
+        o["timestamp"]  = (qint64)r.timestamp;
         repArr.append(o);
     }
     root["userReports"] = repArr;
@@ -641,7 +690,8 @@ void loadData() {
         UserReport ur;
         ur.reporterID = o["reporterID"].toInt();
         ur.reportedID = o["reportedID"].toInt();
-        ur.timestamp = (time_t)o["timestamp"].toVariant().toLongLong();
+        ur.reason     = o["reason"].toString().toStdString(); // Load reason (empty string if old data)
+        ur.timestamp  = (time_t)o["timestamp"].toVariant().toLongLong();
         modSystem.reports.push_back(ur);
     }
     QJsonArray appArr = root["banAppeals"].toArray();
@@ -696,6 +746,7 @@ void loadData() {
         p->postID = pObj["postID"].toInt();
         p->content = pObj["content"].toString().toStdString();
         p->imagePath = pObj["imagePath"].toString().toStdString();
+        p->videoPath = pObj["videoPath"].toString().toStdString();
         p->timestamp = (time_t)pObj["timestamp"].toVariant().toLongLong();
         p->likeCount = pObj["likeCount"].toInt();
         
@@ -774,6 +825,17 @@ void loadData() {
     
     notifSystem.loadFromFile("notifications.txt");
     ensureDefaultAdminAccount();
+}
+
+void freeAllData() {
+    if (users) {
+        for (int i = 0; i < userCount; i++) {
+            delete users[i];
+        }
+        delete[] users;
+        users = nullptr;
+    }
+    userCount = 0;
 }
 
 

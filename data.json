@@ -6,8 +6,60 @@
     "messages": [
     ],
     "nextGroupID": 1,
-    "nextID": 3,
+    "nextID": 11,
     "posts": [
+        {
+            "comments": [
+            ],
+            "content": "",
+            "imagePath": "C:/Users/iAT/Desktop/Pics/Food.jpeg",
+            "likeCount": 0,
+            "likedBy": [
+            ],
+            "ownerID": 3,
+            "postID": 4,
+            "timestamp": 1778559228,
+            "videoPath": ""
+        },
+        {
+            "comments": [
+            ],
+            "content": "",
+            "imagePath": "C:/Users/iAT/Desktop/Pics/Food.jpeg",
+            "likeCount": 0,
+            "likedBy": [
+            ],
+            "ownerID": 3,
+            "postID": 5,
+            "timestamp": 1778559234,
+            "videoPath": ""
+        },
+        {
+            "comments": [
+            ],
+            "content": "",
+            "imagePath": "",
+            "likeCount": 0,
+            "likedBy": [
+            ],
+            "ownerID": 6,
+            "postID": 8,
+            "timestamp": 1778559772,
+            "videoPath": "C:/Users/iAT/Desktop/Pics/Bunk.mp4"
+        },
+        {
+            "comments": [
+            ],
+            "content": "",
+            "imagePath": "",
+            "likeCount": 0,
+            "likedBy": [
+            ],
+            "ownerID": 6,
+            "postID": 9,
+            "timestamp": 1778559884,
+            "videoPath": "C:/Users/iAT/Desktop/Pics/WhatsApp Video 2026-04-24 at 10.06.22 AM.mp4"
+        }
     ],
     "relations": {
         "followers": [
@@ -17,9 +69,17 @@
         "friends": [
         ],
         "requests": [
+            [
+                2,
+                10
+            ],
+            [
+                3,
+                10
+            ]
         ]
     },
-    "userCount": 2,
+    "userCount": 5,
     "userReports": [
     ],
     "users": [
@@ -44,6 +104,39 @@
             "role": "user",
             "userID": 2,
             "userName": "SENODROOM"
+        },
+        {
+            "birthDate": "",
+            "email": "kaazo",
+            "githubUsername": "",
+            "isBanned": true,
+            "password": "kaazoo",
+            "profileImagePath": "",
+            "role": "user",
+            "userID": 3,
+            "userName": "duso"
+        },
+        {
+            "birthDate": "",
+            "email": "dusoo",
+            "githubUsername": "",
+            "isBanned": false,
+            "password": "khosoo",
+            "profileImagePath": "",
+            "role": "user",
+            "userID": 6,
+            "userName": "dusii"
+        },
+        {
+            "birthDate": "",
+            "email": "DC",
+            "githubUsername": "",
+            "isBanned": false,
+            "password": "abc123",
+            "profileImagePath": "",
+            "role": "user",
+            "userID": 10,
+            "userName": "PP"
         }
     ]
 }

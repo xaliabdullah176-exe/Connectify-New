@@ -29,6 +29,7 @@ FeedPostCard::FeedPostCard(int postID,
                            const QString &ownerAvatarPath,
                            const QString &content,
                            const QString &imagePath,
+                           const QString &videoPath,
                            const QString &timeAgo,
                            int likes,
                            int comments,
@@ -133,6 +134,48 @@ FeedPostCard::FeedPostCard(int postID,
                                     "background:#1a0a3d;");
         }
         vl->addWidget(imgLabel);
+    }
+    
+    // ── Video (if present) ────────────────────────────
+    if (!videoPath.isEmpty()) {
+        QWidget *videoContainer = new QWidget();
+        QVBoxLayout *vbox = new QVBoxLayout(videoContainer);
+        vbox->setContentsMargins(0,0,0,0);
+        vbox->setSpacing(5);
+
+        QVideoWidget *videoWidget = new QVideoWidget();
+        videoWidget->setFixedHeight(260);
+        vbox->addWidget(videoWidget);
+
+        QMediaPlayer *player = new QMediaPlayer(this);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        QAudioOutput *audioOutput = new QAudioOutput(this);
+        player->setAudioOutput(audioOutput);
+        player->setSource(QUrl::fromLocalFile(videoPath));
+#else
+        player->setMedia(QUrl::fromLocalFile(videoPath));
+#endif
+        player->setVideoOutput(videoWidget);
+
+        QPushButton *playBtn = new QPushButton("▶️ Play / Pause");
+        playBtn->setStyleSheet("background:transparent; color:#a78bfa; font-weight:bold; border:1px solid #7c3aed; border-radius:6px; padding:4px;");
+        playBtn->setCursor(Qt::PointingHandCursor);
+        vbox->addWidget(playBtn, 0, Qt::AlignCenter);
+
+        connect(playBtn, &QPushButton::clicked, this, [player]() {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            if (player->playbackState() == QMediaPlayer::PlayingState)
+#else
+            if (player->state() == QMediaPlayer::PlayingState)
+#endif
+            {
+                player->pause();
+            } else {
+                player->play();
+            }
+        });
+
+        vl->addWidget(videoContainer);
     }
 
     // ── Footer: like / comment ─────────────────────────
@@ -282,6 +325,7 @@ void NewsFeedPage::addPost(int postID,
                            const QString &ownerAvatarPath,
                            const QString &content,
                            const QString &imagePath,
+                           const QString &videoPath,
                            const QString &timeAgo,
                            int likes,
                            int comments,
@@ -291,7 +335,7 @@ void NewsFeedPage::addPost(int postID,
                            bool isOwnPost)
 {
     FeedPostCard *card = new FeedPostCard(
-        postID, ownerName, ownerAvatarPath, content, imagePath,
+        postID, ownerName, ownerAvatarPath, content, imagePath, videoPath,
         timeAgo, likes, comments, canInteract, isLikedByMe, commentsList, isOwnPost
     );
 
@@ -350,46 +394,56 @@ void NewsFeedPage::setNotifBadge(int count) {
 // ═══════════════════════════════════════════════════════
 void NewsFeedPage::onPostBtnClicked() {
     QString content = postInput->toPlainText().trimmed();
-    if (content.isEmpty() && m_selectedImagePath.isEmpty()) return;
+    if (content.isEmpty() && m_selectedImagePath.isEmpty() && m_selectedVideoPath.isEmpty()) return;
 
-    emit createPostClicked(content, m_selectedImagePath);
+    emit createPostClicked(content, m_selectedImagePath, m_selectedVideoPath);
 
     // Clear the compose box
     postInput->clear();
     m_selectedImagePath.clear();
+    m_selectedVideoPath.clear();
     imagePreviewLabel->hide();
-    selectImageBtn->setText("📷  Add Photo");
+    selectMediaBtn->setText("📷/🎥  Add Media");
     charCountLabel->setText("0 / 280");
 }
 
 // ═══════════════════════════════════════════════════════
 //  SELECT IMAGE
 // ═══════════════════════════════════════════════════════
-void NewsFeedPage::onSelectImageClicked() {
-    if (!m_selectedImagePath.isEmpty()) {
-        // Clear selected image
+void NewsFeedPage::onSelectMediaClicked() {
+    if (!m_selectedImagePath.isEmpty() || !m_selectedVideoPath.isEmpty()) {
+        // Clear selected media
         m_selectedImagePath.clear();
+        m_selectedVideoPath.clear();
         imagePreviewLabel->hide();
-        selectImageBtn->setText("📷  Add Photo");
+        selectMediaBtn->setText("📷/🎥  Add Media");
         return;
     }
 
     QString path = QFileDialog::getOpenFileName(
-        this, "Select Image", "",
-        "Images (*.png *.jpg *.jpeg *.gif *.bmp *.webp)"
+        this, "Select Media", "",
+        "Media Files (*.png *.jpg *.jpeg *.mp4 *.avi *.mkv *.mov)"
     );
     if (path.isEmpty()) return;
 
-    m_selectedImagePath = path;
-    QPixmap px(path);
-    if (!px.isNull()) {
-        imagePreviewLabel->setPixmap(
-            px.scaled(300, 160, Qt::KeepAspectRatio, Qt::SmoothTransformation)
-        );
-        imagePreviewLabel->show();
-    }
     QFileInfo fi(path);
-    selectImageBtn->setText("❌  Remove  " + fi.fileName());
+    QString ext = fi.suffix().toLower();
+    
+    if (ext == "mp4" || ext == "avi" || ext == "mkv" || ext == "mov") {
+        m_selectedVideoPath = path;
+        imagePreviewLabel->setText("🎥 Selected Video: " + fi.fileName());
+        imagePreviewLabel->show();
+    } else {
+        m_selectedImagePath = path;
+        QPixmap px(path);
+        if (!px.isNull()) {
+            imagePreviewLabel->setPixmap(
+                px.scaled(300, 160, Qt::KeepAspectRatio, Qt::SmoothTransformation)
+            );
+            imagePreviewLabel->show();
+        }
+    }
+    selectMediaBtn->setText("❌  Remove  " + fi.fileName());
 }
 
 // ═══════════════════════════════════════════════════════
@@ -584,10 +638,10 @@ void NewsFeedPage::setupUI() {
     charCountLabel = new QLabel("0 / 280");
     charCountLabel->setObjectName("charCount");
 
-    selectImageBtn = new QPushButton("📷  Add Photo");
-    selectImageBtn->setObjectName("secondaryBtn");
-    selectImageBtn->setCursor(Qt::PointingHandCursor);
-    selectImageBtn->setFixedHeight(36);
+    selectMediaBtn = new QPushButton("📷/🎥  Add Media");
+    selectMediaBtn->setObjectName("secondaryBtn");
+    selectMediaBtn->setCursor(Qt::PointingHandCursor);
+    selectMediaBtn->setFixedHeight(36);
 
     postBtn = new QPushButton("Post");
     postBtn->setObjectName("primaryBtn");
@@ -597,7 +651,7 @@ void NewsFeedPage::setupUI() {
 
     createBtnRow->addWidget(charCountLabel);
     createBtnRow->addStretch();
-    createBtnRow->addWidget(selectImageBtn);
+    createBtnRow->addWidget(selectMediaBtn);
     createBtnRow->addWidget(postBtn);
     createLayout->addLayout(createBtnRow);
 
@@ -625,7 +679,7 @@ void NewsFeedPage::setupUI() {
 
     // ── Wire up signals ────────────────────────────────
     connect(postBtn,        &QPushButton::clicked, this, &NewsFeedPage::onPostBtnClicked);
-    connect(selectImageBtn, &QPushButton::clicked, this, &NewsFeedPage::onSelectImageClicked);
+    connect(selectMediaBtn, &QPushButton::clicked, this, &NewsFeedPage::onSelectMediaClicked);
     connect(logoutBtn,      &QPushButton::clicked, this, &NewsFeedPage::logoutClicked);
     connect(profileBtn,     &QPushButton::clicked, this, &NewsFeedPage::goToProfile);
     connect(feedBtn,        &QPushButton::clicked, this, &NewsFeedPage::showNetworkPostsClicked);

@@ -13,6 +13,7 @@ public:
     int postID;
     string content;
     string imagePath;
+    string videoPath;
     int likeCount;
     std::vector<int> likedBy;
     string comments[50];
@@ -25,22 +26,28 @@ public:
         postID = 0;
         content = "";
         imagePath = "";
+        videoPath = "";
         likeCount = 0;
         commentCount = 0;
         next = nullptr;
         timestamp = time(nullptr);
     }
 
-    Post(int id, string c, string imgPath = "")
+    Post(int id, string text, string img = "", string vid = "")
     {
         postID = id;
-        content = c;
-        imagePath = imgPath;
+        content = text;
+        imagePath = img;
+        videoPath = vid;
         likeCount = 0;
         commentCount = 0;
         next = nullptr;
-        timestamp = time(nullptr);
+        timestamp = std::time(nullptr);
     }
+
+    // Rule of 3 violations: disable copy and assignment
+    Post(const Post &other) = delete;
+    Post &operator=(const Post &other) = delete;
 
     bool toggleLike(int userID)
     {
@@ -141,86 +148,9 @@ public:
         delete[] posts;
     }
 
-    // Copy constructor (shallow copy of pointer arrays)
-    User(const User &other)
-    {
-        userID = other.userID;
-        password = other.password;
-        userName = other.userName;
-        role = other.role;
-        isBanned = other.isBanned;
-        birthDate = other.birthDate;
-        githubUsername = other.githubUsername;
-        email = other.email;
-        profileImagePath = other.profileImagePath;
-        friendCount = other.friendCount;
-        requestCount = other.requestCount;
-        followerCount = other.followerCount;
-        followingCount = other.followingCount;
-        postCount = other.postCount;
-
-        friends = new User *[friendCount + 1];
-        request = new User *[requestCount + 1];
-        follower = new User *[followerCount + 1];
-        following = new User *[followingCount + 1];
-        posts = new Post *[postCount + 1];
-
-        for (int i = 0; i < friendCount; i++)
-            friends[i] = other.friends[i];
-        for (int i = 0; i < requestCount; i++)
-            request[i] = other.request[i];
-        for (int i = 0; i < followerCount; i++)
-            follower[i] = other.follower[i];
-        for (int i = 0; i < followingCount; i++)
-            following[i] = other.following[i];
-        for (int i = 0; i < postCount; i++)
-            posts[i] = other.posts[i];
-    }
-
-    User &operator=(const User &other)
-    {
-        if (this != &other)
-        {
-            delete[] friends;
-            delete[] request;
-            delete[] follower;
-            delete[] following;
-            delete[] posts;
-
-            userID = other.userID;
-            password = other.password;
-            userName = other.userName;
-            role = other.role;
-            isBanned = other.isBanned;
-            birthDate = other.birthDate;
-            githubUsername = other.githubUsername;
-            email = other.email;
-            profileImagePath = other.profileImagePath;
-            friendCount = other.friendCount;
-            requestCount = other.requestCount;
-            followerCount = other.followerCount;
-            followingCount = other.followingCount;
-            postCount = other.postCount;
-
-            friends = new User *[friendCount + 1];
-            request = new User *[requestCount + 1];
-            follower = new User *[followerCount + 1];
-            following = new User *[followingCount + 1];
-            posts = new Post *[postCount + 1];
-
-            for (int i = 0; i < friendCount; i++)
-                friends[i] = other.friends[i];
-            for (int i = 0; i < requestCount; i++)
-                request[i] = other.request[i];
-            for (int i = 0; i < followerCount; i++)
-                follower[i] = other.follower[i];
-            for (int i = 0; i < followingCount; i++)
-                following[i] = other.following[i];
-            for (int i = 0; i < postCount; i++)
-                posts[i] = other.posts[i];
-        }
-        return *this;
-    }
+    // Rule of 3 violations: disable copy and assignment to prevent double-free
+    User(const User &other) = delete;
+    User &operator=(const User &other) = delete;
 
     // Utility
     void resize(User **&u, int count);
@@ -294,6 +224,10 @@ public:
         text = t;
         timestamp = ts;
     }
+
+    // Disable copy/assignment
+    Message(const Message &other) = delete;
+    Message &operator=(const Message &other) = delete;
 };
 
 // ==================== MESSAGE SYSTEM CLASS ====================
@@ -420,10 +354,9 @@ public:
     void loadFromFile(const string &filename);
 };
 
-void searchUsers(string keyword);
-void searchPosts(string keyword);
-
 extern NotificationSystem notifSystem;
+
+void freeAllData();
 
 // ==================== GROUP CHAT ====================
 class Group
@@ -436,6 +369,10 @@ public:
     std::vector<int> memberIDs;
 
     Group() : groupID(0), name(""), iconPath(""), creatorID(0) {}
+
+    // Disable copy/assignment
+    Group(const Group &other) = delete;
+    Group &operator=(const Group &other) = delete;
 };
 
 class GroupSystem
@@ -466,6 +403,7 @@ struct UserReport
 {
     int reporterID;
     int reportedID;
+    string reason;      // WHY the user was reported (filled from dialog)
     time_t timestamp;
 };
 
@@ -482,7 +420,8 @@ public:
     std::vector<UserReport> reports;
     std::vector<BanAppeal> pendingAppeals;
 
-    bool addReport(User *reporter, int reportedUserID);
+    // reason is the text the reporter typed in the dialog (e.g. "Harassment", "Spam")
+    bool addReport(User *reporter, int reportedUserID, const string &reason = "");
     void clearReportsAgainst(int reportedUserID);
     int reportCountAgainst(int reportedUserID) const;
     bool alreadyReportedPair(int reporterID, int reportedID) const;

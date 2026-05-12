@@ -12,6 +12,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QTextEdit>
+#include <QComboBox>
 #include <unordered_set>
 #include <vector>
 #include <map>
@@ -60,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 // ═══════════════════════════════════════════════════════
 MainWindow::~MainWindow() {
     saveData();
+    freeAllData();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -105,32 +107,132 @@ void MainWindow::connectSignals() {
         User* me = users[m_loggedInIndex];
         if (me->userID == reportedUserID) return;
 
+        // ── Find the target user ──
         User* target = nullptr;
         for (int i = 0; i < userCount; i++)
             if (users[i]->userID == reportedUserID) { target = users[i]; break; }
         if (!target) return;
+
+        // ── Admins cannot be reported ──
         if (target->role == "admin" || target->role == "Admin") {
             QMessageBox::information(this, QStringLiteral("Report"),
                 QStringLiteral("Admin accounts cannot be reported."));
             return;
         }
 
-        if (!modSystem.addReport(me, reportedUserID)) {
+        // ── Check: already reported this user? ──
+        if (modSystem.alreadyReportedPair(me->userID, reportedUserID)) {
             QMessageBox::information(this, QStringLiteral("Report"),
                 QStringLiteral("You have already reported this user."));
             return;
         }
 
-        const int cnt = modSystem.reportCountAgainst(reportedUserID);
+        // ═══════════════════════════════════════════════════
+        //  REPORT REASON DIALOG
+        //  Shows BEFORE the report is submitted.
+        //  User must select a reason (or write a custom one).
+        // ═══════════════════════════════════════════════════
+        QDialog reasonDlg(this);
+        reasonDlg.setWindowTitle(QStringLiteral("Report User — @") +
+                                 QString::fromStdString(target->userName));
+        reasonDlg.setMinimumWidth(420);
+
+        QVBoxLayout *dlgLayout = new QVBoxLayout(&reasonDlg);
+
+        // Instruction label
+        QLabel *instrLabel = new QLabel(
+            QStringLiteral("Why are you reporting <b>@%1</b>?")
+                .arg(QString::fromStdString(target->userName)),
+            &reasonDlg
+        );
+        instrLabel->setWordWrap(true);
+        dlgLayout->addWidget(instrLabel);
+
+        // Pre-defined reason buttons (acts like a radio group using checkboxes)
+        QLabel *pickLabel = new QLabel(QStringLiteral("Select a reason:"), &reasonDlg);
+        dlgLayout->addWidget(pickLabel);
+
+        // We use a QComboBox for clean, beginner-friendly selection
+        QComboBox *reasonCombo = new QComboBox(&reasonDlg);
+        reasonCombo->addItem(QStringLiteral("-- Select a reason --"));
+        reasonCombo->addItem(QStringLiteral("Harassment or bullying"));
+        reasonCombo->addItem(QStringLiteral("Spam or fake account"));
+        reasonCombo->addItem(QStringLiteral("Inappropriate content"));
+        reasonCombo->addItem(QStringLiteral("Hate speech"));
+        reasonCombo->addItem(QStringLiteral("Impersonation"));
+        reasonCombo->addItem(QStringLiteral("Other (describe below)"));
+        dlgLayout->addWidget(reasonCombo);
+
+        // Optional additional details text box
+        QLabel *detailLabel = new QLabel(
+            QStringLiteral("Additional details (optional):"), &reasonDlg);
+        dlgLayout->addWidget(detailLabel);
+
+        QTextEdit *detailEdit = new QTextEdit(&reasonDlg);
+        detailEdit->setPlaceholderText(
+            QStringLiteral("Describe the issue in more detail..."));
+        detailEdit->setFixedHeight(80);
+        detailEdit->setAcceptRichText(false);
+        dlgLayout->addWidget(detailEdit);
+
+        // Note to user
+        QLabel *noteLabel = new QLabel(
+            QStringLiteral("<i>The reported user will NOT be notified about this report.</i>"),
+            &reasonDlg
+        );
+        noteLabel->setWordWrap(true);
+        dlgLayout->addWidget(noteLabel);
+
+        // OK / Cancel buttons
+        QDialogButtonBox *dlgBtns =
+            new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                                 &reasonDlg);
+        dlgLayout->addWidget(dlgBtns);
+        connect(dlgBtns, &QDialogButtonBox::accepted, &reasonDlg, &QDialog::accept);
+        connect(dlgBtns, &QDialogButtonBox::rejected, &reasonDlg, &QDialog::reject);
+
+        // ── User clicked Cancel → do nothing ──
+        if (reasonDlg.exec() != QDialog::Accepted) return;
+
+        // ── Validate: user must select a real reason ──
+        if (reasonCombo->currentIndex() == 0) {
+            QMessageBox::warning(this, QStringLiteral("Report"),
+                QStringLiteral("Please select a reason before submitting the report."));
+            return;
+        }
+
+        // ── Build the final reason string ──
+        QString selectedReason = reasonCombo->currentText();
+        QString extraDetails   = detailEdit->toPlainText().trimmed();
+        QString fullReason     = selectedReason;
+        if (!extraDetails.isEmpty())
+            fullReason += QStringLiteral(": ") + extraDetails;
+
+        // ── Submit the report with reason ──
+        if (!modSystem.addReport(me, reportedUserID, fullReason.toStdString())) {
+            QMessageBox::information(this, QStringLiteral("Report"),
+                QStringLiteral("You have already reported this user."));
+            return;
+        }
+
+        // ── Notify the admin ──
+        const int cnt     = modSystem.reportCountAgainst(reportedUserID);
         const int adminId = getFirstAdminUserID();
         if (adminId >= 0) {
             std::string line = "[REPORT] " + std::to_string(cnt) + " report(s) against @"
-                + target->userName + ". Latest reporter: @" + me->userName + ".";
+                + target->userName + ". Latest: @" + me->userName
+                + " — Reason: " + fullReason.toStdString();
             notifSystem.addNotification(adminId, line);
         }
+
         saveData();
-        QMessageBox::information(this, QStringLiteral("Report"),
-            QStringLiteral("Thanks — your report was sent to the moderators. The other person will not be notified."));
+
+        // ── Confirmation to reporter ──
+        QMessageBox::information(this, QStringLiteral("Report Submitted"),
+            QStringLiteral("Your report has been sent to the moderators.\n"
+                           "Reason: %1\n\n"
+                           "The other person will not be notified.")
+                .arg(fullReason));
     });
     connect(profilePage, &ProfilePage::editProfileClicked, this, [this]() {
     if (m_loggedInIndex < 0) return;
@@ -1081,10 +1183,10 @@ void MainWindow::onLogout() {
 // ═══════════════════════════════════════════════════════
 //  CREATE POST
 // ═══════════════════════════════════════════════════════
-void MainWindow::onCreatePost(const QString &content, const QString &imagePath) {
+void MainWindow::onCreatePost(const QString &content, const QString &imagePath, const QString &videoPath) {
     if (m_loggedInIndex == -1) return;
 
-    Post *p = new Post(nextID++, content.toStdString(), imagePath.toStdString());
+    Post *p = new Post(nextID++, content.toStdString(), imagePath.toStdString(), videoPath.toStdString());
     users[m_loggedInIndex]->createPost(p);
 
     // Notify all friends about the new post
@@ -1220,31 +1322,42 @@ void MainWindow::onAdminCreateNews() {
     contentEdit->setAcceptRichText(false);
     contentEdit->setFixedHeight(150);
 
-    QLabel *imagePathLabel = new QLabel("No image selected", &dlg);
-    imagePathLabel->setWordWrap(true);
+    QLabel *mediaPathLabel = new QLabel("No media selected", &dlg);
+    mediaPathLabel->setWordWrap(true);
     QString selectedImagePath;
+    QString selectedVideoPath;
 
     QHBoxLayout *imageButtons = new QHBoxLayout();
-    QPushButton *selectImageBtn = new QPushButton("Select Image", &dlg);
-    QPushButton *clearImageBtn = new QPushButton("Clear", &dlg);
-    imageButtons->addWidget(selectImageBtn);
-    imageButtons->addWidget(clearImageBtn);
+    QPushButton *selectMediaBtn = new QPushButton("Select Media", &dlg);
+    QPushButton *clearMediaBtn = new QPushButton("Clear", &dlg);
+    imageButtons->addWidget(selectMediaBtn);
+    imageButtons->addWidget(clearMediaBtn);
     imageButtons->addStretch();
 
-    connect(selectImageBtn, &QPushButton::clicked, &dlg, [&]() {
+    connect(selectMediaBtn, &QPushButton::clicked, &dlg, [&]() {
         const QString path = QFileDialog::getOpenFileName(
             this,
-            "Select News Image",
+            "Select News Media",
             "",
-            "Images (*.png *.jpg *.jpeg *.gif *.bmp *.webp)"
+            "Media Files (*.png *.jpg *.jpeg *.gif *.mp4 *.avi *.mkv *.mov)"
         );
         if (path.isEmpty()) return;
-        selectedImagePath = path;
-        imagePathLabel->setText(path);
+        
+        QFileInfo fi(path);
+        QString ext = fi.suffix().toLower();
+        if (ext == "mp4" || ext == "avi" || ext == "mkv" || ext == "mov") {
+            selectedVideoPath = path;
+            selectedImagePath.clear();
+        } else {
+            selectedImagePath = path;
+            selectedVideoPath.clear();
+        }
+        mediaPathLabel->setText(path);
     });
-    connect(clearImageBtn, &QPushButton::clicked, &dlg, [&]() {
+    connect(clearMediaBtn, &QPushButton::clicked, &dlg, [&]() {
         selectedImagePath.clear();
-        imagePathLabel->setText("No image selected");
+        selectedVideoPath.clear();
+        mediaPathLabel->setText("No media selected");
     });
 
     QDialogButtonBox *buttons =
@@ -1255,18 +1368,18 @@ void MainWindow::onAdminCreateNews() {
     layout->addWidget(title);
     layout->addWidget(contentEdit);
     layout->addLayout(imageButtons);
-    layout->addWidget(imagePathLabel);
+    layout->addWidget(mediaPathLabel);
     layout->addWidget(buttons);
 
     if (dlg.exec() != QDialog::Accepted) return;
 
     const QString content = contentEdit->toPlainText().trimmed();
-    if (content.isEmpty() && selectedImagePath.isEmpty()) {
-        QMessageBox::warning(this, "Invalid News", "Add text or an image before posting.");
+    if (content.isEmpty() && selectedImagePath.isEmpty() && selectedVideoPath.isEmpty()) {
+        QMessageBox::warning(this, "Invalid News", "Add text or media before posting.");
         return;
     }
 
-    Post *p = new Post(nextID++, content.toStdString(), selectedImagePath.toStdString());
+    Post *p = new Post(nextID++, content.toStdString(), selectedImagePath.toStdString(), selectedVideoPath.toStdString());
     admin->createPost(p);
 
     const std::string preview = content.left(40).toStdString();
@@ -1332,15 +1445,26 @@ void MainWindow::loadFeed() {
         }
     }
 
-    // Sort latest first
-    std::sort(items.begin(), items.end(), [](const FeedItem &a, const FeedItem &b) {
-        return a.post->timestamp > b.post->timestamp;
-    });
+    // Sort posts: latest timestamp first
+    // Old: std::sort with lambda (needs <algorithm>)
+    // New: Bubble Sort — compare adjacent pairs, swap if out of order, repeat
+    int n = items.size();
+    for (int pass = 0; pass < n - 1; pass++) {
+        for (int j = 0; j < n - pass - 1; j++) {
+            // If left post is OLDER than right post, swap them
+            if (items[j].post->timestamp < items[j + 1].post->timestamp) {
+                FeedItem temp  = items[j];
+                items[j]       = items[j + 1];
+                items[j + 1]   = temp;
+            }
+        }
+    }
 
     for (auto &item : items) {
         QString ownerName = QString::fromStdString(item.owner->userName);
         QString content   = QString::fromStdString(item.post->content);
         QString imagePath = QString::fromStdString(item.post->imagePath);
+        QString videoPath = QString::fromStdString(item.post->videoPath);
 
         // Time ago
         time_t now  = time(nullptr);
@@ -1360,7 +1484,7 @@ void MainWindow::loadFeed() {
 
         feedPage->addPost(
             item.post->postID, ownerName, QString::fromStdString(item.owner->profileImagePath), content,
-            imagePath,
+            imagePath, videoPath,
             timeAgo,
             item.post->likeCount,
             item.post->commentCount,
@@ -1603,12 +1727,26 @@ void MainWindow::showAdminDashboard() {
     for (const auto& pr : reportsByVictim) {
         const int rid = pr.first;
         const int cnt = static_cast<int>(pr.second.size());
+
+        // Build "reported by" names list
         QStringList repNames;
         for (int repId : pr.second)
             repNames.append(userNameById(repId));
-        const QString sum = QStringLiteral("@%1 — reported by: %2")
-                                .arg(userNameById(rid))
-                                .arg(repNames.join(QStringLiteral(", ")));
+
+        // Also collect the reasons for all reports against this user
+        QStringList reasons;
+        for (const auto& r : modSystem.reports) {
+            if (r.reportedID == rid && !r.reason.empty())
+                reasons.append(QString::fromStdString(r.reason));
+        }
+
+        // Build the admin summary: who was reported, by whom, and why
+        QString sum = QStringLiteral("@%1 — reported by: %2")
+                          .arg(userNameById(rid))
+                          .arg(repNames.join(QStringLiteral(", ")));
+        if (!reasons.isEmpty())
+            sum += QStringLiteral("\nReasons: ") + reasons.join(QStringLiteral(" | "));
+
         adminPage->addReportRow(rid, cnt, sum);
     }
 
