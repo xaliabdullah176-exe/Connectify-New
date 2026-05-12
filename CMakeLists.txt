@@ -65,6 +65,9 @@ set(PROJECT_SOURCES
     backend/src/message.cpp
     backend/src/notification.cpp
     backend/src/search.cpp
+
+    # Windows app icon resource (embeds icon into .exe)
+    app.rc
 )
 
 # ---------------------------------------------------------------------------
@@ -77,7 +80,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     )
     qt_add_resources(ConnectifyUI "resources"
         PREFIX "/"
-        FILES frontend/styles/style.qss
+        FILES
+            frontend/styles/style.qss
+            frontend/resources/app_icon.png
     )
 else()
     if(ANDROID)

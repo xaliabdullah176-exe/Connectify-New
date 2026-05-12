@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include <QApplication>
 #include <QDateEdit>
 #include <QDateTime>
 #include <QDialog>
@@ -53,6 +54,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     stack->addWidget(notifPage);    // 7
 
     connectSignals();
+
+    // Set application window icon from embedded Qt resource
+    QIcon appIcon(":/frontend/resources/app_icon.png");
+    if (!appIcon.isNull()) {
+        setWindowIcon(appIcon);
+        QApplication::setWindowIcon(appIcon);
+    }
+
     showLogin();
 }
 
