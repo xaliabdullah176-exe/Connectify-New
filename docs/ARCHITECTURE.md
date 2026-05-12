@@ -2,259 +2,218 @@
 
 ## Overview
 
-Connectify is structured in three strict layers. No layer may depend on a layer above it.
+Connectify is built on a **strict three-layer architecture**. No layer may depend on a layer above it. This design separates domain logic, business logic, and presentation into independent, testable units.
 
 ```
-┌─────────────────────────────────────────────────┐
-│                  UI Layer (Qt6)                  │
-│   MainWindow · 8 Pages · 2 Widgets · Session    │
-├─────────────────────────────────────────────────┤
-│              Manager Layer (Business Logic)      │
-│  AuthManager · FileManager · NewsFeed ·         │
-│  FriendGraph · MessageManager ·                 │
-│  NotificationManager · SearchEngine             │
-├─────────────────────────────────────────────────┤
-│                 Model Layer (Pure C++)           │
-│  Person · User · Admin · Post · TextPost ·      │
-│  ImagePost · Custom Data Structures             │
-└─────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────┐
+│                  UI Layer (Qt6)                    │
+│  MainWindow · 8 Pages · 2 Widgets · Session        │
+│  LoginPage · SignupPage · NewsFeedPage ·           │
+│  ProfilePage · MessagePage · SearchPage ·          │
+│  NotificationPage · AdminDashboard                 │
+├────────────────────────────────────────────────────┤
+│           Manager / Business Logic Layer           │
+│  AuthManager · FileManager · NewsFeed ·            │
+│  FriendGraph · MessageSystem ·                     │
+│  NotificationSystem · SearchEngine · GroupSystem   │
+├────────────────────────────────────────────────────┤
+│               Model Layer (Pure C++)               │
+│  User · NormalUser · Admin · Post · Message ·      │
+│  Notification · Group · Custom Data Structures     │
+└────────────────────────────────────────────────────┘
 ```
 
-**Rule:** Models know nothing about managers. Managers know nothing about Qt. UI knows about both.
+**Core Rule:** Models know nothing about managers. Managers know nothing about Qt. The UI knows about both but never bypasses the manager layer.
 
 ---
 
 ## Layer 1 — Model Layer
 
-All domain classes. Zero Qt dependency. Zero STL containers.
+All domain classes live here. They have **zero Qt dependency** and **zero STL containers**.
 
-### Inheritance Hierarchy
-
-```
-Person  (abstract)
-├── User
-└── Admin
-
-Post  (abstract)
-├── TextPost
-└── ImagePost
-```
-
-### Custom Data Structures
-
-Every collection in this project is a hand-written pointer-based structure.
+### Class Hierarchy
 
 ```
-CommentList          — singly-linked list       — Post comments
-PostList             — singly-linked list       — User's posts (owns Post* nodes)
-RequestList          — singly-linked list       — Friend requests
-NotifList            — singly-linked list       — Notifications
-MessageList          — doubly-linked list       — Messages (prev + next pointers)
-LikeList             — raw int* dynamic array   — User IDs who liked a post
-FollowArray          — raw int* dynamic array   — Follower / following ID lists
-UserTable            — raw User** dynamic array — All registered users
-FeedSnapshot         — raw Post** dynamic array — Rendered news feed (no ownership)
-Array<T>             — generic raw T* array     — Reusable template
+User  (base class — virtual destructor)
+├── NormalUser     role = "user"
+└── Admin          role = "admin"
+
+Post  (standalone — linked list node)
+└── (TextPost / ImagePost variants planned for v2)
+
+Message            (value object)
+Notification       (value object with seen/unseen state)
+Group              (group chat entity)
 ```
 
-### Ownership Rules
+### Key Model: `User`
 
-| Structure | Owns its elements? |
-|---|---|
-| `PostList` | ✅ Yes — destructor deletes all `Post*` |
-| `CommentList` | ✅ Yes — destructor deletes all `Comment*` |
-| `NotifList` | ✅ Yes — destructor deletes all `NotifNode*` |
-| `MessageList` | ✅ Yes — destructor deletes all `MsgNode*` |
-| `RequestList` | ✅ Yes — destructor deletes all `RequestNode*` |
-| `UserTable` | ❌ No — `AuthManager` owns User objects |
-| `FeedSnapshot` | ❌ No — posts belong to their User |
-| `LikeList` | ✅ Yes — owns `int[]` array |
-| `FollowArray` | ✅ Yes — owns `int[]` array |
+The `User` class is the heart of the application. It holds:
+
+| Field | Type | Purpose |
+|---|---|---|
+| `userID` | `int` | Unique identifier |
+| `userName` | `string` | Display name |
+| `password` | `string` | Stored credential |
+| `role` | `string` | `"user"` or `"admin"` |
+| `email` | `string` | Contact / login |
+| `isBanned` | `bool` | Admin-controlled ban flag |
+| `birthDate` | `string` | Profile information |
+| `githubUsername` | `string` | Profile link |
+| `profileImagePath` | `string` | Avatar image path |
+| `friends` | `User**` | Dynamic array of friend pointers |
+| `request` | `User**` | Pending friend requests |
+| `follower` | `User**` | Users following this user |
+| `following` | `User**` | Users this user follows |
+| `posts` | `Post**` | Dynamic array of post pointers |
+
+The `User` class implements:
+- Custom copy constructor (deep copy of pointer arrays)
+- Copy assignment operator (`operator=`)
+- Virtual destructor (proper cleanup of all dynamic arrays)
+- `resize()` and `resizePosts()` for dynamic array growth
 
 ---
 
 ## Layer 2 — Manager Layer
 
-Business logic. All singletons. No Qt includes except where signalling is needed.
+Managers implement business rules. They are independent of Qt and interact with models only.
 
-### Manager Responsibilities
+### `NotificationSystem`
 
-```
-AuthManager
-  ├── Owns all User* objects (UserTable)
-  ├── Owns the single Admin* object
-  ├── Login / signup / ban / delete account
-  └── Delegates load/save to FileManager
+Manages a dynamic array of `Notification*` objects. Provides:
+- `addNotification(targetID, message)` — append a new notification
+- `addFriendRequestNotification(targetID, fromID, message)` — typed notification
+- `removeFriendRequestNotifications(targetID, fromID)` — cleanup on rejection
+- `showNotifications(userID, userName)` — console display
+- `countUnseen(userID)` — badge count for UI
+- `markAllSeen(userID)` — mark all as read
+- `saveToFile()` / `loadFromFile()` — persistence
 
-FileManager
-  ├── All fstream read/write
-  ├── Pipe-delimited flat file format
-  ├── Password hashing (djb2)
-  └── ensureDataDir() creates data/ on first run
+### `MessageSystem`
 
-NewsFeed
-  ├── Generates FeedSnapshot for a user
-  ├── Collects posts from followed users
-  └── Insertion-sorts by timestamp descending
+Manages a dynamic array of `Message*` objects with full resize logic:
+- `sendMessage(from, to, text)` — create and store message
+- `sendGroupMessage(from, groupID, text)` — group chat support
+- `viewInbox(user)` — console display of conversations
+- `removeMessagesForGroup(groupID)` — group cleanup
 
-FriendGraph
-  ├── Owns RequestList
-  ├── send / accept / reject requests
-  └── Mutates User follow/follower arrays on accept
+### `GroupSystem`
 
-MessageManager
-  ├── Owns MessageList
-  ├── Sends messages (appends to file immediately)
-  └── Returns raw MsgNode** arrays to callers
+Manages group chats:
+- `createGroup(creator, name, iconPath, friendIDs)` — create a new group
+- `findGroup(groupID)` — lookup
+- `setGroupName(groupID, actor, newName)` — rename (creator only)
+- `addMembersToGroup(groupID, actor, friendIDs)` — extend group
+- `removeMember(groupID, actor, memberID)` — remove member
 
-NotificationManager
-  ├── Owns NotifList
-  ├── Creates NotifNode and appends to file
-  └── markAllRead() rewrites entire file
+### `SearchEngine` (stateless)
 
-SearchEngine
-  ├── Stateless — all static methods
-  ├── Manual substring search (no std::string::find)
-  └── Returns raw pointer arrays — caller must delete[]
-```
-
-### Singleton Access Pattern
-
-Every manager is accessed via `instance()`:
-
-```cpp
-AuthManager::instance().login(email, password);
-FileManager::instance().saveAllUsers(users);
-NotificationManager::instance().notify(ownerID, NotifType::LIKE, msg);
-```
+- `searchUsers(keyword)` — linear scan of all usernames
+- `searchPosts(keyword)` — linear scan of all post contents
 
 ---
 
 ## Layer 3 — UI Layer
 
-Qt6 Widgets. Reads from managers, renders to screen, emits signals for navigation.
+Built entirely with **Qt6 Widgets**. No business logic lives here — all actions go through the manager layer.
 
-### Page Navigation — QStackedWidget
+### Navigation Model
 
-`MainWindow` holds a single `QStackedWidget`. Only one page is visible at a time.  
-Navigation is done entirely through Qt signals and slots — pages never call each other directly.
+A single `QStackedWidget` in `MainWindow` holds all pages. Navigation is done by switching the active widget index.
 
 ```
-MainWindow (QStackedWidget)
-│
-├── LoginPage    ──loginSuccess──►  showFeed()
-│                ──adminLogin───►  showAdmin()
-│                ──goToSignup───►  showSignup()
-│
-├── SignupPage   ──signupSuccess─►  showFeed()
-│                ──goToLogin────►  showLogin()
-│
-├── FeedPage     ──goToProfile──►  showProfile(id)
-│                ──goToMessages─►  showMessages()
-│                ──goToSearch───►  showSearch()
-│                ──goToNotifs───►  showNotifs()
-│                ──logout───────►  showLogin()
-│
-├── ProfilePage  ──goBack───────►  showFeed()
-├── MessagesPage ──goBack───────►  showFeed()
-├── SearchPage   ──goBack───────►  showFeed()
-│                ──openProfile──►  showProfile(id)
-├── NotifsPage   ──goBack───────►  showFeed()
-└── AdminPage    ──logout───────►  showLogin()
+MainWindow (QMainWindow)
+└── QStackedWidget (stack)
+    ├── LoginPage
+    ├── SignupPage
+    ├── NewsFeedPage
+    ├── ProfilePage
+    ├── SearchPage
+    ├── MessagePage
+    ├── NotificationPage
+    └── AdminDashboard
 ```
 
-### Session Singleton
+### Page Descriptions
 
-`Session` holds a raw `User*` pointer to the currently logged-in user.  
-It is set by `LoginPage` / `SignupPage` and cleared on logout.  
-All pages read from it to know who is logged in.
+| Page | File | Responsibility |
+|---|---|---|
+| `LoginPage` | `frontend/pages/LoginPage` | Username + password form, login signal |
+| `SignupPage` | `frontend/pages/SignupPage` | Registration form with validation |
+| `NewsFeedPage` | `frontend/pages/newsfeedpage` | Post feed, compose post, like, comment |
+| `ProfilePage` | `frontend/pages/profilepage` | View/edit user profile, posts list |
+| `SearchPage` | `frontend/pages/searchpage` | Search users and posts by keyword |
+| `MessagePage` | `frontend/pages/messagepage` | Inbox, conversations, group chats |
+| `NotificationPage` | `frontend/pages/notificationpage` | Notification list, mark-all-read |
+| `AdminDashboard` | `frontend/pages/admindashboard` | Stats panel, user table, post moderation, reports, appeals |
 
-```cpp
-User* me = Session::instance().current();
-bool  isAdmin = Session::instance().isAdmin();
+### Integration Header
+
+`frontend/integration/mainwindow_integration.h` serves as the **wiring document** for all inter-page signals and slots. It declares:
+- All page pointers as members
+- All navigation slots (`showLogin()`, `showSignup()`, `showNewsFeed()`, etc.)
+- All action slots (`onLoginClicked()`, `onCreatePost()`, `onLikePost()`, etc.)
+- Extern references to global backend state (`users`, `userCount`, `nextID`, `msgSystem`, `notifSystem`)
+
+---
+
+## Data Flow — Login Example
+
+```
+User types credentials in LoginPage
+        │
+        ▼ (signal: loginClicked(username, password))
+MainWindow::onLoginClicked()
+        │
+        ▼ calls backend
+login(username, password)          ← backend/src/user.cpp
+        │
+        ▼ returns index
+m_loggedInIndex = result
+        │
+        ▼
+if role == "admin" → showAdminDashboard()
+else               → showNewsFeed()
+        │
+        ▼
+feedPage->refresh(users[m_loggedInIndex])
 ```
 
 ---
 
-## Data Flow — Creating a Post
+## Data Persistence Flow
 
 ```
-User types text → clicks "Post"
-        │
-        ▼
-FeedPage::onCreatePost()
-        │
-        ├── NewsFeed::nextPostID(allUsers)   // find highest ID + 1
-        ├── new TextPost(pid, ownerID, text)  // create Post object
-        ├── me->addPost(post)                 // append to User's PostList
-        └── FileManager::saveAllPosts(users)  // write to posts.dat
-        │
-        ▼
-FeedPage::buildFeed()                        // re-render feed
+App Startup → loadData()          [reads data.json → populates users[], posts, relations]
+                                  [reads notifications.txt → populates notifSystem]
+
+App Shutdown → saveData()         [serializes all in-memory state → writes data.json]
+                                  [saves notifSystem → writes notifications.txt]
 ```
 
-## Data Flow — Login
-
-```
-User enters email + password → clicks "Log In"
-        │
-        ▼
-LoginPage::onLogin()
-        │
-        ├── AuthManager::isAdminLogin()  → yes → Session::setAdmin(true) → showAdmin()
-        └── AuthManager::login()
-                │
-                ├── FileManager::hashPassword(password)   // djb2 hash
-                ├── UserTable linear search by email+hash
-                ├── Check isBanned()
-                └── returns User*
-                        │
-                        ▼
-               Session::instance().set(user)
-                        │
-                        ▼
-               emit loginSuccess() → MainWindow::showFeed()
-```
+All data is stored in:
+- `data.json` — users, posts, messages, groups, relations, reports, appeals
+- `notifications.txt` — notification records
 
 ---
 
-## File Storage Architecture
+## Build System
 
-All data lives in `data/` as pipe-delimited plain text. The directory is created automatically.
+The project uses **CMake 3.23+** with three build presets:
 
-```
-data/
-├── users.dat              userID|name|email|hashedPassword|isBanned|profilePicPath
-├── posts.dat              postID|ownerID|type|content|imagePath|timestamp|likes
-├── friends.dat            fromID|toID|status
-├── friend_requests.dat    requestID|fromID|toID|status
-├── messages.dat           msgID|senderID|receiverID|content|timestamp
-└── notifications.dat      notifID|ownerID|type|message|isRead|timestamp
-```
+| Preset | Generator | Output Directory |
+|---|---|---|
+| `qt-debug` | Ninja | `build-qt-debug/` |
+| `qt-mingw-debug` | MinGW Makefiles | `build-mingw-debug/` |
+| `msvc-debug` | Visual Studio 18 2026 | `build-msvc-debug/` |
 
-`|` characters inside content fields are replaced with `;` on save and restored on load.
+The CMakeLists.txt uses `GLOB_RECURSE` to automatically pick up all `.cpp` files — no manual registration needed when adding new source files.
 
----
+Include directories exposed to all targets:
+- `backend/include` — for `user.h` (also passed to MOC)
+- `backend` — for backend source includes
+- `frontend/pages` — for page headers
+- `frontend/integration` — for the integration header
 
-## Memory Management Summary
-
-```
-AuthManager destructor
-  └── deletes every User* in UserTable
-        └── ~User() → ~PostList() → deletes every Post* in chain
-                          └── ~Post() → ~CommentList() → deletes every Comment*
-                                     → ~LikeList()    → deletes int[]
-
-FriendGraph destructor
-  └── ~RequestList() → deletes every RequestNode*
-
-MessageManager destructor
-  └── ~MessageList() → deletes every MsgNode*
-
-NotificationManager destructor
-  └── ~NotifList() → deletes every NotifNode*
-```
-
-All heap-allocated raw pointer arrays returned to callers  
-(from `SearchEngine`, `MessageManager`, `NotificationManager`, `FriendGraph`)  
-must be `delete[]`-d by the caller. This is documented on each method.
+Linked libraries: `Qt6::Widgets`

@@ -1,211 +1,224 @@
-# DATA_FORMAT.md — File Storage Format
+# DATA_FORMAT.md — Persistence Layer
 
-All persistent data is stored in the `data/` directory as plain pipe-delimited text files.  
-This directory is created automatically on first run.
-
----
-
-## General Rules
-
-- Fields are separated by `|`
-- The first line of every file is a header row
-- Pipe characters inside field values are replaced with `;` on save
-- Timestamps are stored as Unix epoch integers (`time_t`)
-- Boolean flags are stored as `1` (true) or `0` (false)
-- Empty string fields are stored as empty (two consecutive pipes `||`)
+CONNECT uses two files for data persistence: `data.json` for all structured data, and `notifications.txt` for notification records.
 
 ---
 
-## users.dat
+## `data.json` — Main Data Store
 
-Stores all registered user accounts.
+All application data is read from this file on startup (`loadData()`) and written back on shutdown (`saveData()`). The file is created automatically if it does not exist.
 
-```
-userID|name|email|hashedPassword|isBanned|profilePicPath
-```
+### Top-Level Schema
 
-| Field | Type | Example |
-|---|---|---|
-| `userID` | int | `1001` |
-| `name` | string | `Ali Hassan` |
-| `email` | string | `ali@example.com` |
-| `hashedPassword` | string (hex) | `8f2a91bc...` |
-| `isBanned` | 0 or 1 | `0` |
-| `profilePicPath` | string | `` (empty if none) |
-
-**Example:**
-```
-userID|name|email|hashedPassword|isBanned|profilePicPath
-1001|Ali Hassan|ali@example.com|8f2a91bc44d7e301|0|
-1002|Sara Khan|sara@example.com|3c7d8a22f1b09e44|0|assets/sara.png
-1003|Bad Actor|bad@example.com|1d2e3f4a5b6c7d8e|1|
+```json
+{
+    "users":       [ ... ],
+    "posts":       [ ... ],
+    "messages":    [ ... ],
+    "groups":      [ ... ],
+    "relations": {
+        "friends":   [ ... ],
+        "followers": [ ... ],
+        "following": [ ... ],
+        "requests":  [ ... ]
+    },
+    "banAppeals":    [ ... ],
+    "userReports":   [ ... ],
+    "nextID":        3,
+    "nextGroupID":   1,
+    "userCount":     2
+}
 ```
 
 ---
 
-## posts.dat
+### `users` Array
 
-Stores all posts from all users.
+Each element represents one registered user account.
 
+```json
+{
+    "userID":           1,
+    "userName":         "Alice",
+    "password":         "SecurePass123",
+    "role":             "user",
+    "email":            "alice@example.com",
+    "birthDate":        "2000-01-15",
+    "githubUsername":   "alice-dev",
+    "profileImagePath": "C:/Users/Alice/Pictures/avatar.png",
+    "isBanned":         false
+}
 ```
-postID|ownerID|type|content|imagePath|timestamp|likes
-```
 
-| Field | Type | Example |
-|---|---|---|
-| `postID` | int | `2001` |
-| `ownerID` | int | `1001` |
-| `type` | `TEXT` or `IMAGE` | `TEXT` |
-| `content` | string | `Hello world!` |
-| `imagePath` | string | `` (empty for TEXT posts) |
-| `timestamp` | Unix epoch | `1714300800` |
-| `likes` | int | `5` |
-
-> **Note:** `likes` count is saved for reference but the actual like tracking (which user liked) is rebuilt from file relationships. The canonical like count comes from `LikeList` in memory.
-
-**Example:**
-```
-postID|ownerID|type|content|imagePath|timestamp|likes
-2001|1001|TEXT|Hello everyone!||1714300800|3
-2002|1002|TEXT|Loving this app||1714301200|1
-2003|1001|IMAGE|Check this out|assets/photo.png|1714302000|0
-```
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `userID` | int | Yes | Unique auto-incremented identifier |
+| `userName` | string | Yes | Display name and login identifier |
+| `password` | string | Yes | Plain-text credential (stored as-is in v1) |
+| `role` | string | Yes | `"user"` or `"admin"` |
+| `email` | string | No | Optional contact email |
+| `birthDate` | string | No | Optional profile info |
+| `githubUsername` | string | No | Optional GitHub link |
+| `profileImagePath` | string | No | Absolute path to avatar image |
+| `isBanned` | bool | Yes | Admin-controlled ban flag |
 
 ---
 
-## friends.dat
+### `posts` Array
 
-Stores accepted follow relationships.
+Each element represents one post created by a user.
 
-```
-fromID|toID|status
+```json
+{
+    "postID":    101,
+    "ownerID":   1,
+    "content":   "Hello everyone, this is my first post!",
+    "imagePath": "",
+    "timestamp": 1748700000,
+    "likeCount": 3,
+    "likedBy":   [2, 4, 7],
+    "comments":  ["Bob: Great post!", "Carol: Welcome!"]
+}
 ```
 
 | Field | Type | Description |
 |---|---|---|
-| `fromID` | int | The follower's user ID |
-| `toID` | int | The followed user's ID |
-| `status` | string | Always `ACCEPTED` in this file |
-
-**Example:**
-```
-fromID|toID|status
-1001|1002|ACCEPTED
-1002|1001|ACCEPTED
-1003|1001|ACCEPTED
-```
-
-> This file is rewritten completely every time `saveFriends()` is called. It is derived from each User's `FollowArray`.
+| `postID` | int | Unique post identifier |
+| `ownerID` | int | `userID` of the post creator |
+| `content` | string | Text body of the post |
+| `imagePath` | string | Path to attached image (empty if text-only) |
+| `timestamp` | long | Unix epoch (seconds since 1970-01-01) |
+| `likeCount` | int | Cached count (authoritative source is `likedBy.length`) |
+| `likedBy` | int[] | Array of userIDs who liked this post |
+| `comments` | string[] | Array of comment strings (format: `"username: text"`) |
 
 ---
 
-## friend_requests.dat
+### `messages` Array
 
-Stores all friend/follow requests including pending and rejected ones.
+Each element is a direct message between two users.
 
+```json
+{
+    "senderID":   2,
+    "receiverID": 1,
+    "text":       "Hey, want to connect?",
+    "timestamp":  1748700120
+}
 ```
-requestID|fromID|toID|status
+
+Group messages use the same structure but `receiverID` is a negative group ID (e.g. `-1` for groupID 1) to distinguish them from direct messages.
+
+---
+
+### `groups` Array
+
+Each element is a group chat.
+
+```json
+{
+    "groupID":   1,
+    "name":      "Study Group",
+    "iconPath":  "",
+    "creatorID": 1,
+    "memberIDs": [1, 2, 3]
+}
 ```
 
-| Field | Type | Values |
+---
+
+### `relations` Object
+
+Stores the social graph as arrays of `[fromID, toID]` pairs.
+
+```json
+"relations": {
+    "friends":   [[1, 2], [1, 3]],
+    "followers":  [[2, 1], [3, 1]],
+    "following":  [[1, 2], [1, 3]],
+    "requests":   [[4, 1]]
+}
+```
+
+| Key | Meaning |
+|---|---|
+| `friends` | Bidirectional — user A and user B are mutual friends |
+| `followers` | userID B follows userID A |
+| `following` | userID A follows userID B |
+| `requests` | userID A has sent a pending request to userID B |
+
+On load, these pairs are resolved to actual `User*` pointers and wired into each user's `friends[]`, `follower[]`, `following[]`, and `request[]` arrays.
+
+---
+
+### `banAppeals` Array
+
+Submitted by banned users requesting re-activation.
+
+```json
+{
+    "userID":  3,
+    "userName": "BadActor",
+    "message":  "I promise to follow the rules from now on."
+}
+```
+
+---
+
+### `userReports` Array
+
+Submitted by users reporting others for misconduct.
+
+```json
+{
+    "reportedUserID": 3,
+    "reporterID":     1,
+    "reason":         "Spam and harassment"
+}
+```
+
+---
+
+### Counters
+
+| Field | Type | Description |
 |---|---|---|
-| `requestID` | int | e.g. `5001` |
-| `fromID` | int | Sender's user ID |
-| `toID` | int | Recipient's user ID |
-| `status` | string | `PENDING`, `ACCEPTED`, `REJECTED` |
-
-**Example:**
-```
-requestID|fromID|toID|status
-5001|1001|1003|ACCEPTED
-5002|1002|1003|PENDING
-5003|1004|1001|REJECTED
-```
+| `nextID` | int | Next available userID / postID (auto-incremented) |
+| `nextGroupID` | int | Next available groupID |
+| `userCount` | int | Total registered users |
 
 ---
 
-## messages.dat
+## `notifications.txt` — Notification Records
 
-Stores all direct messages between users. New messages are **appended** (not rewritten).
+Managed by `NotificationSystem::saveToFile()` / `loadFromFile()`. The format is internal to the notification system implementation. On first run, the file is created automatically.
 
+The `notifications.txt` file that ships with the project contains just:
 ```
-msgID|senderID|receiverID|content|timestamp
+0
 ```
+(zero notifications in the initial empty state)
 
-| Field | Type | Example |
+---
+
+## Load / Save Functions
+
+| Function | Location | What It Does |
 |---|---|---|
-| `msgID` | int | `3001` |
-| `senderID` | int | `1001` |
-| `receiverID` | int | `1002` |
-| `content` | string | `Hey how are you?` |
-| `timestamp` | Unix epoch | `1714305600` |
-
-**Example:**
-```
-msgID|senderID|receiverID|content|timestamp
-3001|1001|1002|Hey how are you?|1714305600
-3002|1002|1001|I am good thanks!|1714305660
-3003|1001|1002|Great to hear!|1714305720
-```
+| `loadData()` | `backend/src/user.cpp` | Read `data.json` → populate all in-memory structures |
+| `saveData()` | `backend/src/user.cpp` | Serialise all in-memory state → write `data.json` |
+| `notifSystem.loadFromFile()` | `backend/src/notification.cpp` | Read `notifications.txt` |
+| `notifSystem.saveToFile()` | `backend/src/notification.cpp` | Write `notifications.txt` |
+| `ensureDefaultAdminAccount()` | `backend/src/user.cpp` | Recreate the default admin if not found in loaded data |
 
 ---
 
-## notifications.dat
+## Reset / Fresh Start
 
-Stores all notifications for all users.  
-New notifications are **appended**. The entire file is rewritten only when `markAllRead()` is called.
+To reset all data and start fresh:
 
-```
-notifID|ownerID|type|message|isRead|timestamp
-```
+1. Delete `data.json`
+2. Delete `notifications.txt`
+3. Relaunch the application
 
-| Field | Type | Values |
-|---|---|---|
-| `notifID` | int | e.g. `4001` |
-| `ownerID` | int | Who receives this notification |
-| `type` | string | `LIKE`, `COMMENT`, `REQUEST`, `FOLLOW`, `SYSTEM` |
-| `message` | string | Human-readable description |
-| `isRead` | 0 or 1 | `0` = unread |
-| `timestamp` | Unix epoch | — |
-
-**Example:**
-```
-notifID|ownerID|type|message|isRead|timestamp
-4001|1002|LIKE|Ali Hassan liked your post.|0|1714306000
-4002|1001|FOLLOW|Sara Khan started following you.|0|1714306100
-4003|1002|COMMENT|Ali Hassan commented on your post.|1|1714306200
-```
-
----
-
-## ID Ranges
-
-ID ranges are pre-assigned by convention to avoid collisions:
-
-| Entity | ID Range | Starting value |
-|---|---|---|
-| Users | 1001+ | `lastUserID_ = 1000` |
-| Posts | 2001+ | `nextPostID()` scans all posts |
-| Messages | 3001+ | `lastMsgID_ = 3000` |
-| Notifications | 4001+ | `lastID_ = 4000` |
-| Friend Requests | 5001+ | `lastRequestID_ = 5000` |
-| Admin | 1 | Hardcoded |
-
----
-
-## Resetting Data
-
-To reset specific data, delete the relevant `.dat` file. It will be recreated with just the header on next save.
-
-```powershell
-# Reset everything
-Remove-Item C:\Programming\Connectify\build\data\*.dat
-
-# Reset only messages
-Remove-Item C:\Programming\Connectify\build\data\messages.dat
-
-# Reset only notifications
-Remove-Item C:\Programming\Connectify\build\data\notifications.dat
-```
-
-> **Warning:** Deleting `users.dat` removes all accounts. Deleting `friends.dat` removes all follow relationships. The app handles missing files gracefully — it simply starts empty.
+The default admin account will be recreated automatically.

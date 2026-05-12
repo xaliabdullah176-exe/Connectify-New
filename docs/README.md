@@ -1,152 +1,69 @@
-# Connectify
+# CONNECT — Social Media Platform
+### Evaluation Guide
 
-A social media desktop application built in **C++17** with **Qt6**, demonstrating core Object-Oriented Programming principles through custom pointer-based data structures — no STL containers used.
-
----
-
-## Features
-
-| Feature | Description |
-|---|---|
-| 👤 Auth | Register, login, logout with hashed passwords |
-| 📰 Feed | News feed showing posts from followed users |
-| ✍️ Posts | Create and view text posts |
-| ❤️ Likes | Like and unlike posts |
-| 👥 Follow | Follow and unfollow other users |
-| 🔍 Search | Search users and posts by keyword |
-| 💬 Messages | Direct messaging between users |
-| 🔔 Notifications | Like and follow notifications |
-| 🛡️ Admin | Ban users, delete posts, view all accounts |
-| 💾 Persistence | All data saved to plain text `.dat` files |
+> **Project by:** Quantum Logics (PVT) Limited  
+> **License:** MIT (2026)  
+> **Build System:** CMake + Qt6 + MinGW / MSVC  
+> **Language:** C++17
 
 ---
 
-## Tech Stack
+## What is CONNECT?
 
-| Layer | Technology |
-|---|---|
-| Language | C++17 |
-| GUI Framework | Qt 6 (Widgets) |
-| Build System | CMake 3.16+ |
-| Compiler | GCC 13+ (MinGW on Windows) |
-| Data Storage | Custom pipe-delimited flat files |
+**CONNECT** (also called *Connectify* / *ConnectifyUI*) is a fully functional desktop social media platform built in C++ with a Qt6 GUI. It was engineered from scratch as an academic project that demonstrates real-world application of Object-Oriented Programming principles, custom data structures, and a layered software architecture — all without using STL containers.
+
+The application ships with both a console-mode backend and a polished graphical frontend, proving the backend logic is completely independent of the UI layer.
 
 ---
 
-## OOP Concepts Demonstrated
+## Table of Contents — Evaluation Guide
 
-- **Inheritance** — `Person → User / Admin`, `Post → TextPost / ImagePost`
-- **Polymorphism** — virtual `display()` and `getRole()` on base classes
-- **Encapsulation** — all data private, exposed through getters/setters
-- **Abstract Classes** — `Person` and `Post` have pure virtual methods
-- **Custom Data Structures** — singly/doubly linked lists, raw pointer arrays (no STL containers)
-- **Singleton Pattern** — `AuthManager`, `FileManager`, `Session`, `NotificationManager`
-
----
-
-## Project Structure
-
-```
-Connectify/
-├── CMakeLists.txt
-├── run.bat                        ← double-click to build & run (Windows)
-├── data/                          ← auto-generated flat file database
-│   ├── users.dat
-│   ├── posts.dat
-│   ├── friends.dat
-│   ├── friend_requests.dat
-│   ├── messages.dat
-│   └── notifications.dat
-└── src/
-    ├── main.cpp
-    ├── models/                    ← pure C++ domain classes
-    │   ├── Array.h                ← generic dynamic pointer array
-    │   ├── Person.h / .cpp        ← abstract base
-    │   ├── User.h / .cpp
-    │   ├── Admin.h / .cpp
-    │   ├── UserTable.h            ← raw User** array
-    │   ├── Post.h / .cpp          ← abstract base
-    │   ├── TextPost.h / .cpp
-    │   ├── ImagePost.h / .cpp
-    │   ├── PostList.h             ← singly-linked list of Post*
-    │   ├── Comment.h              ← singly-linked list of comments
-    │   ├── LikeList.h             ← raw int* array of user IDs
-    │   ├── FollowArray.h          ← raw int* array for follow graph
-    │   ├── Message.h              ← doubly-linked list of messages
-    │   └── Notification.h         ← singly-linked list of notifications
-    ├── managers/                  ← business logic singletons
-    │   ├── FileManager.h / .cpp   ← all file I/O
-    │   ├── AuthManager.h / .cpp   ← login, signup, ban
-    │   ├── NewsFeed.h / .cpp      ← feed generation + sorting
-    │   ├── FriendGraph.h / .cpp   ← follow requests
-    │   ├── MessageManager.h / .cpp
-    │   ├── NotificationManager.h / .cpp
-    │   └── SearchEngine.h / .cpp
-    ├── ui/                        ← Qt6 UI layer
-    │   ├── Session.h / .cpp       ← logged-in user singleton
-    │   ├── MainWindow.h / .cpp    ← QStackedWidget router
-    │   ├── pages/
-    │   │   ├── LoginPage
-    │   │   ├── SignupPage
-    │   │   ├── FeedPage
-    │   │   ├── ProfilePage
-    │   │   ├── MessagesPage
-    │   │   ├── SearchPage
-    │   │   ├── NotifsPage
-    │   │   └── AdminPage
-    │   └── widgets/
-    │       ├── PostCard           ← reusable post display widget
-    │       └── ChatBubble         ← message bubble widget
-    └── resources/
-        ├── style.qss              ← global Qt stylesheet
-        └── resources.qrc
-```
-
----
-
-## Quick Start
-
-### Prerequisites
-
-- MSYS2 with `mingw-w64-ucrt-x86_64-gcc`, `qt6-base`, `qt6-tools` installed
-- CMake 3.16+
-- `C:\msys64\ucrt64\bin` on your system PATH
-
-### First-time build
-
-```powershell
-cd C:\Programming\Connectify
-mkdir build && cd build
-cmake .. -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:\msys64\ucrt64" -DCMAKE_CXX_COMPILER="C:/msys64/ucrt64/bin/g++.exe"
-mingw32-make -j4
-.\Connectify.exe
-```
-
-### Every time after that
-
-```powershell
-# From project root — just double-click run.bat or:
-C:\Programming\Connectify\run.bat
-```
-
----
-
-## Default Credentials
-
-| Role | Email | Password |
+| # | Document | What It Covers |
 |---|---|---|
-| Admin | `admin@connectify.com` | `admin123` |
-| User | register via Sign Up screen | your choice |
+| 1 | [README.md](README.md) | Project overview (this file) |
+| 2 | [ARCHITECTURE.md](ARCHITECTURE.md) | Three-layer architecture, class diagram, data flow |
+| 3 | [OOP_CONCEPTS.md](OOP_CONCEPTS.md) | All OOP principles demonstrated with code examples |
+| 4 | [DATA_STRUCTURES.md](DATA_STRUCTURES.md) | Every custom data structure explained |
+| 5 | [FEATURES.md](FEATURES.md) | Full feature list — user & admin capabilities |
+| 6 | [BUILD_AND_RUN.md](BUILD_AND_RUN.md) | Step-by-step setup and build instructions |
+| 7 | [DATA_FORMAT.md](DATA_FORMAT.md) | Persistence layer — how data is saved and loaded |
+| 8 | [CLASS_REFERENCE.md](CLASS_REFERENCE.md) | Every class and its public API |
 
 ---
 
-## Resetting Data
+## Quick Project Stats
 
-Delete any `.dat` file inside `data\` — it will be recreated empty on next launch.  
-To reset everything: `Remove-Item C:\Programming\Connectify\build\data\*.dat`
+| Metric | Value |
+|---|---|
+| Total source files | 48 |
+| Language | C++17 |
+| GUI Framework | Qt 6.5+ |
+| Build system | CMake 3.23+ with Ninja |
+| Data persistence | JSON (`data.json`) + text (`notifications.txt`) |
+| Custom data structures | 9 distinct hand-written structures |
+| OOP principles applied | Inheritance, Encapsulation, Polymorphism, Abstraction |
+| UI pages | 8 (Login, Signup, NewsFeed, Profile, Messages, Search, Notifications, Admin) |
+| Backend operations | 18 user actions + 5 admin actions |
 
 ---
 
-## License
+## Team & Repository
 
-OOP Course Project — BSE-2B
+- **Organization:** Quantum Logics (PVT) Limited
+- **Root directory:** `C:\CONNECT`
+- **Main executable:** `ConnectifyUI.exe`
+- **Quick launch:** `.\run.ps1` (PowerShell script — builds and launches in one step)
+
+---
+
+## At a Glance — What Makes This Project Stand Out
+
+1. **Zero STL containers** — every list, array, and collection is hand-written using raw pointers and manual memory management, proving mastery of low-level C++.
+
+2. **Clean three-layer architecture** — Model → Manager → UI, with a strict no-upward-dependency rule enforced across all files.
+
+3. **Dual interface** — the same backend logic powers both a console menu system (`backend/main.cpp`) and a full Qt6 graphical interface (`frontend/`), demonstrating true separation of concerns.
+
+4. **Complete social graph** — friends, followers, following, friend requests, and notifications are all managed in memory with custom pointer-based graphs.
+
+5. **Admin system** — a separate admin role with its own dashboard for user management, ban/unban, post moderation, report review, and appeal handling.

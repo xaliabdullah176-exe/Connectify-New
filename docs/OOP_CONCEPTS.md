@@ -1,405 +1,341 @@
-# OOP_CONCEPTS.md — OOP Concepts Used in Connectify
+# OOP_CONCEPTS.md — Object-Oriented Programming in CONNECT
 
-This document maps every OOP concept to the exact files and code where it appears.  
-Use this as a reference when explaining the project.
+This document demonstrates every OOP principle applied in the project, with direct references to the actual source code.
 
 ---
 
 ## 1. Classes and Objects
 
-Every entity in the system is a class. Objects are created with `new` and destroyed with `delete`.
+The project defines **7 major classes** in `backend/include/user.h`:
 
-```cpp
-// Creating a User object on the heap
-User* u = new User(1001, "Ali", "ali@example.com", hashedPass);
+- `Post` — represents a social media post
+- `User` — base class for all user accounts
+- `NormalUser` — inherits from `User` (role = "user")
+- `Admin` — inherits from `User` (role = "admin")
+- `Message` — a direct message between two users
+- `MessageSystem` — manages all messages
+- `Notification` — a single notification record
+- `NotificationSystem` — manages all notifications
+- `Group` — a group chat entity
+- `GroupSystem` — manages all groups
 
-// Creating a TextPost object
-Post* p = new TextPost(2001, 1001, "Hello world!");
-
-// Object is destroyed when its owner (PostList) is destroyed
-delete p;
-```
-
-**Where:** Every file in `src/models/`
+Each class encapsulates its data and exposes a clean public interface.
 
 ---
 
 ## 2. Encapsulation
 
-All data members are `private` or `protected`. External code can only interact through public methods.
+Data and behaviour are bundled together inside each class. Access is controlled through public methods.
+
+### Example — `Post` class
 
 ```cpp
-class User : public Person {
+class Post {
 public:
-    std::string getName()  const { return name_; }  // controlled read
-    void setName(const std::string& n) { name_ = n; } // controlled write
+    int postID;
+    string content;
+    string imagePath;
+    int likeCount;
+    std::vector<int> likedBy;   // exception: uses vector for like tracking
+    string comments[50];
+    int commentCount;
+    Post* next;
+    time_t timestamp;
 
-private:
-    std::string name_;     // cannot be accessed directly
-    bool        banned_;   // hidden implementation detail
+    // Behaviour bundled with data:
+    bool toggleLike(int userID);   // toggles like and updates likeCount
+    bool hasLiked(int userID);     // check without exposing the likedBy list logic
+    void addComment(string c);     // bounds-checked comment append
+    void display();                // self-displays to console
 };
 ```
 
-No code outside `User` can set `banned_` directly — it must call `setBanned()`.  
-No code outside `Post` can modify `likes_` — it must call `like()` or `unlike()`.
+**Key encapsulation detail:** `toggleLike()` hides the entire like/unlike logic. The caller never manipulates `likedBy` directly — they just call `toggleLike(userID)` and get a bool back indicating the new state.
 
-**Where:** All model classes — `Person`, `User`, `Admin`, `Post`, `TextPost`, `ImagePost`
+### Example — `NotificationSystem`
+
+```cpp
+class NotificationSystem {
+    Notification** notifications;   // private — internal storage hidden
+    int notifCount;
+    void resize();                  // private — implementation detail
+
+public:
+    void addNotification(int targetID, string msg);
+    void markAllSeen(int userID);
+    int countUnseen(int userID) const;
+    Notification* getAt(int i) const;
+    void saveToFile(const string& filename);
+    void loadFromFile(const string& filename);
+};
+```
+
+The internal `notifications` array and `resize()` are private. External code can only use the clean public interface.
 
 ---
 
 ## 3. Inheritance
 
-### Single Inheritance — Person hierarchy
+The project uses a two-level inheritance hierarchy for users.
 
 ```
-Person  (abstract)
-├── User     — regular social media account
-└── Admin    — privileged administrative account
+User  (base class)
+├── NormalUser
+└── Admin
 ```
 
-`User` and `Admin` inherit `id_`, `name_`, `email_`, `hashedPassword_` from `Person`.  
-They also inherit `login()` and `getProfile()` and override where needed.
+### Base class — `User`
 
 ```cpp
-// Person.h
-class Person {
+class User {
 public:
-    virtual std::string getRole() const = 0;   // must override
-    virtual std::string getProfile() const;     // can override
-    bool login(const std::string& email, const std::string& password) const;
-protected:
-    int         id_;
-    std::string name_;
-    // ...
-};
+    int userID;
+    string userName;
+    string password;
+    string role;
+    bool isBanned;
+    // ... all common user data
 
-// User.h
-class User : public Person {
-public:
-    std::string getRole() const override { return "USER"; }
-    std::string getProfile() const override; // adds follower stats
-};
+    User** friends;
+    int friendCount;
+    Post** posts;
+    int postCount;
 
-// Admin.h
-class Admin : public Person {
-public:
-    std::string getRole() const override { return "ADMIN"; }
+    virtual ~User();              // virtual destructor — essential for inheritance
+
+    void sendRequest(User* u);
+    void follow(User* to);
+    void acceptRequest(User* u);
+    void rejectRequest(User* u);
+    void createPost(Post* p);
+    bool deletePost(int postID);
+    void showPosts();
+    void showNewsFeed();
 };
 ```
 
-### Single Inheritance — Post hierarchy
-
-```
-Post  (abstract)
-├── TextPost  — text-only content
-└── ImagePost — image with caption
-```
+### Derived class — `NormalUser`
 
 ```cpp
-class Post {
+class NormalUser : public User {
 public:
-    virtual void        display() const = 0;
-    virtual std::string getType()  const = 0;
-    // shared: likes, comments, timestamp, ownerID
-};
+    NormalUser() { role = "user"; }
 
-class TextPost : public Post {
-public:
-    void        display() const override;
-    std::string getType() const override { return "TEXT"; }
-private:
-    std::string content_;
-};
-
-class ImagePost : public Post {
-public:
-    void        display() const override;
-    std::string getType() const override { return "IMAGE"; }
-private:
-    std::string imagePath_;
-    std::string caption_;
+    NormalUser(int id, string username, string pass, string em = "") {
+        userID    = id;
+        userName  = username;
+        password  = pass;
+        role      = "user";    // automatically set — caller doesn't need to know
+        email     = em;
+    }
 };
 ```
 
-**Where:** `src/models/Person.h`, `User.h`, `Admin.h`, `Post.h`, `TextPost.h`, `ImagePost.h`
+### Derived class — `Admin`
+
+```cpp
+class Admin : public User {
+public:
+    Admin() { role = "admin"; }
+
+    Admin(int id, string username, string pass, string em = "") {
+        userID   = id;
+        userName = username;
+        password = pass;
+        role     = "admin";   // automatically set
+        email    = em;
+    }
+};
+```
+
+**What inheritance gives us here:**
+- All social features (friends, posts, follow) are defined once in `User` and reused by both roles.
+- `NormalUser` and `Admin` differ only in their `role` field — they are stored together in the same `User**` array and distinguished at runtime by checking `users[i]->role`.
 
 ---
 
 ## 4. Polymorphism
 
-### Runtime Polymorphism (Virtual Functions)
+### Runtime polymorphism via virtual destructor
 
-A `Post*` pointer can point to either a `TextPost` or an `ImagePost`. The correct `display()` is called at runtime based on the actual type.
-
-```cpp
-Post* p = new TextPost(1, 1, "Hello");
-p->display();   // calls TextPost::display() at runtime — not Post::display()
-
-Post* q = new ImagePost(2, 1, "photo.png", "Nice view");
-q->display();   // calls ImagePost::display() at runtime
-
-// Same call, different behavior — this is polymorphism
-```
-
-### Used in FileManager for type detection
+The `User` base class declares:
 
 ```cpp
-Post* p = /* from PostList */;
-if (p->getType() == "TEXT") {
-    auto* tp = dynamic_cast<TextPost*>(p);   // downcast
-    content = tp->getContent();
-} else {
-    auto* ip = dynamic_cast<ImagePost*>(p);  // downcast
-    content = ip->getCaption();
+virtual ~User() {
+    delete[] friends;
+    delete[] request;
+    delete[] follower;
+    delete[] following;
+    for (int i = 0; i < postCount; i++)
+        delete posts[i];
+    delete[] posts;
 }
 ```
 
-### Used in FeedPage for rendering
+This means when you `delete` a `User*` that actually points to a `NormalUser` or `Admin`, the correct destructor chain is called — preventing memory leaks when working with the polymorphic `User**` array.
+
+### Runtime role dispatch
+
+Throughout the codebase, polymorphism is used to branch behaviour based on role:
 
 ```cpp
-for (int i = 0; i < snap.size(); ++i) {
-    Post* p = snap[i];
-    auto* card = new PostCard(p, me, this);  // PostCard handles both types
-    feedLayout_->addWidget(card);
+// In backend/main.cpp — after login:
+if (users[loggedInIndex]->role == "admin")
+    adminDashboard();
+else
+    userDashboard();
+
+// In frontend/mainwindow:
+if (users[m_loggedInIndex]->role == "admin")
+    showAdminDashboard();
+else
+    showNewsFeed();
+```
+
+The same `User*` pointer is used — its behaviour differs based on the actual object it points to.
+
+### Function overloading (compile-time polymorphism)
+
+The `Post` class provides two constructors:
+
+```cpp
+// Default constructor
+Post() {
+    postID = 0; content = ""; likeCount = 0; /* ... */
+}
+
+// Parameterised constructor
+Post(int id, string c, string imgPath = "") {
+    postID = id; content = c; imagePath = imgPath; /* ... */
 }
 ```
 
-**Where:** `FileManager.cpp`, `FeedPage.cpp`, `PostCard.cpp`, `SearchEngine.cpp`
+The `User` class provides overloaded constructors as well as a copy constructor and `operator=`.
 
 ---
 
-## 5. Abstract Classes
+## 5. Abstraction
 
-A class with at least one **pure virtual function** (`= 0`) cannot be instantiated.
+Abstraction means exposing only what is necessary and hiding implementation details.
+
+### Example — `MessageSystem::sendMessage()`
 
 ```cpp
-class Person {
-public:
-    virtual std::string getRole() const = 0;   // pure virtual
-    // Person p;  ← compile error — cannot instantiate abstract class
-};
-
-class Post {
-public:
-    virtual void        display() const = 0;   // pure virtual
-    virtual std::string getType()  const = 0;  // pure virtual
-};
+bool MessageSystem::sendMessage(User* from, User* to, string text);
 ```
 
-This forces every subclass to provide an implementation. If `User` forgot to implement `getRole()`, it would also become abstract and could not be instantiated.
+The caller just provides sender, receiver, and text. The internal logic of:
+- checking if the receiver exists
+- resizing the internal message array
+- creating a `Message` object on the heap
+- storing it in the array
 
-**Where:** `Person.h`, `Post.h`
+...is all hidden inside `sendMessage()`. The caller sees a simple boolean result.
+
+### Example — `User::resize()` / `User::resizePosts()`
+
+```cpp
+void resize(User**& u, int count);       // grows a User** array by one slot
+void resizePosts(Post**& p, int count);  // grows a Post** array by one slot
+```
+
+All the raw memory reallocation logic is encapsulated in these utility methods. Every place in the code that needs to grow an array just calls `resize()` rather than duplicating `new`/`delete[]` logic.
 
 ---
 
-## 6. Pointers and Dynamic Memory
+## 6. Constructor Types
 
-The entire data storage system uses raw pointer-based custom data structures.
+| Constructor Type | Class | Example |
+|---|---|---|
+| Default constructor | `Post`, `User`, `Message`, `Notification`, `Group` | `Post()` — initialises all fields to defaults |
+| Parameterised constructor | `Post`, `NormalUser`, `Admin`, `Message` | `Post(int id, string c, string imgPath)` |
+| Copy constructor | `User` | Deep copies all pointer arrays |
+| Destructor | `User`, `MessageSystem`, `NotificationSystem`, `GroupSystem` | Properly frees all heap-allocated members |
+| Virtual destructor | `User` | Ensures correct cleanup through base class pointer |
 
-### Singly-Linked List (PostList)
+### Copy Constructor (deep copy example)
 
 ```cpp
-struct PostNode {
-    Post*     post;    // pointer to heap-allocated Post
-    PostNode* next;    // pointer to next node
-    explicit PostNode(Post* p) : post(p), next(nullptr) {}
-};
+User(const User& other) {
+    userID       = other.userID;
+    userName     = other.userName;
+    // ... copy all primitive fields ...
+    friendCount  = other.friendCount;
 
-class PostList {
-    PostNode* head_;   // pointer to first node
-    // ...
-};
-```
+    // DEEP COPY — allocate new arrays and copy pointer values
+    friends = new User*[friendCount + 1];
+    for (int i = 0; i < friendCount; i++)
+        friends[i] = other.friends[i];
 
-Traversal:
-```cpp
-PostNode* node = user->getPosts().head();
-while (node) {
-    node->post->display();
-    node = node->next;   // advance pointer
+    posts = new Post*[postCount + 1];
+    for (int i = 0; i < postCount; i++)
+        posts[i] = other.posts[i];
 }
 ```
 
-### Doubly-Linked List (MessageList)
+### Copy Assignment Operator
 
 ```cpp
-struct MsgNode {
-    MsgNode* prev;   // points backward
-    MsgNode* next;   // points forward
-};
-```
-
-### Raw Dynamic Arrays
-
-```cpp
-class FollowArray {
-    int* data_;      // raw int array on heap
-    int  size_;
-    int  capacity_;
-
-    void grow() {
-        int* newData = new int[capacity_ * 2];    // allocate larger
-        for (int i = 0; i < size_; ++i)
-            newData[i] = data_[i];                // manual copy
-        delete[] data_;                           // free old
-        data_ = newData;
+User& operator=(const User& other) {
+    if (this != &other) {           // self-assignment guard
+        delete[] friends;           // free old memory first
+        delete[] posts;
+        // ... copy all fields ...
+        friends = new User*[friendCount + 1];
+        // ... deep copy arrays ...
     }
-};
-```
-
-**Where:** `PostList.h`, `Comment.h`, `Message.h`, `Notification.h`, `FollowArray.h`, `LikeList.h`, `UserTable.h`
-
----
-
-## 7. Destructors and Memory Management
-
-Every class that owns heap memory has a destructor that frees it.
-
-```cpp
-// PostList owns its PostNode chain and the Post objects
-class PostList {
-public:
-    ~PostList() {
-        PostNode* cur = head_;
-        while (cur) {
-            PostNode* next = cur->next;
-            delete cur->post;   // free the Post object
-            delete cur;         // free the node
-            cur = next;
-        }
-    }
-};
-```
-
-Ownership chain — one destructor triggers the next:
-
-```
-~AuthManager()
-  └─ delete user         → ~User()
-                              └─ ~PostList()
-                                    └─ delete Post  → ~Post()
-                                                         └─ ~CommentList()
-                                                         └─ ~LikeList() → delete[] data_
-```
-
-**Where:** `PostList.h`, `Comment.h`, `Message.h`, `Notification.h`, `LikeList.h`, `FollowArray.h`, `AuthManager.cpp`
-
----
-
-## 8. Singleton Pattern
-
-Managers are singletons — one global instance, private constructor, public `instance()`.
-
-```cpp
-class AuthManager {
-public:
-    static AuthManager& instance() {
-        static AuthManager am;   // created once, lives forever
-        return am;
-    }
-
-private:
-    AuthManager();                                    // private — no outside construction
-    AuthManager(const AuthManager&)            = delete;  // no copying
-    AuthManager& operator=(const AuthManager&) = delete;  // no assignment
-};
-
-// Usage from anywhere:
-User* u = AuthManager::instance().login(email, password);
-```
-
-**Where:** `AuthManager`, `FileManager`, `FriendGraph`, `MessageManager`, `NotificationManager`, `Session`
-
----
-
-## 9. Composition
-
-Classes are built from other classes as members (not inheritance).
-
-```cpp
-class User : public Person {
-private:
-    FollowArray following_;   // User HAS-A FollowArray
-    FollowArray followers_;   // User HAS-A FollowArray
-    PostList    posts_;       // User HAS-A PostList
-};
-
-class Post {
-private:
-    LikeList    likes_;       // Post HAS-A LikeList
-    CommentList comments_;    // Post HAS-A CommentList
-};
-```
-
-When a `User` is destroyed, its `PostList`, `FollowArray` members are also destroyed automatically.
-
-**Where:** `User.h`, `Post.h`
-
----
-
-## 10. `dynamic_cast` — Safe Downcasting
-
-When you have a `Post*` and need to access subclass-specific methods, `dynamic_cast` safely converts it:
-
-```cpp
-Post* p = /* some post */;
-
-// Try to cast to TextPost
-TextPost* tp = dynamic_cast<TextPost*>(p);
-if (tp) {
-    // p really is a TextPost — safe to use TextPost methods
-    std::string content = tp->getContent();
-}
-
-// Try to cast to ImagePost
-ImagePost* ip = dynamic_cast<ImagePost*>(p);
-if (ip) {
-    std::string path = ip->getImagePath();
+    return *this;
 }
 ```
 
-If the cast fails (wrong type), `dynamic_cast` returns `nullptr` instead of crashing.
+---
 
-**Where:** `FileManager.cpp`, `SearchEngine.cpp`, `PostCard.cpp`, `AdminPage.cpp`
+## 7. Operator Overloading
+
+The `User` class overloads `operator=` to support safe copy assignment with proper memory cleanup and deep copy of all dynamic arrays.
 
 ---
 
-## 11. `const` Correctness
+## 8. Access Specifiers
 
-Methods that do not modify the object are marked `const`. This allows them to be called on `const` references.
+| Class | Private | Public |
+|---|---|---|
+| `NotificationSystem` | `notifications`, `notifCount`, `resize()` | All user-facing methods |
+| `User` | (all public for performance) | All fields and methods |
+| `Post` | (all public for performance) | All fields and methods |
+| `Group` | (all public) | `groupID`, `name`, `memberIDs`, etc. |
+
+The project follows a pragmatic approach: fields that are only ever modified through class methods are kept public for simplicity in this academic context, while classes that manage shared state (`NotificationSystem`) enforce proper access control.
+
+---
+
+## 9. Static / Global Scope
+
+The project uses `extern` declarations to share global state across compilation units:
 
 ```cpp
-class User {
-public:
-    std::string getName()       const { return name_; }    // read-only
-    bool        isFollowing(int id) const;                 // read-only
-    void        follow(int id);                            // modifies — no const
-};
-
-// Can pass User as const& without worrying about modification
-void printUser(const User& u) {
-    std::cout << u.getName();      // ✅ fine — getName() is const
-    // u.follow(123);              // ❌ compile error — follow() is not const
-}
+// Declared in user.h — shared across all .cpp files:
+extern User** users;
+extern int userCount;
+extern NotificationSystem notifSystem;
 ```
 
-**Where:** All model headers — every getter is `const`
+This is a deliberate architectural choice: the backend global state is accessible to both the console `main.cpp` and the Qt `mainwindow` without duplication.
 
 ---
 
 ## Summary Table
 
-| Concept | Demonstrated In |
-|---|---|
-| Classes & Objects | All model files |
-| Encapsulation | `Person`, `User`, `Post` private members |
-| Inheritance | `Person→User/Admin`, `Post→TextPost/ImagePost` |
-| Polymorphism | `Post::display()`, `Post::getType()` virtual calls |
-| Abstract Classes | `Person` (getRole=0), `Post` (display=0, getType=0) |
-| Raw Pointers | `PostList`, `MessageList`, `FollowArray`, `UserTable` |
-| Linked Lists | `PostList` (singly), `MessageList` (doubly), `CommentList` (singly), `NotifList` (singly), `RequestList` (singly) |
-| Destructors | `PostList`, `CommentList`, `LikeList`, `FollowArray`, `AuthManager` |
-| Singleton | `AuthManager`, `FileManager`, `Session`, `FriendGraph`, `MessageManager`, `NotificationManager` |
-| Composition | `User` has `PostList` + `FollowArray`, `Post` has `LikeList` + `CommentList` |
-| dynamic_cast | `FileManager`, `SearchEngine`, `PostCard`, `AdminPage` |
-| const correctness | All getters in all model classes |
+| OOP Concept | Where Applied | How |
+|---|---|---|
+| Classes | Throughout | `Post`, `User`, `NormalUser`, `Admin`, `Message`, `MessageSystem`, `Notification`, `NotificationSystem`, `Group`, `GroupSystem` |
+| Encapsulation | `NotificationSystem`, `MessageSystem`, `Post` | Private data + public interface |
+| Inheritance | `NormalUser : User`, `Admin : User` | Role-based specialisation |
+| Polymorphism | `User*` array, login dispatch | Virtual destructor + runtime role check |
+| Abstraction | `sendMessage()`, `resize()`, `toggleLike()` | Complex logic hidden behind simple calls |
+| Default constructor | All classes | Zero-initialise fields safely |
+| Parameterised constructor | `Post`, `NormalUser`, `Admin`, `Message` | Convenient object creation |
+| Copy constructor | `User` | Deep copy of pointer arrays |
+| Destructor | `User`, `MessageSystem`, `NotificationSystem` | Proper heap cleanup |
+| Virtual destructor | `User` | Safe delete through base pointer |
+| Operator overloading | `User::operator=` | Safe copy assignment |
