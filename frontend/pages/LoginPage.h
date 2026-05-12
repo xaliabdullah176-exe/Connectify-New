@@ -22,6 +22,8 @@ private slots:
     void onLoginClicked();
 
 private:
+    void applyStyles();
+
     QLineEdit*   usernameEdit_;
     QLineEdit*   passwordEdit_;
     QCheckBox*   showPasswordCheck_;

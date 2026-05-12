@@ -9,6 +9,16 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QFileDialog>
+#include <QtGlobal>
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QMediaPlayer>
+#include <QVideoWidget>
+#include <QAudioOutput>
+#else
+#include <QMediaPlayer>
+#include <QVideoWidget>
+#endif
 
 // ─────────────────────────────────────────────────────
 //  Single post card shown in the feed
@@ -21,7 +31,8 @@ public:
                  const QString &ownerName,
                  const QString &ownerAvatarPath,
                  const QString &content,
-                 const QString &imagePath, // "" if text-only post
+                 const QString &imagePath, // "" if no image
+                 const QString &videoPath, // "" if no video
                  const QString &timeAgo,
                  int likes,
                  int comments,
@@ -63,7 +74,8 @@ public:
                  const QString &ownerName,
                  const QString &ownerAvatarPath,
                  const QString &content,
-                 const QString &imagePath, // "" for text post
+                 const QString &imagePath,
+                 const QString &videoPath,
                  const QString &timeAgo,
                  int likes,
                  int comments,
@@ -87,7 +99,7 @@ signals:
     // User typed text (+optional image) and clicked Post
     // → call: Post* p = new Post(nextID++, content.toStdString());
     //          users[loggedInIndex]->createPost(p);
-    void createPostClicked(const QString &content, const QString &imagePath);
+    void createPostClicked(const QString &content, const QString &imagePath, const QString &videoPath);
 
     // User clicked ❤️ Like
     // → find post by postID in users array, call post->like()
@@ -110,13 +122,14 @@ signals:
 
 private slots:
     void onPostBtnClicked();
-    void onSelectImageClicked();
+    void onSelectMediaClicked();
 
 private:
     // ── State ──────────────────────────────────────────
     int m_currentUserID = -1;
     QString m_currentUserName;
     QString m_selectedImagePath;
+    QString m_selectedVideoPath;
 
     // ── Navbar ─────────────────────────────────────────
     QLabel *navUserNameLabel;
@@ -128,7 +141,7 @@ private:
     // ── Create post box ────────────────────────────────
     QTextEdit *postInput;
     QLabel *imagePreviewLabel;
-    QPushButton *selectImageBtn;
+    QPushButton *selectMediaBtn;
     QPushButton *postBtn;
     QLabel *charCountLabel;
 

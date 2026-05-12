@@ -18,11 +18,11 @@ if(DEFINED ENV{Qt6_DIR} AND NOT "$ENV{Qt6_DIR}" STREQUAL "")
 endif()
 list(APPEND CMAKE_PREFIX_PATH "C:/msys64/ucrt64")
 
-find_package(Qt6 QUIET COMPONENTS Widgets)
+find_package(Qt6 QUIET COMPONENTS Widgets Multimedia MultimediaWidgets)
 if(Qt6_FOUND)
     set(QT_VERSION_MAJOR 6)
 else()
-    find_package(Qt5 REQUIRED COMPONENTS Widgets)
+    find_package(Qt5 REQUIRED COMPONENTS Widgets Multimedia MultimediaWidgets)
     set(QT_VERSION_MAJOR 5)
 endif()
 
@@ -65,6 +65,9 @@ set(PROJECT_SOURCES
     backend/src/message.cpp
     backend/src/notification.cpp
     backend/src/search.cpp
+
+    # Windows app icon resource (embeds icon into .exe)
+    app.rc
 )
 
 # ---------------------------------------------------------------------------
@@ -77,7 +80,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     )
     qt_add_resources(ConnectifyUI "resources"
         PREFIX "/"
-        FILES frontend/styles/style.qss
+        FILES
+            frontend/styles/style.qss
+            frontend/resources/app_icon.png
     )
 else()
     if(ANDROID)
@@ -108,7 +113,11 @@ set_target_properties(ConnectifyUI PROPERTIES
 # ---------------------------------------------------------------------------
 # Link
 # ---------------------------------------------------------------------------
-target_link_libraries(ConnectifyUI PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(ConnectifyUI PRIVATE 
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Multimedia
+    Qt${QT_VERSION_MAJOR}::MultimediaWidgets
+)
 
 # ---------------------------------------------------------------------------
 # Target properties

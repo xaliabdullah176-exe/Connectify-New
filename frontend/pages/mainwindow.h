@@ -3,7 +3,6 @@
 #include <QStackedWidget>
 #include <QInputDialog>
 #include <QMessageBox>
-#include <algorithm>
 #include <QString>
 
 // ── Frontend pages ──
@@ -42,7 +41,7 @@ private slots:
     void onLogout();
 
     // ── Feed actions ──
-    void onCreatePost(const QString &content, const QString &imagePath);
+    void onCreatePost(const QString &content, const QString &imagePath, const QString &videoPath);
     void onLikePost(int postID);
     void onCommentPost(int postID);
     void onDeletePost(int postID);
